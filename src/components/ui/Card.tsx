@@ -40,7 +40,7 @@ export function Card({
       `}
         >
             {badge && (
-                <span className="absolute top-3 right-3 bg-green-50 text-green-700 text-sm font-medium px-3 py-1 rounded-[var(--radius-full)]">
+                <span className="absolute top-4 right-4 bg-white/50 backdrop-blur-md text-[var(--pais-green-700)] text-xs font-bold px-3 py-1 rounded-full border border-[var(--pais-green-200)] uppercase tracking-wider">
                     {badge}
                 </span>
             )}
@@ -48,7 +48,7 @@ export function Card({
             {hasHeader ? (
                 <div className="flex items-start gap-4">
                     {icon && (
-                        <div className="shrink-0 w-12 h-12 rounded-[var(--radius-sm)] bg-green-50 flex items-center justify-center text-green-500">
+                        <div className="shrink-0 w-14 h-14 rounded-2xl bg-white flex items-center justify-center shadow-sm border border-black/5">
                             {icon}
                         </div>
                     )}

@@ -19,8 +19,8 @@ export function Header({ greeting, userName }: HeaderProps) {
             <div className="max-w-[var(--max-content)] mx-auto flex items-center justify-between h-[var(--header-height)] px-5">
                 {/* Logo + Greeting */}
                 <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 rounded-full bg-green-500 flex items-center justify-center">
-                        <span className="text-white font-heading font-bold text-lg">P</span>
+                    <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-[var(--pais-green-500)] to-[var(--pais-amber-500)] flex items-center justify-center shadow-lg transform rotate-3">
+                        <span className="text-white font-heading font-bold text-lg -rotate-3">P</span>
                     </div>
                     <div>
                         <p className="text-base text-text-secondary leading-tight">
