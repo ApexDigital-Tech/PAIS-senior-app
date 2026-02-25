@@ -11,31 +11,37 @@
   --pais-green-50: #F0F9F5;
   --pais-green-100: #D1F0E0;
   --pais-green-200: #A3E1C1;
-  --pais-green-500: #00BA61; /* Vibrant Green - Life */
+  --pais-green-500: #00BA61;
+  /* Vibrant Green - Life */
   --pais-green-600: #009E52;
   --pais-green-700: #008244;
 
   --pais-blue-50: #EEF8FF;
   --pais-blue-100: #D1EAFF;
   --pais-blue-200: #A3D5FF;
-  --pais-blue-500: #0084FF; /* Energetic Blue - Trust */
+  --pais-blue-500: #0084FF;
+  /* Energetic Blue - Trust */
   --pais-blue-600: #0070D9;
   --pais-blue-700: #005CB3;
 
   /* —— Motivational Accents —— */
-  --pais-orange-500: #FF8F00; /* Energy & Warmth */
+  --pais-orange-500: #FF8F00;
+  /* Energy & Warmth */
   --pais-orange-600: #E68100;
   --pais-orange-50: #FFF3E0;
 
-  --pais-purple-500: #8E24AA; /* Spirituality & Community */
+  --pais-purple-500: #8E24AA;
+  /* Spirituality & Community */
   --pais-purple-50: #F3E5F5;
 
   /* —— Semantic Colors —— */
-  --pais-red-500: #FF3B30; /* Brighter Red */
+  --pais-red-500: #FF3B30;
+  /* Brighter Red */
   --pais-red-600: #D32F2F;
   --pais-red-50: #FFF5F5;
 
-  --pais-amber-500: #FFCC00; /* Sun Yellow */
+  --pais-amber-500: #FFCC00;
+  /* Sun Yellow */
   --pais-amber-50: #FFFDE7;
 
   --pais-success: var(--pais-green-500);
@@ -106,6 +112,11 @@
   --max-content: 960px;
   --nav-height: 72px;
   --header-height: 64px;
+
+  /* —— Vibrant Glows —— */
+  --glow-green: rgba(0, 186, 97, 0.12);
+  --glow-blue: rgba(0, 132, 255, 0.12);
+  --glow-orange: rgba(255, 143, 0, 0.12);
 }
 
 /* —— Tailwind v4 Theme Integration —— */
@@ -175,6 +186,7 @@
 
 /* —— Reduced Motion —— */
 @media (prefers-reduced-motion: reduce) {
+
   *,
   *::before,
   *::after {
@@ -195,6 +207,11 @@ html {
 
 body {
   background: var(--background);
+  background-image:
+    radial-gradient(at 0% 0%, var(--glow-green) 0px, transparent 50%),
+    radial-gradient(at 100% 0%, var(--glow-blue) 0px, transparent 50%),
+    radial-gradient(at 50% 100%, var(--glow-orange) 0px, transparent 50%);
+  background-attachment: fixed;
   color: var(--foreground);
   font-family: var(--font-body);
   line-height: var(--line-height);
@@ -229,9 +246,11 @@ textarea {
 ::-webkit-scrollbar {
   width: 6px;
 }
+
 ::-webkit-scrollbar-track {
   background: transparent;
 }
+
 ::-webkit-scrollbar-thumb {
   background: var(--pais-warm-300);
   border-radius: var(--radius-full);
@@ -244,18 +263,39 @@ textarea {
 
 /* —— Keyframes —— */
 @keyframes pulse-sos {
-  0%, 100% { box-shadow: 0 0 0 0 rgba(211, 47, 47, 0.4); }
-  50% { box-shadow: 0 0 0 12px rgba(211, 47, 47, 0); }
+
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 rgba(211, 47, 47, 0.4);
+  }
+
+  50% {
+    box-shadow: 0 0 0 12px rgba(211, 47, 47, 0);
+  }
 }
 
 @keyframes fade-in {
-  from { opacity: 0; transform: translateY(8px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 @keyframes skeleton-pulse {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.4; }
+
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.4;
+  }
 }
 
 .animate-fade-in {
@@ -268,4 +308,25 @@ textarea {
 
 .animate-skeleton {
   animation: skeleton-pulse 2s var(--ease-smooth) infinite;
+}
+
+.glass {
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.glass-dark {
+  background: rgba(28, 28, 26, 0.7);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.text-gradient {
+  background: linear-gradient(to right, var(--pais-green-700), var(--pais-blue-600));
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
 }

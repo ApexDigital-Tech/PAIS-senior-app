@@ -112,70 +112,81 @@ export default function LoginPage() {
     }
 
     return (
-        <div className="min-h-screen flex flex-col px-6 py-12 bg-[var(--pais-warm-50)]">
-            <div className="flex-1 max-w-sm mx-auto w-full flex flex-col justify-center">
+        <div className="relative min-h-screen flex flex-col px-6 py-12 overflow-hidden bg-white/30">
+            {/* Decorative Background Glows - This is what makes it feel "Alive" */}
+            <div className="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] bg-[var(--pais-green-200)] blur-[120px] rounded-full opacity-30 animate-pulse"></div>
+            <div className="absolute bottom-[-10%] right-[-10%] w-[50%] h-[50%] bg-[var(--pais-blue-100)] blur-[120px] rounded-full opacity-30"></div>
+            <div className="absolute top-[20%] right-[-5%] w-[30%] h-[30%] bg-[var(--pais-orange-100)] blur-[100px] rounded-full opacity-20"></div>
+
+            <div className="relative z-10 flex-1 max-w-sm mx-auto w-full flex flex-col justify-center">
                 {/* Logo/Header */}
-                <div className="text-center mb-10 animate-fade-in">
-                    <div className="w-24 h-24 bg-gradient-to-tr from-[var(--pais-green-500)] to-[var(--pais-amber-500)] rounded-3xl flex items-center justify-center mx-auto mb-6 shadow-xl transform rotate-3">
-                        <span className="text-white font-heading text-5xl font-bold -rotate-3">P</span>
+                <div className="text-center mb-12 animate-fade-in">
+                    <div className="w-28 h-28 bg-gradient-to-br from-[var(--pais-green-400)] via-[var(--pais-green-600)] to-[var(--pais-blue-600)] rounded-[2.5rem] flex items-center justify-center mx-auto mb-8 shadow-[0_20px_40px_-10px_rgba(0,186,97,0.4)] transform rotate-6 hover:rotate-0 transition-transform duration-500">
+                        <span className="text-white font-heading text-6xl font-bold -rotate-6">P</span>
                     </div>
-                    <h1 className="font-heading text-4xl font-bold text-text-primary tracking-tight">PAIS</h1>
-                    <p className="text-xl text-text-secondary mt-2">Bienvenido de nuevo</p>
+                    <h1 className="font-heading text-5xl font-black tracking-tighter text-gradient mb-2">PAIS</h1>
+                    <p className="text-xl text-text-secondary font-medium italic">Tu vida, en equilibrio.</p>
                 </div>
 
-                <Card className="p-6 mb-6">
-                    <form onSubmit={handleSignIn} className="space-y-6">
+                <div className="glass p-8 rounded-[2.5rem] shadow-[0_20px_50px_-20px_rgba(0,0,0,0.1)] mb-8 border border-white/40">
+                    <form onSubmit={handleSignIn} className="space-y-8">
                         {step === "identifier" ? (
                             <>
                                 {method === "phone" ? (
-                                    <div className="space-y-2">
-                                        <label htmlFor="phone" className="block text-xl font-medium text-text-primary">
+                                    <div className="space-y-3">
+                                        <label htmlFor="phone" className="block text-xl font-bold text-[var(--pais-green-800)] ml-1">
                                             Tu número de celular
                                         </label>
-                                        <div className="relative">
-                                            <Phone className="absolute left-4 top-1/2 -translate-y-1/2 text-text-secondary" size={24} />
-                                            <input
-                                                id="phone"
-                                                type="tel"
-                                                value={phone}
-                                                onChange={(e) => setPhone(e.target.value)}
-                                                placeholder="70000000"
-                                                className="w-full h-16 pl-14 pr-4 text-2xl bg-warm-50 border-2 border-border rounded-[var(--radius-md)] focus:outline-none focus:border-green-500 focus:ring-4 focus:ring-green-100 transition-all font-medium"
-                                                required
-                                                autoFocus
-                                            />
+                                        <div className="relative group">
+                                            <div className="absolute inset-0 bg-gradient-to-r from-[var(--pais-green-500)] to-[var(--pais-blue-500)] rounded-[1.5rem] opacity-0 group-focus-within:opacity-100 blur-[2px] transition-opacity duration-300"></div>
+                                            <div className="relative h-18 bg-white/80 border-2 border-transparent group-focus-within:border-transparent rounded-[1.5rem] flex items-center px-5 ring-1 ring-black/5">
+                                                <Phone className="text-[var(--pais-green-600)]" size={24} />
+                                                <input
+                                                    id="phone"
+                                                    type="tel"
+                                                    value={phone}
+                                                    onChange={(e) => setPhone(e.target.value)}
+                                                    placeholder="70000000"
+                                                    className="w-full h-full ml-4 text-2xl bg-transparent border-none focus:outline-none placeholder:text-[var(--pais-warm-300)] font-bold text-[var(--pais-warm-900)]"
+                                                    required
+                                                    autoFocus
+                                                />
+                                            </div>
                                         </div>
-                                        <p className="text-sm text-text-secondary">
-                                            Te enviaremos un código por SMS para entrar de forma segura.
+                                        <p className="text-sm text-[var(--pais-warm-500)] font-medium pl-2">
+                                            Seguridad biométrica lista tras el SMS.
                                         </p>
                                     </div>
                                 ) : (
-                                    <div className="space-y-2">
-                                        <label htmlFor="email" className="block text-xl font-medium text-text-primary">
+                                    <div className="space-y-3">
+                                        <label htmlFor="email" className="block text-xl font-bold text-[var(--pais-green-800)] ml-1">
                                             Correo electrónico
                                         </label>
-                                        <div className="relative">
-                                            <Mail className="absolute left-4 top-1/2 -translate-y-1/2 text-text-secondary" size={24} />
-                                            <input
-                                                id="email"
-                                                type="email"
-                                                value={email}
-                                                onChange={(e) => setEmail(e.target.value)}
-                                                placeholder="tu@correo.com"
-                                                className="w-full h-16 pl-14 pr-4 text-xl bg-warm-50 border-2 border-border rounded-[var(--radius-md)] focus:outline-none focus:border-green-500 focus:ring-4 focus:ring-green-100 transition-all font-medium"
-                                                required
-                                                autoFocus
-                                            />
+                                        <div className="relative group">
+                                            <div className="absolute inset-0 bg-gradient-to-r from-[var(--pais-green-500)] to-[var(--pais-blue-500)] rounded-[1.5rem] opacity-0 group-focus-within:opacity-100 blur-[2px] transition-opacity duration-300"></div>
+                                            <div className="relative h-18 bg-white/80 border-2 border-transparent group-focus-within:border-transparent rounded-[1.5rem] flex items-center px-5 ring-1 ring-black/5">
+                                                <Mail className="text-[var(--pais-green-600)]" size={24} />
+                                                <input
+                                                    id="email"
+                                                    type="email"
+                                                    value={email}
+                                                    onChange={(e) => setEmail(e.target.value)}
+                                                    placeholder="tu@correo.com"
+                                                    className="w-full h-full ml-4 text-xl bg-transparent border-none focus:outline-none placeholder:text-[var(--pais-warm-300)] font-bold text-[var(--pais-warm-900)]"
+                                                    required
+                                                    autoFocus
+                                                />
+                                            </div>
                                         </div>
                                     </div>
                                 )}
                             </>
                         ) : (
-                            <div className="space-y-4">
+                            <div className="space-y-6">
                                 <div className="text-center mb-4">
-                                    <h2 className="text-xl font-bold text-text-primary">Ingresa el código</h2>
-                                    <p className="text-base text-text-secondary">
-                                        Enviado a {method === "phone" ? phone : email}
+                                    <h2 className="text-2xl font-black text-text-primary">Ingresa el código</h2>
+                                    <p className="text-lg text-text-secondary font-medium">
+                                        Enviado a <span className="text-[var(--pais-green-600)]">{method === "phone" ? phone : email}</span>
                                     </p>
                                 </div>
                                 <input
@@ -183,7 +194,7 @@ export default function LoginPage() {
                                     value={otp}
                                     onChange={(e) => setOtp(e.target.value)}
                                     placeholder="000000"
-                                    className="w-full h-20 text-center text-5xl tracking-[0.5em] font-bold bg-warm-50 border-3 border-green-500 rounded-[var(--radius-md)] focus:outline-none focus:ring-8 focus:ring-green-100 transition-all"
+                                    className="w-full h-24 text-center text-6xl tracking-[0.4em] font-black bg-white/50 border-2 border-[var(--pais-green-500)] rounded-[1.5rem] focus:outline-none focus:ring-8 focus:ring-[var(--pais-green-100)] transition-all shadow-inner"
                                     maxLength={6}
                                     required
                                     autoFocus
@@ -191,17 +202,17 @@ export default function LoginPage() {
                                 <button
                                     type="button"
                                     onClick={() => setStep("identifier")}
-                                    className="w-full text-center text-green-600 font-semibold py-2 hover:underline"
+                                    className="w-full text-center text-[var(--pais-green-700)] font-bold py-2 hover:scale-105 transition-transform"
                                 >
-                                    ¿No recibiste el código? Volver a intentar
+                                    ¿No recibiste nada? Reenviar
                                 </button>
                             </div>
                         )}
 
                         {error && (
-                            <div className="flex items-center gap-2 p-4 bg-red-50 text-red-700 rounded-[var(--radius-md)] border border-red-200">
-                                <AlertCircle size={20} className="shrink-0" />
-                                <p className="text-sm font-medium">{error}</p>
+                            <div className="flex items-center gap-3 p-5 bg-red-50/80 backdrop-blur-md text-red-700 rounded-3xl border border-red-100 animate-shake">
+                                <AlertCircle size={24} className="shrink-0" />
+                                <p className="text-sm font-bold">{error}</p>
                             </div>
                         )}
 
@@ -210,12 +221,16 @@ export default function LoginPage() {
                             fullWidth
                             size="lg"
                             loading={loading}
-                            className="text-xl py-8 shadow-[0_10px_20px_-5px_rgba(0,186,97,0.3)] bg-[var(--pais-green-500)]"
+                            className="text-2xl py-10 rounded-[1.5rem] shadow-[0_20px_40px_-10px_rgba(0,186,97,0.4)] bg-gradient-to-r from-[var(--pais-green-500)] to-[var(--pais-green-600)] hover:scale-[1.02] active:scale-[0.98] transition-all"
                         >
-                            {step === "identifier" ? "Enviar código" : "Entrar"}
+                            {step === "identifier" ? (
+                                <span className="flex items-center gap-3">
+                                    Continuar <ChevronRight size={28} />
+                                </span>
+                            ) : "Acceder"}
                         </Button>
                     </form>
-                </Card>
+                </div>
 
                 {/* Toggle method */}
                 <button
@@ -224,32 +239,35 @@ export default function LoginPage() {
                         setStep("identifier");
                         setError(null);
                     }}
-                    className="flex items-center justify-center gap-2 py-4 text-text-secondary hover:text-text-primary transition-colors"
+                    className="flex items-center justify-center gap-3 py-6 text-text-secondary hover:text-[var(--pais-green-700)] transition-all font-bold text-lg"
                 >
                     {method === "phone" ? (
                         <>
-                            <Mail size={18} />
-                            <span className="text-base font-medium">Usar correo electrónico</span>
+                            <Mail size={22} className="opacity-70" />
+                            <span>Entrar con Correo</span>
                         </>
                     ) : (
                         <>
-                            <Phone size={18} />
-                            <span className="text-base font-medium">Usar número de celular</span>
+                            <Phone size={22} className="opacity-70" />
+                            <span>Entrar con Celular</span>
                         </>
                     )}
                 </button>
 
                 {/* Register link */}
-                <div className="mt-8 text-center pt-8 border-t border-warm-200">
-                    <p className="text-text-secondary text-lg mb-4">¿Aún no tienes cuenta?</p>
+                <div className="mt-8 text-center pt-8 border-t border-black/[0.03]">
+                    <p className="text-[var(--pais-warm-500)] text-xl font-medium mb-6">¿Eres nuevo en la comunidad?</p>
                     <Button
                         variant="secondary"
                         fullWidth
+                        size="lg"
                         onClick={() => router.push("/register")}
-                        className="group"
+                        className="group py-8 rounded-[1.5rem] bg-white hover:bg-[var(--pais-warm-50)] border-none shadow-md"
                     >
-                        Regístrate aquí
-                        <ChevronRight size={20} className="group-hover:translate-x-1 transition-transform" />
+                        <span className="text-xl font-bold text-[var(--pais-green-700)] flex items-center gap-2">
+                            Crear mi cuenta
+                            <ChevronRight size={24} className="group-hover:translate-x-2 transition-transform" />
+                        </span>
                     </Button>
                 </div>
             </div>
