@@ -2,6 +2,8 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { createClient } from "@/lib/supabase/client";
+import { useUser } from "@/hooks/useUser";
 import { useGeolocation } from "@/hooks/useGeolocation";
 import { Button } from "@/components/ui/Button";
 import { MapView } from "@/components/transport/MapView";
@@ -76,6 +78,7 @@ export function RequestForm() {
     const [step, setStep] = useState<Step>(1);
     const [formData, setFormData] = useState<Partial<TripFormData>>({});
     const [manualAddress, setManualAddress] = useState("");
+    const [routeMetrics, setRouteMetrics] = useState<{ distance: string, duration: string } | null>(null);
 
     // Step 1: Pick destination
     const handleSelectDestination = (place: FavoritePlace) => {
@@ -108,11 +111,37 @@ export function RequestForm() {
         setStep(3);
     };
 
+    const { user } = useUser();
+    const [submitting, setSubmitting] = useState(false);
+    const supabase = createClient();
+
     // Step 3: Submit
-    const handleSubmit = () => {
-        // TODO: Insert into Supabase transport_requests
-        console.log("Trip requested:", formData);
-        router.push("/transport");
+    const handleSubmit = async () => {
+        if (!user || !formData.origin || !formData.destination) return;
+
+        setSubmitting(true);
+        try {
+            const { error } = await supabase.from("transport_requests").insert({
+                senior_id: user.id,
+                origin_address: formData.origin.address,
+                origin_lat: formData.origin.lat,
+                origin_lng: formData.origin.lng,
+                destination_address: formData.destination.address,
+                destination_lat: formData.destination.lat,
+                destination_lng: formData.destination.lng,
+                scheduled_at: formData.scheduled_at || new Date().toISOString(),
+                status: 'pending'
+            });
+
+            if (error) throw error;
+
+            router.push("/transport?success=true");
+        } catch (error) {
+            console.error("Error requesting trip:", error);
+            alert("Hubo un error al solicitar el viaje. Por favor intenta de nuevo.");
+        } finally {
+            setSubmitting(false);
+        }
     };
 
     const handleBack = () => {
@@ -234,8 +263,8 @@ export function RequestForm() {
                             else handleConfirmOrigin();
                         }}
                         className={`w-full flex items-center gap-4 p-5 rounded-[var(--radius-md)] border-2 transition-all cursor-pointer ${geo.position
-                                ? "border-green-500 bg-green-50"
-                                : "border-border bg-surface hover:border-green-200"
+                            ? "border-green-500 bg-green-50"
+                            : "border-border bg-surface hover:border-green-200"
                             } focus-visible:ring-4 focus-visible:ring-green-200 focus-visible:outline-none`}
                     >
                         <div className="w-12 h-12 rounded-full bg-green-500 flex items-center justify-center shrink-0">
@@ -317,6 +346,7 @@ export function RequestForm() {
                                 ? { ...formData.destination, address: formData.destination.address }
                                 : undefined
                         }
+                        onRouteCalculated={(distance, duration) => setRouteMetrics({ distance, duration })}
                         className="h-[240px]"
                     />
 
@@ -348,11 +378,21 @@ export function RequestForm() {
 
                         <div className="flex items-center gap-2 text-text-secondary">
                             <Clock size={16} />
-                            <span className="text-base">Salida: Ahora</span>
+                            <span className="text-base font-semibold text-[var(--pais-green-700)]">
+                                Salida: Ahora
+                                {routeMetrics && ` — LLegada estimada en ${routeMetrics.duration}`}
+                            </span>
                         </div>
+
+                        {routeMetrics && (
+                            <div className="pt-2 flex justify-between items-center text-sm">
+                                <span className="text-text-secondary">Distancia total:</span>
+                                <span className="font-bold text-text-primary">{routeMetrics.distance}</span>
+                            </div>
+                        )}
                     </div>
 
-                    <Button fullWidth size="lg" onClick={handleSubmit}>
+                    <Button fullWidth size="lg" onClick={handleSubmit} loading={submitting}>
                         Solicitar Viaje
                     </Button>
 

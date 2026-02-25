@@ -18,6 +18,7 @@ export default function LoginPage() {
     const [phone, setPhone] = useState("");
     const [email, setEmail] = useState("");
     const [otp, setOtp] = useState("");
+    const [otpSent, setOtpSent] = useState(false);
 
     const handleSignIn = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -25,6 +26,8 @@ export default function LoginPage() {
         setError(null);
 
         try {
+            const appUrl = process.env.NEXT_PUBLIC_APP_URL || window.location.origin;
+
             if (method === "phone") {
                 if (step === "identifier") {
                     const { error } = await supabase.auth.signInWithOtp({
@@ -39,23 +42,27 @@ export default function LoginPage() {
                         type: "sms",
                     });
                     if (error) throw error;
-                    router.push("/");
+                    router.push("/dashboard");
                 }
             } else {
                 if (step === "identifier") {
                     const { error } = await supabase.auth.signInWithOtp({
                         email,
+                        options: {
+                            emailRedirectTo: `${appUrl}/dashboard`,
+                        }
                     });
                     if (error) throw error;
-                    setStep("otp");
+                    setOtpSent(true);
                 } else {
+                    // This part is for manual OTP if needed, but we prefer the link
                     const { error } = await supabase.auth.verifyOtp({
                         email,
                         token: otp,
                         type: "email",
                     });
                     if (error) throw error;
-                    router.push("/");
+                    router.push("/dashboard");
                 }
             }
         } catch (err: any) {
@@ -64,6 +71,26 @@ export default function LoginPage() {
             setLoading(false);
         }
     };
+
+    if (otpSent && method === "email") {
+        return (
+            <div className="min-h-screen flex flex-col px-6 py-12 bg-[var(--pais-warm-50)] animate-fade-in">
+                <div className="flex-1 max-w-sm mx-auto w-full flex flex-col justify-center text-center">
+                    <div className="w-20 h-20 bg-green-500 rounded-full flex items-center justify-center mx-auto mb-6 shadow-lg">
+                        <Mail className="text-white" size={40} />
+                    </div>
+                    <h1 className="text-3xl font-bold mb-4 font-heading">Revisa tu correo</h1>
+                    <p className="text-lg text-text-secondary leading-tight mb-8">
+                        Hemos enviado un enlace de acceso a <span className="font-bold text-text-primary">{email}</span>.
+                        Haz clic en el enlace para confirmar tu identidad y entrar a PAIS.
+                    </p>
+                    <Button variant="secondary" onClick={() => setOtpSent(false)}>
+                        Volver a intentar
+                    </Button>
+                </div>
+            </div>
+        );
+    }
 
     return (
         <div className="min-h-screen flex flex-col px-6 py-12 bg-[var(--pais-warm-50)]">

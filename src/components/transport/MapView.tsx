@@ -8,9 +8,10 @@ interface MapViewProps {
     origin?: { lat: number; lng: number; address?: string };
     destination?: { lat: number; lng: number; address?: string };
     className?: string;
+    onRouteCalculated?: (distance: string, duration: string) => void;
 }
 
-export function MapView({ origin, destination, className = "" }: MapViewProps) {
+export function MapView({ origin, destination, className = "", onRouteCalculated }: MapViewProps) {
     const mapRef = useRef<HTMLDivElement>(null);
     const [mapError, setMapError] = useState(false);
     const [loading, setLoading] = useState(true);
@@ -102,6 +103,10 @@ export function MapView({ origin, destination, className = "" }: MapViewProps) {
                         (result: any, status: any) => {
                             if (status === "OK" && result) {
                                 directionsRenderer.setDirections(result);
+                                const leg = result.routes[0].legs[0];
+                                if (leg && onRouteCalculated) {
+                                    onRouteCalculated(leg.distance.text, leg.duration.text);
+                                }
                             }
                         }
                     );

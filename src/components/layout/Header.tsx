@@ -1,5 +1,8 @@
+"use client";
+
 import { User } from "lucide-react";
 import Link from "next/link";
+import { useUser } from "@/hooks/useUser";
 
 interface HeaderProps {
     greeting?: string;
@@ -7,8 +10,9 @@ interface HeaderProps {
 }
 
 export function Header({ greeting, userName }: HeaderProps) {
+    const { user } = useUser();
     const timeGreeting = greeting || getTimeGreeting();
-    const displayName = userName || "amigo";
+    const displayName = userName || user?.full_name?.split(' ')[0] || "amigo";
 
     return (
         <header className="sticky top-0 z-20 bg-surface/95 backdrop-blur-sm border-b border-border">

@@ -48,16 +48,28 @@ export default function RegisterPage() {
         setError(null);
 
         const identifier = usePhone ? (phone.startsWith("+") ? phone : `+591${phone}`) : email;
+        const appUrl = process.env.NEXT_PUBLIC_APP_URL || window.location.origin;
 
         try {
             const { error } = await supabase.auth.signInWithOtp(
                 usePhone
                     ? { phone: identifier, options: { data: { full_name: fullName, role: role } } }
-                    : { email: identifier, options: { data: { full_name: fullName, role: role } } }
+                    : {
+                        email: identifier,
+                        options: {
+                            emailRedirectTo: `${appUrl}/dashboard`,
+                            data: { full_name: fullName, role: role }
+                        }
+                    }
             );
 
             if (error) throw error;
-            setStep("otp");
+
+            if (usePhone) {
+                setStep("otp");
+            } else {
+                setStep("success"); // Show "Check your email" message
+            }
         } catch (err: any) {
             setError(err.message || "Error al iniciar el registro");
         } finally {
@@ -188,7 +200,7 @@ export default function RegisterPage() {
                                                 type="tel"
                                                 value={phone}
                                                 onChange={(e) => setPhone(e.target.value)}
-                                                placeholder="70000000"
+                                                placeholder="72030441"
                                                 className="w-full h-14 pl-12 pr-4 text-xl bg-warm-50 border-2 border-border rounded-[var(--radius-md)] focus:outline-none focus:border-green-500 focus:ring-4 focus:ring-green-100 transition-all font-medium"
                                                 required
                                             />
@@ -213,6 +225,27 @@ export default function RegisterPage() {
                                         </div>
                                     </div>
                                 )}
+
+                                <button
+                                    type="button"
+                                    onClick={() => {
+                                        setUsePhone(!usePhone);
+                                        setError(null);
+                                    }}
+                                    className="flex items-center gap-2 text-green-600 font-semibold text-base hover:underline py-1"
+                                >
+                                    {usePhone ? (
+                                        <>
+                                            <Mail size={16} />
+                                            <span>Prefiero usar correo electrónico</span>
+                                        </>
+                                    ) : (
+                                        <>
+                                            <Phone size={16} />
+                                            <span>Prefiero usar mi número de celular</span>
+                                        </>
+                                    )}
+                                </button>
 
                                 {error && (
                                     <div className="flex items-center gap-2 p-4 bg-red-50 text-red-700 rounded-[var(--radius-md)] border border-red-200">
@@ -286,7 +319,7 @@ export default function RegisterPage() {
                     </div>
                 )}
 
-                {/* Step 4: Success */}
+                {/* Step 4: Success / Confirmation */}
                 {step === "success" && (
                     <div className="animate-fade-in space-y-8 py-10 text-center">
                         <div className="relative mx-auto w-24 h-24 bg-green-500 rounded-full flex items-center justify-center shadow-lg animate-fade-in">
@@ -294,21 +327,37 @@ export default function RegisterPage() {
                             <div className="absolute inset-0 rounded-full animate-ping bg-green-500 opacity-20"></div>
                         </div>
 
-                        <div className="space-y-2">
-                            <h2 className="text-3xl font-bold text-text-primary">¡Bienvenido!</h2>
-                            <p className="text-xl text-text-secondary max-w-[280px] mx-auto">
-                                Tu cuenta ha sido creada exitosamente. Estamos felices de tenerte aquí.
-                            </p>
-                        </div>
-
-                        <Button
-                            size="lg"
-                            fullWidth
-                            onClick={() => router.push("/")}
-                            className="text-xl"
-                        >
-                            Comenzar ahora
-                        </Button>
+                        {!usePhone ? (
+                            <div className="space-y-4">
+                                <h2 className="text-3xl font-bold text-text-primary">¡Confirma tu correo!</h2>
+                                <p className="text-xl text-text-secondary max-w-sm mx-auto">
+                                    Hemos enviado un **enlace de confirmación** a <span className="text-green-600 font-bold">{email}</span>.
+                                </p>
+                                <p className="text-lg text-text-secondary">
+                                    Haz clic en el enlace para completar tu registro y entrar a PAIS.
+                                </p>
+                                <div className="pt-4">
+                                    <Button variant="secondary" onClick={() => router.push("/login")}>
+                                        Volver al inicio
+                                    </Button>
+                                </div>
+                            </div>
+                        ) : (
+                            <div className="space-y-2">
+                                <h2 className="text-3xl font-bold text-text-primary">¡Bienvenido!</h2>
+                                <p className="text-xl text-text-secondary max-w-[280px] mx-auto">
+                                    Tu cuenta ha sido creada exitosamente. Estamos felices de tenerte aquí.
+                                </p>
+                                <Button
+                                    size="lg"
+                                    fullWidth
+                                    onClick={() => router.push("/dashboard")}
+                                    className="text-xl mt-6"
+                                >
+                                    Comenzar ahora
+                                </Button>
+                            </div>
+                        )}
                     </div>
                 )}
 

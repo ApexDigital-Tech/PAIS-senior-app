@@ -7,41 +7,49 @@
    ============================================ */
 
 :root {
-  /* —— Primary Colors —— */
-  --pais-green-50: #E8F5ED;
-  --pais-green-100: #C8E6D0;
-  --pais-green-200: #A5D6B3;
-  --pais-green-500: #2D8A56;
-  --pais-green-600: #247A49;
-  --pais-green-700: #1B6A3C;
+  /* —— Primary Colors: Vibrant & Motivational —— */
+  --pais-green-50: #F0F9F5;
+  --pais-green-100: #D1F0E0;
+  --pais-green-200: #A3E1C1;
+  --pais-green-500: #00BA61; /* Vibrant Green - Life */
+  --pais-green-600: #009E52;
+  --pais-green-700: #008244;
 
-  --pais-blue-50: #E3F2F9;
-  --pais-blue-100: #B8DCE8;
-  --pais-blue-200: #8DC6D8;
-  --pais-blue-500: #1A6B8A;
-  --pais-blue-600: #155C78;
-  --pais-blue-700: #104D66;
+  --pais-blue-50: #EEF8FF;
+  --pais-blue-100: #D1EAFF;
+  --pais-blue-200: #A3D5FF;
+  --pais-blue-500: #0084FF; /* Energetic Blue - Trust */
+  --pais-blue-600: #0070D9;
+  --pais-blue-700: #005CB3;
+
+  /* —— Motivational Accents —— */
+  --pais-orange-500: #FF8F00; /* Energy & Warmth */
+  --pais-orange-600: #E68100;
+  --pais-orange-50: #FFF3E0;
+
+  --pais-purple-500: #8E24AA; /* Spirituality & Community */
+  --pais-purple-50: #F3E5F5;
 
   /* —— Semantic Colors —— */
-  --pais-red-500: #D32F2F;
-  --pais-red-600: #B71C1C;
-  --pais-red-50: #FFEBEE;
+  --pais-red-500: #FF3B30; /* Brighter Red */
+  --pais-red-600: #D32F2F;
+  --pais-red-50: #FFF5F5;
 
-  --pais-amber-500: #F59E0B;
-  --pais-amber-50: #FFF8E1;
+  --pais-amber-500: #FFCC00; /* Sun Yellow */
+  --pais-amber-50: #FFFDE7;
 
   --pais-success: var(--pais-green-500);
   --pais-warning: var(--pais-amber-500);
   --pais-danger: var(--pais-red-500);
 
-  /* —— Neutrals —— */
-  --pais-warm-50: #FAFAF8;
-  --pais-warm-100: #F5F5F0;
-  --pais-warm-200: #E8E8E2;
-  --pais-warm-300: #D4D4CC;
-  --pais-warm-500: #737368;
-  --pais-warm-700: #44443E;
-  --pais-warm-900: #1A1A16;
+  /* —— Neutrals: Fresher & Prettier —— */
+  --pais-warm-50: #FDFDFB;
+  --pais-warm-100: #F9F9F4;
+  --pais-warm-200: #F1F1E9;
+  --pais-warm-300: #E2E2D6;
+  --pais-warm-500: #8E8E82;
+  --pais-warm-700: #55554D;
+  --pais-warm-900: #1C1C1A;
 
   /* —— Theme —— */
   --background: var(--pais-warm-50);

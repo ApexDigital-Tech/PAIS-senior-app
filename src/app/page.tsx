@@ -1,0 +1,117 @@
+"use client";
+
+import { useRouter } from "next/navigation";
+import { useUser } from "@/hooks/useUser";
+import { Header } from "@/components/layout/Header";
+import { Button } from "@/components/ui/Button";
+import {
+    Car,
+    Heart,
+    Users,
+    ShieldCheck,
+    ChevronRight,
+    ArrowRight
+} from "lucide-react";
+import { useEffect } from "react";
+
+export default function LandingPage() {
+    const router = useRouter();
+    const { user, loading } = useUser();
+
+    // If logged in, go to dashboard
+    useEffect(() => {
+        if (!loading && user) {
+            router.push("/dashboard");
+        }
+    }, [user, loading, router]);
+
+    return (
+        <div className="min-h-screen bg-[var(--pais-warm-50)] text-[var(--pais-text-primary)]">
+            {/* Simple Hero */}
+            <header className="pt-12 pb-8 px-6 text-center max-w-2xl mx-auto">
+                <div className="w-24 h-24 bg-gradient-to-tr from-[var(--pais-green-500)] to-[var(--pais-amber-500)] rounded-[2rem] flex items-center justify-center mx-auto mb-6 shadow-xl animate-fade-in rotate-3">
+                    <span className="text-white font-heading text-5xl font-bold -rotate-3">P</span>
+                </div>
+                <h1 className="text-4xl md:text-5xl font-bold font-heading mb-4 leading-tight bg-clip-text text-transparent bg-gradient-to-r from-[var(--pais-green-700)] to-[var(--pais-blue-600)]">
+                    Bienvenido a PAIS
+                </h1>
+                <p className="text-xl text-[var(--pais-text-secondary)] mb-8 leading-relaxed max-w-lg mx-auto">
+                    Tu compañero de vida para una autonomía prolongada y un bienestar integral.
+                </p>
+                <div className="flex flex-col gap-4 sm:flex-row justify-center">
+                    <Button
+                        size="lg"
+                        onClick={() => router.push("/register")}
+                        className="text-xl py-8 px-10 rounded-2xl shadow-[0_10px_30px_-10px_rgba(0,186,97,0.5)] bg-[var(--pais-green-500)] hover:scale-105 transition-transform"
+                    >
+                        Comenzar ahora
+                    </Button>
+                    <Button
+                        variant="secondary"
+                        size="lg"
+                        onClick={() => router.push("/login")}
+                        className="text-xl py-8 px-10 rounded-2xl border-2 hover:bg-[var(--pais-warm-100)] transition-colors"
+                    >
+                        Ya tengo cuenta
+                    </Button>
+                </div>
+            </header>
+
+            {/* Services Grid */}
+            <main className="max-w-4xl mx-auto px-6 pb-20">
+                <h2 className="text-2xl font-bold text-center mb-10 opacity-70 uppercase tracking-widest text-[var(--pais-green-700)]">
+                    Nuestros Servicios
+                </h2>
+
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    {/* Transport */}
+                    <div className="bg-white p-8 rounded-[2.5rem] shadow-[0_4px_20px_-5px_rgba(0,0,0,0.05)] border border-[var(--pais-warm-200)] hover:shadow-xl hover:border-[var(--pais-blue-200)] transition-all group cursor-pointer" onClick={() => router.push("/register")}>
+                        <div className="w-16 h-16 bg-[var(--pais-blue-50)] text-[var(--pais-blue-500)] rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 group-hover:bg-[var(--pais-blue-500)] group-hover:text-white transition-all">
+                            <Car size={32} />
+                        </div>
+                        <h3 className="text-2xl font-bold mb-3">Transporte</h3>
+                        <p className="text-lg text-[var(--pais-text-secondary)] leading-tight">
+                            Viajes seguros punto a punto con conductores de confianza.
+                        </p>
+                    </div>
+
+                    {/* Health */}
+                    <div className="bg-white p-8 rounded-[2.5rem] shadow-[0_4px_20px_-5px_rgba(0,0,0,0.05)] border border-[var(--pais-warm-200)] hover:shadow-xl hover:border-[var(--pais-orange-200)] transition-all group cursor-pointer" onClick={() => router.push("/register")}>
+                        <div className="w-16 h-16 bg-[var(--pais-orange-50)] text-[var(--pais-orange-500)] rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 group-hover:bg-[var(--pais-orange-500)] group-hover:text-white transition-all">
+                            <Heart size={32} />
+                        </div>
+                        <h3 className="text-2xl font-bold mb-3">Salud</h3>
+                        <p className="text-lg text-[var(--pais-text-secondary)] leading-tight">
+                            Control de medicamentos, citas y botón SOS 24/7.
+                        </p>
+                    </div>
+
+                    {/* Community */}
+                    <div className="bg-white p-8 rounded-[2.5rem] shadow-[0_4px_20px_-5px_rgba(0,0,0,0.05)] border border-[var(--pais-warm-200)] hover:shadow-xl hover:border-[var(--pais-purple-200)] transition-all group cursor-pointer" onClick={() => router.push("/register")}>
+                        <div className="w-16 h-16 bg-[var(--pais-purple-50)] text-[var(--pais-purple-500)] rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 group-hover:bg-[var(--pais-purple-500)] group-hover:text-white transition-all">
+                            <Users size={32} />
+                        </div>
+                        <h3 className="text-2xl font-bold mb-3">Comunidad</h3>
+                        <p className="text-lg text-[var(--pais-text-secondary)] leading-tight">
+                            Conecta con voluntarios para compañía y actividades.
+                        </p>
+                    </div>
+                </div>
+
+                {/* Secure Badge */}
+                <div className="mt-16 flex flex-col items-center gap-4 bg-green-50 p-8 rounded-[3rem] border border-green-100">
+                    <ShieldCheck size={48} className="text-green-600" />
+                    <div className="text-center">
+                        <p className="text-xl font-bold text-green-800">Seguro y Privado</p>
+                        <p className="text-lg text-green-700">Toda tu información está protegida bajo estándares médicos.</p>
+                    </div>
+                </div>
+            </main>
+
+            {/* Simple Footer */}
+            <footer className="py-10 text-center opacity-50 text-sm">
+                <p>&copy; 2026 PAIS — Atención Integral Senior. Todos los derechos reservados.</p>
+            </footer>
+        </div>
+    );
+}

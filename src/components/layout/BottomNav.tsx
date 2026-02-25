@@ -5,7 +5,7 @@ import Link from "next/link";
 import { Home, Car, Users, Heart } from "lucide-react";
 
 const navItems = [
-    { href: "/", label: "Inicio", icon: Home },
+    { href: "/dashboard", label: "Inicio", icon: Home },
     { href: "/transport", label: "Transporte", icon: Car },
     { href: "/community", label: "Comunidad", icon: Users },
     { href: "/health", label: "Salud", icon: Heart },
@@ -22,8 +22,7 @@ export function BottomNav() {
         >
             <div className="max-w-[var(--max-content)] mx-auto flex items-center justify-around h-[var(--nav-height)]">
                 {navItems.map(({ href, label, icon: Icon }) => {
-                    const isActive =
-                        href === "/" ? pathname === "/" : pathname.startsWith(href);
+                    const isActive = pathname === href || (href !== "/dashboard" && pathname.startsWith(href));
 
                     return (
                         <Link
