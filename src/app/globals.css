@@ -1,26 +1,263 @@
 @import "tailwindcss";
 
+/* ============================================
+   PAIS Design System — Design Tokens
+   Based on PAIS-DESIGN.md
+   Senior-Accessible | WCAG 2.1 AA+
+   ============================================ */
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* —— Primary Colors —— */
+  --pais-green-50: #E8F5ED;
+  --pais-green-100: #C8E6D0;
+  --pais-green-200: #A5D6B3;
+  --pais-green-500: #2D8A56;
+  --pais-green-600: #247A49;
+  --pais-green-700: #1B6A3C;
+
+  --pais-blue-50: #E3F2F9;
+  --pais-blue-100: #B8DCE8;
+  --pais-blue-200: #8DC6D8;
+  --pais-blue-500: #1A6B8A;
+  --pais-blue-600: #155C78;
+  --pais-blue-700: #104D66;
+
+  /* —— Semantic Colors —— */
+  --pais-red-500: #D32F2F;
+  --pais-red-600: #B71C1C;
+  --pais-red-50: #FFEBEE;
+
+  --pais-amber-500: #F59E0B;
+  --pais-amber-50: #FFF8E1;
+
+  --pais-success: var(--pais-green-500);
+  --pais-warning: var(--pais-amber-500);
+  --pais-danger: var(--pais-red-500);
+
+  /* —— Neutrals —— */
+  --pais-warm-50: #FAFAF8;
+  --pais-warm-100: #F5F5F0;
+  --pais-warm-200: #E8E8E2;
+  --pais-warm-300: #D4D4CC;
+  --pais-warm-500: #737368;
+  --pais-warm-700: #44443E;
+  --pais-warm-900: #1A1A16;
+
+  /* —— Theme —— */
+  --background: var(--pais-warm-50);
+  --foreground: var(--pais-warm-900);
+  --surface: #FFFFFF;
+  --surface-hover: var(--pais-warm-100);
+  --border: var(--pais-warm-200);
+  --border-focus: var(--pais-blue-500);
+  --text-primary: var(--pais-warm-900);
+  --text-secondary: var(--pais-warm-500);
+  --text-inverse: #FFFFFF;
+
+  /* —— Spacing (8-point grid) —— */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-10: 40px;
+  --space-12: 48px;
+  --space-16: 64px;
+
+  /* —— Radius —— */
+  --radius-sm: 8px;
+  --radius-md: 16px;
+  --radius-lg: 24px;
+  --radius-full: 9999px;
+
+  /* —— Shadows —— */
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.06), 0 1px 2px rgba(0, 0, 0, 0.04);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.08), 0 2px 4px rgba(0, 0, 0, 0.04);
+  --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.10), 0 4px 8px rgba(0, 0, 0, 0.06);
+
+  /* —— Typography —— */
+  --font-body: var(--font-inter), system-ui, sans-serif;
+  --font-heading: var(--font-outfit), system-ui, sans-serif;
+  --text-base: 18px;
+  --text-lg: 20px;
+  --text-xl: 24px;
+  --text-2xl: 30px;
+  --text-3xl: 36px;
+  --line-height: 1.6;
+
+  /* —— Animation —— */
+  --duration-fast: 150ms;
+  --duration-normal: 300ms;
+  --duration-slow: 500ms;
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* —— Layout —— */
+  --max-content: 960px;
+  --nav-height: 72px;
+  --header-height: 64px;
 }
 
+/* —— Tailwind v4 Theme Integration —— */
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-surface: var(--surface);
+  --color-surface-hover: var(--surface-hover);
+  --color-border: var(--border);
+  --color-border-focus: var(--border-focus);
+  --color-text-primary: var(--text-primary);
+  --color-text-secondary: var(--text-secondary);
+  --color-text-inverse: var(--text-inverse);
+
+  --color-green-50: var(--pais-green-50);
+  --color-green-100: var(--pais-green-100);
+  --color-green-200: var(--pais-green-200);
+  --color-green-500: var(--pais-green-500);
+  --color-green-600: var(--pais-green-600);
+  --color-green-700: var(--pais-green-700);
+
+  --color-blue-50: var(--pais-blue-50);
+  --color-blue-100: var(--pais-blue-100);
+  --color-blue-200: var(--pais-blue-200);
+  --color-blue-500: var(--pais-blue-500);
+  --color-blue-600: var(--pais-blue-600);
+  --color-blue-700: var(--pais-blue-700);
+
+  --color-red-50: var(--pais-red-50);
+  --color-red-500: var(--pais-red-500);
+  --color-red-600: var(--pais-red-600);
+
+  --color-amber-50: var(--pais-amber-50);
+  --color-amber-500: var(--pais-amber-500);
+
+  --color-warm-50: var(--pais-warm-50);
+  --color-warm-100: var(--pais-warm-100);
+  --color-warm-200: var(--pais-warm-200);
+  --color-warm-300: var(--pais-warm-300);
+  --color-warm-500: var(--pais-warm-500);
+  --color-warm-700: var(--pais-warm-700);
+  --color-warm-900: var(--pais-warm-900);
+
+  --font-sans: var(--font-body);
+  --font-heading: var(--font-heading);
+
+  --radius-sm: 8px;
+  --radius-md: 16px;
+  --radius-lg: 24px;
+  --radius-full: 9999px;
 }
 
-@media (prefers-color-scheme: dark) {
+/* —— High Contrast Mode —— */
+@media (prefers-contrast: high) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --background: #FFFFFF;
+    --foreground: #000000;
+    --surface: #FFFFFF;
+    --border: #000000;
+    --text-primary: #000000;
+    --text-secondary: #333333;
+    --pais-green-500: #006B2D;
+    --pais-blue-500: #004D6D;
+    --pais-red-500: #B71C1C;
   }
+}
+
+/* —— Reduced Motion —— */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* —— Base Styles —— */
+html {
+  font-size: var(--text-base);
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-body);
+  line-height: var(--line-height);
+  min-height: 100dvh;
+  overflow-x: hidden;
+}
+
+/* —— Senior-Optimized Focus Styles —— */
+:focus-visible {
+  outline: 3px solid var(--border-focus);
+  outline-offset: 2px;
+  border-radius: var(--radius-sm);
+}
+
+/* —— Touch Targets —— */
+button,
+a,
+input,
+select,
+textarea,
+[role="button"] {
+  min-height: 48px;
+}
+
+input,
+select,
+textarea {
+  font-size: var(--text-lg);
+}
+
+/* —— Scrollbar (subtle, non-intrusive) —— */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--pais-warm-300);
+  border-radius: var(--radius-full);
+}
+
+/* —— Utility: Safe area for mobile PWA —— */
+.safe-bottom {
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+/* —— Keyframes —— */
+@keyframes pulse-sos {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(211, 47, 47, 0.4); }
+  50% { box-shadow: 0 0 0 12px rgba(211, 47, 47, 0); }
+}
+
+@keyframes fade-in {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes skeleton-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+
+.animate-fade-in {
+  animation: fade-in var(--duration-normal) var(--ease-smooth) both;
+}
+
+.animate-sos-pulse {
+  animation: pulse-sos 2s infinite;
+}
+
+.animate-skeleton {
+  animation: skeleton-pulse 2s var(--ease-smooth) infinite;
 }
