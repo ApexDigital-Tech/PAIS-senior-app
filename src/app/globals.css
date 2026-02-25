@@ -298,6 +298,18 @@ textarea {
   }
 }
 
+@keyframes pulse-slow {
+
+  0%,
+  100% {
+    transform: scale(1) rotate(6deg);
+  }
+
+  50% {
+    transform: scale(1.05) rotate(6deg);
+  }
+}
+
 .animate-fade-in {
   animation: fade-in var(--duration-normal) var(--ease-smooth) both;
 }
@@ -308,6 +320,10 @@ textarea {
 
 .animate-skeleton {
   animation: skeleton-pulse 2s var(--ease-smooth) infinite;
+}
+
+.animate-pulse-slow {
+  animation: pulse-slow 4s ease-in-out infinite;
 }
 
 .glass {
@@ -350,5 +366,4 @@ textarea {
 .grad-energy {
   background: linear-gradient(135deg, #FFF3E0 0%, #FFFFFF 100%);
   border: 1px solid #FFE0B2;
-}@ k e y f r a m e s   p u l s e - s l o w   {   0 % ,   1 0 0 %   {   t r a n s f o r m :   s c a l e ( 1 )   r o t a t e ( 6 d e g ) ;   }   5 0 %   {   t r a n s f o r m :   s c a l e ( 1 . 0 5 )   r o t a t e ( 6 d e g ) ;   }   }   . a n i m a t e - p u l s e - s l o w   {   a n i m a t i o n :   p u l s e - s l o w   4 s   e a s e - i n - o u t   i n f i n i t e ;   }  
- 
+}
