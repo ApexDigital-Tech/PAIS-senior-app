@@ -29,30 +29,30 @@ export default function HomePage() {
                     </h2>
                 </div>
 
-                <div className="grid grid-cols-1 gap-4">
+                <div className="grid grid-cols-1 gap-6">
                     <Card
-                        icon={<Car size={28} className="text-[var(--pais-blue-600)]" />}
+                        icon={<Car size={32} className="text-[var(--pais-blue-600)]" />}
                         title="Pedir Transporte"
                         description="Viajes seguros con conductores certificados"
                         onClick={() => router.push("/transport")}
-                        className="bg-gradient-to-r from-[var(--pais-blue-50)] to-white border-[var(--pais-blue-100)]"
+                        className="grad-transport shadow-lg hover:scale-[1.02] transition-transform"
                         badge="ACTIVO"
                     />
 
                     <Card
-                        icon={<Users size={28} className="text-[var(--pais-purple-500)]" />}
+                        icon={<Users size={32} className="text-[var(--pais-purple-500)]" />}
                         title="Compañía y Charla"
                         description="Conecta con voluntarios para pasear o conversar"
                         onClick={() => router.push("/community")}
-                        className="bg-gradient-to-r from-[var(--pais-purple-50)] to-white border-[var(--pais-purple-100)]"
+                        className="grad-community shadow-lg hover:scale-[1.02] transition-transform"
                     />
 
                     <Card
-                        icon={<Heart size={28} className="text-[var(--pais-red-500)]" />}
+                        icon={<Heart size={32} className="text-[var(--pais-red-500)]" />}
                         title="Mi Salud y Bienestar"
                         description="Tus medicamentos y citas en un solo lugar"
                         onClick={() => router.push("/health")}
-                        className="bg-gradient-to-r from-[var(--pais-red-50)] to-white border-[var(--pais-red-100)]"
+                        className="grad-health shadow-lg hover:scale-[1.02] transition-transform"
                     />
                 </div>
             </section>

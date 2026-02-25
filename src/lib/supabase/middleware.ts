@@ -37,7 +37,6 @@ export async function updateSession(request: NextRequest) {
 
     // Protected routes: redirect to login if not authenticated
     const isDashboardRoute = request.nextUrl.pathname.startsWith("/(dashboard)") ||
-        request.nextUrl.pathname === "/" ||
         ["/transport", "/health", "/community", "/profile", "/emergency"].some(path =>
             request.nextUrl.pathname.startsWith(path)
         );

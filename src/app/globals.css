@@ -7,14 +7,14 @@
    ============================================ */
 
 :root {
-  /* —— Primary Colors: Vibrant & Motivational —— */
-  --pais-green-50: #F0F9F5;
-  --pais-green-100: #D1F0E0;
-  --pais-green-200: #A3E1C1;
-  --pais-green-500: #00BA61;
-  /* Vibrant Green - Life */
-  --pais-green-600: #009E52;
-  --pais-green-700: #008244;
+  /* —— Primary Colors: Vibrant & Motivational (High Saturation) —— */
+  --pais-green-50: #E8F5E9;
+  --pais-green-100: #C8E6C9;
+  --pais-green-200: #A5D6A7;
+  --pais-green-500: #00DB75;
+  /* HIGH VIBRANCY ESMERALDA - Life */
+  --pais-green-600: #00C853;
+  --pais-green-700: #007E33;
 
   --pais-blue-50: #EEF8FF;
   --pais-blue-100: #D1EAFF;
@@ -325,8 +325,30 @@ textarea {
 }
 
 .text-gradient {
-  background: linear-gradient(to right, var(--pais-green-700), var(--pais-blue-600));
+  background: linear-gradient(to right, var(--pais-green-600), var(--pais-blue-600));
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
 }
+
+/* Specific Card Gradients — Energetic & Motivational */
+.grad-transport {
+  background: linear-gradient(135deg, #EEF8FF 0%, #FFFFFF 100%);
+  border: 1px solid #A3D5FF;
+}
+
+.grad-community {
+  background: linear-gradient(135deg, #F3E5F5 0%, #FFFFFF 100%);
+  border: 1px solid #CE93D8;
+}
+
+.grad-health {
+  background: linear-gradient(135deg, #FFF5F5 0%, #FFFFFF 100%);
+  border: 1px solid #FFCDD2;
+}
+
+.grad-energy {
+  background: linear-gradient(135deg, #FFF3E0 0%, #FFFFFF 100%);
+  border: 1px solid #FFE0B2;
+}@ k e y f r a m e s   p u l s e - s l o w   {   0 % ,   1 0 0 %   {   t r a n s f o r m :   s c a l e ( 1 )   r o t a t e ( 6 d e g ) ;   }   5 0 %   {   t r a n s f o r m :   s c a l e ( 1 . 0 5 )   r o t a t e ( 6 d e g ) ;   }   }   . a n i m a t e - p u l s e - s l o w   {   a n i m a t i o n :   p u l s e - s l o w   4 s   e a s e - i n - o u t   i n f i n i t e ;   }  
+ 

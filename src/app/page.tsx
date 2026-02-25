@@ -28,21 +28,21 @@ export default function LandingPage() {
     return (
         <div className="min-h-screen bg-[var(--pais-warm-50)] text-[var(--pais-text-primary)]">
             {/* Simple Hero */}
-            <header className="pt-12 pb-8 px-6 text-center max-w-2xl mx-auto">
-                <div className="w-24 h-24 bg-gradient-to-tr from-[var(--pais-green-500)] to-[var(--pais-amber-500)] rounded-[2rem] flex items-center justify-center mx-auto mb-6 shadow-xl animate-fade-in rotate-3">
-                    <span className="text-white font-heading text-5xl font-bold -rotate-3">P</span>
+            <header className="pt-20 pb-12 px-6 text-center max-w-3xl mx-auto animate-fade-in">
+                <div className="w-28 h-28 bg-gradient-to-br from-[var(--pais-green-400)] via-[var(--pais-green-600)] to-[var(--pais-blue-600)] rounded-[2.5rem] flex items-center justify-center mx-auto mb-10 shadow-[0_20px_40px_-10px_rgba(0,186,97,0.4)] transform rotate-6 animate-pulse-slow">
+                    <span className="text-white font-heading text-6xl font-bold -rotate-6">P</span>
                 </div>
-                <h1 className="text-4xl md:text-5xl font-bold font-heading mb-4 leading-tight bg-clip-text text-transparent bg-gradient-to-r from-[var(--pais-green-700)] to-[var(--pais-blue-600)]">
+                <h1 className="text-5xl md:text-7xl font-black font-heading mb-6 leading-tight text-gradient tracking-tighter">
                     Bienvenido a PAIS
                 </h1>
-                <p className="text-xl text-[var(--pais-text-secondary)] mb-8 leading-relaxed max-w-lg mx-auto">
+                <p className="text-2xl text-[var(--pais-text-secondary)] mb-12 leading-relaxed max-w-xl mx-auto font-medium">
                     Tu compañero de vida para una autonomía prolongada y un bienestar integral.
                 </p>
-                <div className="flex flex-col gap-4 sm:flex-row justify-center">
+                <div className="flex flex-col gap-6 sm:flex-row justify-center items-center">
                     <Button
                         size="lg"
                         onClick={() => router.push("/register")}
-                        className="text-xl py-8 px-10 rounded-2xl shadow-[0_10px_30px_-10px_rgba(0,186,97,0.5)] bg-[var(--pais-green-500)] hover:scale-105 transition-transform"
+                        className="text-2xl py-10 px-14 rounded-3xl shadow-[0_20px_40px_-10px_rgba(0,186,97,0.5)] bg-[var(--pais-green-500)] hover:scale-105 active:scale-95 transition-all font-bold"
                     >
                         Comenzar ahora
                     </Button>
@@ -50,7 +50,7 @@ export default function LandingPage() {
                         variant="secondary"
                         size="lg"
                         onClick={() => router.push("/login")}
-                        className="text-xl py-8 px-10 rounded-2xl border-2 hover:bg-[var(--pais-warm-100)] transition-colors"
+                        className="text-2xl py-10 px-14 rounded-3xl border-2 hover:bg-[var(--pais-warm-100)] transition-all font-bold"
                     >
                         Ya tengo cuenta
                     </Button>
