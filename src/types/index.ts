@@ -180,3 +180,14 @@ export interface SOSAlert {
     resolved_by: string | null;
     notes: string | null;
 }
+
+export interface ActivityLog {
+    id: string;
+    user_id: string | null;
+    action: string;
+    entity_type: string;
+    entity_id: string | null;
+    metadata: Record<string, unknown>;
+    ip_address: string | null;
+    created_at: string;
+}

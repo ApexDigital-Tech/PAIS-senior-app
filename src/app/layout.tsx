@@ -29,8 +29,8 @@ export const metadata: Metadata = {
     title: "PAIS",
   },
   icons: {
-    icon: "/icons/icon-192.png",
-    apple: "/icons/icon-192.png",
+    icon: "/icons/icon.svg",
+    apple: "/icons/icon.svg",
   },
 };
 
@@ -43,6 +43,7 @@ export const viewport: Viewport = {
 };
 
 import { UserProvider } from "@/hooks/useUser";
+import { PwaUpdater } from "@/components/layout/PwaUpdater";
 
 export default function RootLayout({
   children,
@@ -54,6 +55,7 @@ export default function RootLayout({
       <body className="antialiased min-h-screen bg-[var(--pais-warm-50)] text-[var(--pais-text-primary)]">
         <UserProvider>
           {children}
+          <PwaUpdater />
         </UserProvider>
       </body>
     </html>

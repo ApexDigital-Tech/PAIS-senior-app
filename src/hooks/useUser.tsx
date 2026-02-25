@@ -26,13 +26,23 @@ export function UserProvider({ children }: { children: React.ReactNode }) {
             setSession(session);
 
             if (session?.user) {
-                const { data: profile } = await supabase
-                    .from("users")
-                    .select("*")
-                    .eq("id", session.user.id)
-                    .single();
+                try {
+                    const { data: profile, error: profileError } = await supabase
+                        .from("users")
+                        .select("*")
+                        .eq("id", session.user.id)
+                        .single();
 
-                setUser(profile);
+                    if (profileError) {
+                        console.error("Error fetching user profile:", profileError);
+                        setUser(null);
+                    } else {
+                        setUser(profile);
+                    }
+                } catch (e) {
+                    console.error("Unexpected error in useUser:", e);
+                    setUser(null);
+                }
             }
             setLoading(false);
         };
@@ -66,11 +76,11 @@ export function UserProvider({ children }: { children: React.ReactNode }) {
     };
 
     return (
-        <UserContext.Provider value= {{ user, session, loading, signOut }
-}>
-    { children }
-    </UserContext.Provider>
-  );
+        <UserContext.Provider value={{ user, session, loading, signOut }
+        }>
+            {children}
+        </UserContext.Provider>
+    );
 }
 
 export function useUser() {

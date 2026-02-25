@@ -32,53 +32,43 @@ const placeIcons: Record<string, typeof Hospital> = {
     other: Building,
 };
 
-// Demo favorites until Supabase is connected
-const demoFavorites: FavoritePlace[] = [
-    {
-        id: "1",
-        senior_id: "",
-        name: "Hospital San Juan",
-        address: "Av. 6 de Agosto #2548",
-        lat: -16.5,
-        lng: -68.13,
-        icon: "hospital",
-    },
-    {
-        id: "2",
-        senior_id: "",
-        name: "Farmacia Chávez",
-        address: "Calle Comercio #1234",
-        lat: -16.497,
-        lng: -68.133,
-        icon: "pharmacy",
-    },
-    {
-        id: "3",
-        senior_id: "",
-        name: "Iglesia San Francisco",
-        address: "Plaza San Francisco s/n",
-        lat: -16.496,
-        lng: -68.137,
-        icon: "church",
-    },
-    {
-        id: "4",
-        senior_id: "",
-        name: "Casa de Carlos",
-        address: "Zona Sur, Calle 21 #450",
-        lat: -16.54,
-        lng: -68.07,
-        icon: "home",
-    },
-];
+
 
 export function RequestForm() {
     const router = useRouter();
     const geo = useGeolocation();
     const [step, setStep] = useState<Step>(1);
+    const [favorites, setFavorites] = useState<FavoritePlace[]>([]);
     const [formData, setFormData] = useState<Partial<TripFormData>>({});
     const [manualAddress, setManualAddress] = useState("");
     const [routeMetrics, setRouteMetrics] = useState<{ distance: string, duration: string } | null>(null);
+    const [loadingFavs, setLoadingFavs] = useState(true);
+
+    const { user } = useUser();
+    const [submitting, setSubmitting] = useState(false);
+    const supabase = createClient();
+
+    // Fetch real favorites
+    useEffect(() => {
+        const fetchFavorites = async () => {
+            if (!user) return;
+            try {
+                const { data, error } = await supabase
+                    .from("favorite_places")
+                    .select("*")
+                    .eq("senior_id", user.id);
+
+                if (error) throw error;
+                setFavorites(data || []);
+            } catch (error) {
+                console.error("Error fetching favorites:", error);
+            } finally {
+                setLoadingFavs(false);
+            }
+        };
+
+        fetchFavorites();
+    }, [user, supabase]);
 
     // Step 1: Pick destination
     const handleSelectDestination = (place: FavoritePlace) => {
@@ -111,9 +101,7 @@ export function RequestForm() {
         setStep(3);
     };
 
-    const { user } = useUser();
-    const [submitting, setSubmitting] = useState(false);
-    const supabase = createClient();
+
 
     // Step 3: Submit
     const handleSubmit = async () => {
@@ -121,7 +109,8 @@ export function RequestForm() {
 
         setSubmitting(true);
         try {
-            const { error } = await supabase.from("transport_requests").insert({
+            // 1. Insert transport request
+            const { data: request, error } = await supabase.from("transport_requests").insert({
                 senior_id: user.id,
                 origin_address: formData.origin.address,
                 origin_lat: formData.origin.lat,
@@ -131,9 +120,21 @@ export function RequestForm() {
                 destination_lng: formData.destination.lng,
                 scheduled_at: formData.scheduled_at || new Date().toISOString(),
                 status: 'pending'
-            });
+            }).select().single();
 
             if (error) throw error;
+
+            // 2. Log activity
+            await supabase.from("activity_log").insert({
+                user_id: user.id,
+                action: 'TRIP_REQUESTED',
+                entity_type: 'transport_requests',
+                entity_id: request.id,
+                metadata: {
+                    origin: formData.origin.address,
+                    destination: formData.destination.address
+                }
+            });
 
             router.push("/transport?success=true");
         } catch (error) {
@@ -185,26 +186,36 @@ export function RequestForm() {
 
                     {/* Favorites grid */}
                     <div className="grid grid-cols-2 gap-3">
-                        {demoFavorites.map((place) => {
-                            const Icon = placeIcons[place.icon] || Building;
-                            return (
-                                <button
-                                    key={place.id}
-                                    onClick={() => handleSelectDestination(place)}
-                                    className="flex flex-col items-center gap-2 p-4 bg-surface rounded-[var(--radius-md)] border border-border hover:border-green-200 hover:shadow-[var(--shadow-md)] transition-all active:scale-[0.97] focus-visible:ring-4 focus-visible:ring-green-200 focus-visible:outline-none cursor-pointer"
-                                >
-                                    <div className="w-12 h-12 rounded-full bg-green-50 flex items-center justify-center text-green-500">
-                                        <Icon size={22} />
-                                    </div>
-                                    <span className="text-base font-semibold text-text-primary text-center leading-tight">
-                                        {place.name}
-                                    </span>
-                                    <span className="text-xs text-text-secondary text-center line-clamp-2">
-                                        {place.address}
-                                    </span>
-                                </button>
-                            );
-                        })}
+                        {favorites.length > 0 ? (
+                            favorites.map((place) => {
+                                const Icon = placeIcons[place.icon] || Building;
+                                return (
+                                    <button
+                                        key={place.id}
+                                        onClick={() => handleSelectDestination(place)}
+                                        className="flex flex-col items-center gap-2 p-4 bg-surface rounded-[var(--radius-md)] border border-border hover:border-green-200 hover:shadow-[var(--shadow-md)] transition-all active:scale-[0.97] focus-visible:ring-4 focus-visible:ring-green-200 focus-visible:outline-none cursor-pointer"
+                                    >
+                                        <div className="w-12 h-12 rounded-full bg-green-50 flex items-center justify-center text-green-500">
+                                            <Icon size={22} />
+                                        </div>
+                                        <span className="text-base font-semibold text-text-primary text-center leading-tight">
+                                            {place.name}
+                                        </span>
+                                        <span className="text-xs text-text-secondary text-center line-clamp-2">
+                                            {place.address}
+                                        </span>
+                                    </button>
+                                );
+                            })
+                        ) : !loadingFavs ? (
+                            <div className="col-span-2 p-8 text-center bg-warm-50 rounded-[var(--radius-md)] border border-dashed border-warm-200">
+                                <p className="text-text-secondary">No tienes lugares guardados aún</p>
+                            </div>
+                        ) : (
+                            <div className="col-span-2 p-8 text-center">
+                                <p className="text-text-secondary animate-pulse">Cargando favoritos...</p>
+                            </div>
+                        )}
                     </div>
 
                     {/* Manual input */}
