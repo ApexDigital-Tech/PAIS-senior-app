@@ -65,34 +65,34 @@ export default function LandingPage() {
 
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                     {/* Transport */}
-                    <div className="bg-white p-8 rounded-[2.5rem] shadow-[0_4px_20px_-5px_rgba(0,0,0,0.05)] border border-[var(--pais-warm-200)] hover:shadow-xl hover:border-[var(--pais-blue-200)] transition-all group cursor-pointer" onClick={() => router.push("/register")}>
-                        <div className="w-16 h-16 bg-[var(--pais-blue-50)] text-[var(--pais-blue-500)] rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 group-hover:bg-[var(--pais-blue-500)] group-hover:text-white transition-all">
+                    <div className="grad-transport p-8 rounded-[2.5rem] shadow-[0_10px_30px_-10px_rgba(0,0,0,0.05)] border hover:shadow-2xl hover:scale-[1.03] transition-all group cursor-pointer" onClick={() => router.push("/register")}>
+                        <div className="w-16 h-16 bg-white/50 text-[var(--pais-blue-600)] rounded-2xl flex items-center justify-center mb-6 shadow-sm group-hover:bg-[var(--pais-blue-600)] group-hover:text-white transition-all">
                             <Car size={32} />
                         </div>
-                        <h3 className="text-2xl font-bold mb-3">Transporte</h3>
-                        <p className="text-lg text-[var(--pais-text-secondary)] leading-tight">
+                        <h3 className="text-2xl font-bold mb-3 text-[var(--pais-blue-700)]">Transporte</h3>
+                        <p className="text-lg text-[var(--pais-text-secondary)] font-medium leading-tight">
                             Viajes seguros punto a punto con conductores de confianza.
                         </p>
                     </div>
 
                     {/* Health */}
-                    <div className="bg-white p-8 rounded-[2.5rem] shadow-[0_4px_20px_-5px_rgba(0,0,0,0.05)] border border-[var(--pais-warm-200)] hover:shadow-xl hover:border-[var(--pais-orange-200)] transition-all group cursor-pointer" onClick={() => router.push("/register")}>
-                        <div className="w-16 h-16 bg-[var(--pais-orange-50)] text-[var(--pais-orange-500)] rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 group-hover:bg-[var(--pais-orange-500)] group-hover:text-white transition-all">
+                    <div className="grad-health p-8 rounded-[2.5rem] shadow-[0_10px_30px_-10px_rgba(0,0,0,0.05)] border hover:shadow-2xl hover:scale-[1.03] transition-all group cursor-pointer" onClick={() => router.push("/register")}>
+                        <div className="w-16 h-16 bg-white/50 text-[var(--pais-red-500)] rounded-2xl flex items-center justify-center mb-6 shadow-sm group-hover:bg-[var(--pais-red-500)] group-hover:text-white transition-all">
                             <Heart size={32} />
                         </div>
-                        <h3 className="text-2xl font-bold mb-3">Salud</h3>
-                        <p className="text-lg text-[var(--pais-text-secondary)] leading-tight">
+                        <h3 className="text-2xl font-bold mb-3 text-[var(--pais-red-700)]">Salud</h3>
+                        <p className="text-lg text-[var(--pais-text-secondary)] font-medium leading-tight">
                             Control de medicamentos, citas y botón SOS 24/7.
                         </p>
                     </div>
 
                     {/* Community */}
-                    <div className="bg-white p-8 rounded-[2.5rem] shadow-[0_4px_20px_-5px_rgba(0,0,0,0.05)] border border-[var(--pais-warm-200)] hover:shadow-xl hover:border-[var(--pais-purple-200)] transition-all group cursor-pointer" onClick={() => router.push("/register")}>
-                        <div className="w-16 h-16 bg-[var(--pais-purple-50)] text-[var(--pais-purple-500)] rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 group-hover:bg-[var(--pais-purple-500)] group-hover:text-white transition-all">
+                    <div className="grad-community p-8 rounded-[2.5rem] shadow-[0_10px_30px_-10px_rgba(0,0,0,0.05)] border hover:shadow-2xl hover:scale-[1.03] transition-all group cursor-pointer" onClick={() => router.push("/register")}>
+                        <div className="w-16 h-16 bg-white/50 text-[var(--pais-purple-500)] rounded-2xl flex items-center justify-center mb-6 shadow-sm group-hover:bg-[var(--pais-purple-500)] group-hover:text-white transition-all">
                             <Users size={32} />
                         </div>
-                        <h3 className="text-2xl font-bold mb-3">Comunidad</h3>
-                        <p className="text-lg text-[var(--pais-text-secondary)] leading-tight">
+                        <h3 className="text-2xl font-bold mb-3 text-[var(--pais-purple-700)]">Comunidad</h3>
+                        <p className="text-lg text-[var(--pais-text-secondary)] font-medium leading-tight">
                             Conecta con voluntarios para compañía y actividades.
                         </p>
                     </div>

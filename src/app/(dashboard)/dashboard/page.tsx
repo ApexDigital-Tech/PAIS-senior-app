@@ -95,23 +95,24 @@ export default function HomePage() {
             </section>
 
             {/* Emergency Info */}
-            <section className="mt-8 relative overflow-hidden">
-                <div className="p-6 bg-gradient-to-br from-[var(--pais-green-600)] to-[var(--pais-green-700)] rounded-[2.5rem] text-white shadow-lg">
-                    <div className="relative z-10 flex items-center gap-4">
-                        <div className="w-16 h-16 bg-white/20 rounded-2xl flex items-center justify-center backdrop-blur-md">
-                            <Heart size={32} />
+            <section className="mt-8 relative overflow-hidden group">
+                <div className="p-8 bg-gradient-to-br from-[var(--pais-green-500)] to-[var(--pais-green-700)] rounded-[3rem] text-white shadow-xl transform transition-transform group-hover:scale-[1.01]">
+                    <div className="relative z-10 flex items-center gap-5">
+                        <div className="w-20 h-20 bg-white/20 rounded-3xl flex items-center justify-center backdrop-blur-xl shadow-inner group-hover:bg-white/30 transition-colors">
+                            <Heart size={40} className="animate-pulse" />
                         </div>
                         <div>
-                            <p className="text-white/80 text-sm font-medium">Contacto de confianza</p>
-                            <p className="text-2xl font-bold">Carlos García (Hijo)</p>
+                            <p className="text-white/80 text-base font-bold uppercase tracking-wider">Contacto de confianza</p>
+                            <p className="text-3xl font-black font-heading">Carlos García (Hijo)</p>
                         </div>
                     </div>
-                    <Button variant="secondary" fullWidth className="mt-6 bg-white text-[var(--pais-green-700)] hover:bg-[var(--pais-warm-50)] font-bold text-lg border-none shadow-md">
+                    <Button variant="secondary" fullWidth className="mt-8 bg-white text-[var(--pais-green-700)] hover:bg-[var(--pais-warm-50)] font-black text-2xl py-8 rounded-2xl border-none shadow-2xl">
                         Llamar a Carlos
                     </Button>
                 </div>
-                {/* Decorative circle */}
-                <div className="absolute -bottom-10 -right-10 w-40 h-40 bg-white/10 rounded-full blur-2xl"></div>
+                {/* Decorative glows */}
+                <div className="absolute -bottom-10 -right-10 w-48 h-48 bg-white/20 rounded-full blur-3xl"></div>
+                <div className="absolute -top-10 -left-10 w-32 h-32 bg-[var(--pais-green-400)] rounded-full blur-3xl opacity-50"></div>
             </section>
         </PageContainer>
     );
