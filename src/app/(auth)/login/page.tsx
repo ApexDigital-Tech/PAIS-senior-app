@@ -74,19 +74,38 @@ export default function LoginPage() {
 
     if (otpSent && method === "email") {
         return (
-            <div className="min-h-screen flex flex-col px-6 py-12 bg-[var(--pais-warm-50)] animate-fade-in">
-                <div className="flex-1 max-w-sm mx-auto w-full flex flex-col justify-center text-center">
-                    <div className="w-20 h-20 bg-green-500 rounded-full flex items-center justify-center mx-auto mb-6 shadow-lg">
-                        <Mail className="text-white" size={40} />
+            <div className="min-h-screen flex flex-col px-6 py-12 bg-white animate-fade-in">
+                <div className="flex-1 max-w-sm mx-auto w-full flex flex-col justify-center text-center space-y-8">
+                    <div className="relative mx-auto w-32 h-32 bg-[var(--pais-green-50)] rounded-full flex items-center justify-center">
+                        <div className="absolute inset-0 rounded-full animate-ping bg-[var(--pais-green-200)] opacity-20"></div>
+                        <Mail className="text-[var(--pais-green-600)]" size={56} />
                     </div>
-                    <h1 className="text-3xl font-bold mb-4 font-heading">Revisa tu correo</h1>
-                    <p className="text-lg text-text-secondary leading-tight mb-8">
-                        Hemos enviado un enlace de acceso a <span className="font-bold text-text-primary">{email}</span>.
-                        Haz clic en el enlace para confirmar tu identidad y entrar a PAIS.
-                    </p>
-                    <Button variant="secondary" onClick={() => setOtpSent(false)}>
-                        Volver a intentar
-                    </Button>
+
+                    <div className="space-y-4">
+                        <h1 className="text-4xl font-bold font-heading text-text-primary">Revisa tu correo</h1>
+                        <p className="text-xl text-text-secondary leading-relaxed">
+                            Hemos enviado un enlace de acceso a:<br />
+                            <span className="font-bold text-[var(--pais-green-700)] break-all">{email}</span>
+                        </p>
+                        <p className="text-lg text-text-secondary">
+                            Haz clic en el enlace para entrar a PAIS de forma segura.
+                        </p>
+                    </div>
+
+                    <div className="pt-8 space-y-4">
+                        <Button
+                            variant="secondary"
+                            fullWidth
+                            size="lg"
+                            className="text-lg py-6"
+                            onClick={() => setOtpSent(false)}
+                        >
+                            Volver a intentar
+                        </Button>
+                        <p className="text-sm text-text-secondary italic">
+                            ¿No ves el correo? Revisa en tu carpeta de Spam.
+                        </p>
+                    </div>
                 </div>
             </div>
         );
@@ -96,12 +115,12 @@ export default function LoginPage() {
         <div className="min-h-screen flex flex-col px-6 py-12 bg-[var(--pais-warm-50)]">
             <div className="flex-1 max-w-sm mx-auto w-full flex flex-col justify-center">
                 {/* Logo/Header */}
-                <div className="text-center mb-10">
-                    <div className="w-20 h-20 bg-green-500 rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg">
-                        <span className="text-white font-heading text-3xl font-bold">P</span>
+                <div className="text-center mb-10 animate-fade-in">
+                    <div className="w-24 h-24 bg-gradient-to-tr from-[var(--pais-green-500)] to-[var(--pais-amber-500)] rounded-3xl flex items-center justify-center mx-auto mb-6 shadow-xl transform rotate-3">
+                        <span className="text-white font-heading text-5xl font-bold -rotate-3">P</span>
                     </div>
-                    <h1 className="font-heading text-3xl font-bold text-text-primary">PAIS</h1>
-                    <p className="text-lg text-text-secondary mt-2">Bienvenido de nuevo</p>
+                    <h1 className="font-heading text-4xl font-bold text-text-primary tracking-tight">PAIS</h1>
+                    <p className="text-xl text-text-secondary mt-2">Bienvenido de nuevo</p>
                 </div>
 
                 <Card className="p-6 mb-6">
@@ -191,7 +210,7 @@ export default function LoginPage() {
                             fullWidth
                             size="lg"
                             loading={loading}
-                            className="text-xl"
+                            className="text-xl py-8 shadow-[0_10px_20px_-5px_rgba(0,186,97,0.3)] bg-[var(--pais-green-500)]"
                         >
                             {step === "identifier" ? "Enviar código" : "Entrar"}
                         </Button>

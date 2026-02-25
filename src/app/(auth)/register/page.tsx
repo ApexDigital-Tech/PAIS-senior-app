@@ -107,12 +107,12 @@ export default function RegisterPage() {
             <div className="max-w-md mx-auto w-full">
 
                 {/* Progress header */}
-                <div className="mb-10 text-center">
-                    <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-green-500 shadow-md mb-4">
-                        <ShieldCheck size={32} className="text-white" />
+                <div className="mb-10 text-center animate-fade-in">
+                    <div className="w-24 h-24 bg-gradient-to-tr from-[var(--pais-green-500)] to-[var(--pais-amber-500)] rounded-3xl flex items-center justify-center mx-auto mb-6 shadow-xl transform rotate-3">
+                        <span className="text-white font-heading text-5xl font-bold -rotate-3">P</span>
                     </div>
-                    <h1 className="text-3xl font-bold font-heading text-text-primary">Crear Cuenta</h1>
-                    <p className="text-lg text-text-secondary mt-2">Únete a la familia PAIS</p>
+                    <h1 className="text-4xl font-bold font-heading text-text-primary tracking-tight">Crear Cuenta</h1>
+                    <p className="text-xl text-text-secondary mt-2">Únete a la familia PAIS</p>
                 </div>
 
                 {/* Step 1: Role Selection */}
@@ -259,6 +259,7 @@ export default function RegisterPage() {
                                     fullWidth
                                     size="lg"
                                     loading={loading}
+                                    className="text-xl py-8 shadow-[0_10px_20px_-5px_rgba(0,186,97,0.3)] bg-[var(--pais-green-500)]"
                                 >
                                     Regístrame
                                 </Button>
@@ -322,37 +323,51 @@ export default function RegisterPage() {
                 {/* Step 4: Success / Confirmation */}
                 {step === "success" && (
                     <div className="animate-fade-in space-y-8 py-10 text-center">
-                        <div className="relative mx-auto w-24 h-24 bg-green-500 rounded-full flex items-center justify-center shadow-lg animate-fade-in">
-                            <ShieldCheck size={48} className="text-white" />
-                            <div className="absolute inset-0 rounded-full animate-ping bg-green-500 opacity-20"></div>
+                        <div className="relative mx-auto w-32 h-32 bg-[var(--pais-green-50)] rounded-full flex items-center justify-center">
+                            <div className="absolute inset-0 rounded-full animate-ping bg-[var(--pais-green-200)] opacity-20"></div>
+                            <ShieldCheck size={56} className="text-[var(--pais-green-600)]" />
                         </div>
 
                         {!usePhone ? (
-                            <div className="space-y-4">
-                                <h2 className="text-3xl font-bold text-text-primary">¡Confirma tu correo!</h2>
-                                <p className="text-xl text-text-secondary max-w-sm mx-auto">
-                                    Hemos enviado un **enlace de confirmación** a <span className="text-green-600 font-bold">{email}</span>.
-                                </p>
+                            <div className="space-y-6">
+                                <div className="space-y-2">
+                                    <h2 className="text-3xl font-bold font-heading text-text-primary">¡Confirma tu correo!</h2>
+                                    <p className="text-xl text-text-secondary leading-relaxed max-w-sm mx-auto">
+                                        Hemos enviado un enlace de confirmación a:<br />
+                                        <span className="text-[var(--pais-green-700)] font-bold break-all">{email}</span>
+                                    </p>
+                                </div>
                                 <p className="text-lg text-text-secondary">
                                     Haz clic en el enlace para completar tu registro y entrar a PAIS.
                                 </p>
-                                <div className="pt-4">
-                                    <Button variant="secondary" onClick={() => router.push("/login")}>
-                                        Volver al inicio
+                                <div className="pt-8 space-y-4">
+                                    <Button
+                                        variant="secondary"
+                                        fullWidth
+                                        size="lg"
+                                        className="text-lg py-6"
+                                        onClick={() => router.push("/login")}
+                                    >
+                                        Ir al inicio de sesión
                                     </Button>
+                                    <p className="text-sm text-text-secondary italic">
+                                        ¿No ves el correo? Revisa en tu carpeta de Spam.
+                                    </p>
                                 </div>
                             </div>
                         ) : (
-                            <div className="space-y-2">
-                                <h2 className="text-3xl font-bold text-text-primary">¡Bienvenido!</h2>
-                                <p className="text-xl text-text-secondary max-w-[280px] mx-auto">
-                                    Tu cuenta ha sido creada exitosamente. Estamos felices de tenerte aquí.
-                                </p>
+                            <div className="space-y-6">
+                                <div className="space-y-2">
+                                    <h2 className="text-4xl font-bold font-heading text-text-primary">¡Bienvenido!</h2>
+                                    <p className="text-xl text-text-secondary max-w-[320px] mx-auto leading-relaxed">
+                                        Tu cuenta ha sido creada exitosamente. Estamos felices de tenerte aquí.
+                                    </p>
+                                </div>
                                 <Button
                                     size="lg"
                                     fullWidth
                                     onClick={() => router.push("/dashboard")}
-                                    className="text-xl mt-6"
+                                    className="text-xl py-8 shadow-[0_10px_20px_-5px_rgba(0,186,97,0.3)] bg-[var(--pais-green-500)]"
                                 >
                                     Comenzar ahora
                                 </Button>
