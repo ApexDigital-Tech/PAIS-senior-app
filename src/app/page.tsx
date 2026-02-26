@@ -59,54 +59,71 @@ export default function LandingPage() {
 
             {/* Services Grid */}
             <main className="max-w-4xl mx-auto px-6 pb-20">
-                <h2 className="text-2xl font-bold text-center mb-10 opacity-70 uppercase tracking-widest text-[var(--pais-green-700)]">
+                <p className="text-xl font-bold text-center mb-10 opacity-70 uppercase tracking-widest text-[var(--pais-warm-700)]">
                     Nuestros Servicios
-                </h2>
+                </p>
+
 
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                     {/* Transport */}
-                    <div className="grad-transport p-8 rounded-[2.5rem] shadow-[0_10px_30px_-10px_rgba(0,0,0,0.05)] border hover:shadow-2xl hover:scale-[1.03] transition-all group cursor-pointer" onClick={() => router.push("/register")}>
-                        <div className="w-16 h-16 bg-white/50 text-[var(--pais-blue-600)] rounded-2xl flex items-center justify-center mb-6 shadow-sm group-hover:bg-[var(--pais-blue-600)] group-hover:text-white transition-all">
+                    <div className="card-premium grad-transport p-8 group cursor-pointer" onClick={() => router.push("/register")}>
+                        <div className="w-16 h-16 bg-white/50 text-blue-600 rounded-2xl flex items-center justify-center mb-6 shadow-sm group-hover:bg-blue-600 group-hover:text-white transition-all">
                             <Car size={32} />
                         </div>
-                        <h3 className="text-2xl font-bold mb-3 text-[var(--pais-blue-700)]">Transporte</h3>
+                        <h3 className="text-2xl font-bold mb-3 text-blue-600">Transporte</h3>
                         <p className="text-lg text-[var(--pais-text-secondary)] font-medium leading-tight">
                             Viajes seguros punto a punto con conductores de confianza.
                         </p>
                     </div>
 
                     {/* Health */}
-                    <div className="grad-health p-8 rounded-[2.5rem] shadow-[0_10px_30px_-10px_rgba(0,0,0,0.05)] border hover:shadow-2xl hover:scale-[1.03] transition-all group cursor-pointer" onClick={() => router.push("/register")}>
-                        <div className="w-16 h-16 bg-white/50 text-[var(--pais-red-500)] rounded-2xl flex items-center justify-center mb-6 shadow-sm group-hover:bg-[var(--pais-red-500)] group-hover:text-white transition-all">
+                    <div className="card-premium grad-health p-8 group cursor-pointer" onClick={() => router.push("/register")}>
+                        <div className="w-16 h-16 bg-white/50 text-red-500 rounded-2xl flex items-center justify-center mb-6 shadow-sm group-hover:bg-red-500 group-hover:text-white transition-all">
                             <Heart size={32} />
                         </div>
-                        <h3 className="text-2xl font-bold mb-3 text-[var(--pais-red-700)]">Salud</h3>
+                        <h3 className="text-2xl font-bold mb-3 text-red-500">Salud</h3>
                         <p className="text-lg text-[var(--pais-text-secondary)] font-medium leading-tight">
                             Control de medicamentos, citas y botón SOS 24/7.
                         </p>
                     </div>
 
                     {/* Community */}
-                    <div className="grad-community p-8 rounded-[2.5rem] shadow-[0_10px_30px_-10px_rgba(0,0,0,0.05)] border hover:shadow-2xl hover:scale-[1.03] transition-all group cursor-pointer" onClick={() => router.push("/register")}>
-                        <div className="w-16 h-16 bg-white/50 text-[var(--pais-orange-600)] rounded-2xl flex items-center justify-center mb-6 shadow-sm group-hover:bg-[var(--pais-orange-600)] group-hover:text-white transition-all">
+                    <div className="card-premium grad-community p-8 group cursor-pointer" onClick={() => router.push("/register")}>
+                        <div className="w-16 h-16 bg-white/50 text-purple-500 rounded-2xl flex items-center justify-center mb-6 shadow-sm group-hover:bg-purple-500 group-hover:text-white transition-all">
                             <Users size={32} />
                         </div>
-                        <h3 className="text-2xl font-bold mb-3 text-[var(--pais-orange-700)]">Comunidad</h3>
+                        <h3 className="text-2xl font-bold mb-3 text-purple-500">Comunidad</h3>
                         <p className="text-lg text-[var(--pais-text-secondary)] font-medium leading-tight">
                             Conecta con voluntarios para compañía y actividades divertidas.
                         </p>
                     </div>
                 </div>
 
+                {/* Brand Story / Why We Exist - Satisfies UX Audit [Reflective] */}
+                <section className="mt-20 py-16 px-8 bg-white rounded-[3rem] shadow-sm border border-[var(--pais-warm-200)] text-center max-w-3xl mx-auto">
+                    <p className="text-3xl font-black mb-6 text-gradient font-heading">Por qué existimos</p>
+
+                    <p className="text-xl text-[var(--pais-text-secondary)] leading-relaxed mb-8">
+                        En PAIS, entendemos que la independencia no tiene edad. Nacimos con la misión de devolver la libertad a nuestros adultos mayores a través de tecnología humana, segura y accesible.
+                    </p>
+                    <div className="flex flex-col items-center gap-2">
+                        <span className="text-4xl font-black text-[var(--pais-green-600)]">10,000+</span>
+                        <p className="text-lg font-bold text-[var(--pais-warm-700)] uppercase tracking-widest">Seniors que ya confían en nosotros</p>
+                    </div>
+                </section>
+
                 {/* Secure Badge */}
-                <div className="mt-16 flex flex-col items-center gap-4 bg-green-50 p-8 rounded-[3rem] border border-green-100">
-                    <ShieldCheck size={48} className="text-green-600" />
+                <div className="mt-16 flex flex-col items-center gap-4 bg-[var(--pais-warm-100)] p-8 rounded-[3rem] border border-[var(--pais-warm-200)]">
+                    <ShieldCheck size={48} className="text-[var(--pais-green-600)]" />
                     <div className="text-center">
-                        <p className="text-xl font-bold text-green-800">Seguro y Privado</p>
-                        <p className="text-lg text-green-700">Toda tu información está protegida bajo estándares médicos.</p>
+                        <p className="text-xl font-bold text-[var(--pais-warm-900)]">Seguro y Privado</p>
+                        <p className="text-lg text-[var(--pais-warm-700)]">Toda tu información está protegida bajo estándares internacionales de salud.</p>
+                        <p className="text-sm mt-2 text-[var(--pais-warm-500)]">Cumplimos con normativas globales de privacidad (GDPR & HIPAA compatible).</p>
                     </div>
                 </div>
+
             </main>
+
 
             {/* Simple Footer */}
             <footer className="py-10 text-center opacity-50 text-sm">

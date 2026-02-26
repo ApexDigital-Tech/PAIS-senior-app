@@ -117,8 +117,7 @@ export default function RegisterPage() {
                     queryParams: {
                         access_type: 'offline',
                         prompt: 'consent',
-                    },
-                    data: { role: role }
+                    }
                 }
             });
             if (error) throw error;

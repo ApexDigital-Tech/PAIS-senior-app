@@ -7,76 +7,43 @@
    ============================================ */
 
 :root {
-  /* —— Primary Colors: Vibrant & Motivational (High Saturation) —— */
-  --pais-green-50: #E8F5E9;
-  --pais-green-100: #C8E6C9;
-  --pais-green-200: #A5D6A7;
-  --pais-green-500: #00DB75;
-  /* HIGH VIBRANCY ESMERALDA - Life */
-  --pais-green-600: #00C853;
-  --pais-green-700: #007E33;
+  /* —— 60% Neutrals (Dominant) —— */
+  --pais-white: 0 0% 100%;
+  --pais-warm-50: 60 14% 98%;
+  --pais-warm-100: 60 14% 96%;
+  --pais-warm-200: 60 12% 92%;
+  --pais-warm-300: 60 10% 86%;
+  --pais-warm-500: 60 5% 53%;
+  --pais-warm-700: 60 5% 33%;
+  --pais-warm-900: 60 5% 11%;
 
-  --pais-blue-50: #EEF8FF;
-  --pais-blue-100: #D1EAFF;
-  --pais-blue-200: #A3D5FF;
-  --pais-blue-500: #0084FF;
-  /* Energetic Blue - Trust */
-  --pais-blue-600: #0070D9;
-  --pais-blue-700: #005CB3;
+  /* —— 30% Brand Colors (Secondary) —— */
+  --pais-green-500: 152 100% 43%;
+  --pais-green-600: 152 100% 39%;
+  --pais-blue-500: 209 100% 50%;
+  --pais-blue-600: 209 100% 43%;
 
-  /* —— Motivational Accents —— */
-  --pais-orange-500: #FF8F00;
-  /* Energy & Warmth */
-  --pais-orange-600: #E68100;
-  --pais-orange-50: #FFF3E0;
-  --pais-orange-100: #FFE0B2;
-  --pais-orange-200: #FFCC80;
+  /* —— 10% Accents (Strategic) —— */
+  --pais-orange-500: 34 100% 50%;
+  --pais-red-500: 2 100% 60%;
+  --pais-amber-500: 48 100% 50%;
+  --pais-purple-500: 271 81% 56%;
 
-  /* —— Semantic Colors —— */
-  --pais-red-500: #FF3B30;
-  /* Brighter Red */
-  --pais-red-600: #D32F2F;
-  --pais-red-50: #FFF5F5;
+  /* —— Theme Mapping —— */
+  --background: hsl(var(--pais-warm-50));
+  --foreground: hsl(var(--pais-warm-900));
+  --surface: hsl(var(--pais-white));
+  --surface-hover: hsl(var(--pais-warm-100));
+  --border: hsl(var(--pais-warm-200));
+  --border-focus: hsl(var(--pais-blue-500));
+  --text-primary: hsl(var(--pais-warm-900));
+  --text-secondary: hsl(var(--pais-warm-500));
+  --text-inverse: hsl(var(--pais-white));
 
-  --pais-amber-500: #FFCC00;
-  /* Sun Yellow */
-  --pais-amber-50: #FFFDE7;
-
-  --pais-success: var(--pais-green-500);
-  --pais-warning: var(--pais-amber-500);
-  --pais-danger: var(--pais-red-500);
-
-  /* —— Neutrals: Fresher & Prettier —— */
-  --pais-warm-50: #FDFDFB;
-  --pais-warm-100: #F9F9F4;
-  --pais-warm-200: #F1F1E9;
-  --pais-warm-300: #E2E2D6;
-  --pais-warm-500: #8E8E82;
-  --pais-warm-700: #55554D;
-  --pais-warm-900: #1C1C1A;
-
-  /* —— Theme —— */
-  --background: var(--pais-warm-50);
-  --foreground: var(--pais-warm-900);
-  --surface: #FFFFFF;
-  --surface-hover: var(--pais-warm-100);
-  --border: var(--pais-warm-200);
-  --border-focus: var(--pais-blue-500);
-  --text-primary: var(--pais-warm-900);
-  --text-secondary: var(--pais-warm-500);
-  --text-inverse: #FFFFFF;
-
-  /* —— Spacing (8-point grid) —— */
-  --space-1: 4px;
-  --space-2: 8px;
-  --space-3: 12px;
+  /* —— Spacing —— */
   --space-4: 16px;
-  --space-5: 20px;
   --space-6: 24px;
   --space-8: 32px;
-  --space-10: 40px;
-  --space-12: 48px;
-  --space-16: 64px;
 
   /* —— Radius —— */
   --radius-sm: 8px;
@@ -84,10 +51,11 @@
   --radius-lg: 24px;
   --radius-full: 9999px;
 
-  /* —— Shadows —— */
-  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.06), 0 1px 2px rgba(0, 0, 0, 0.04);
-  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.08), 0 2px 4px rgba(0, 0, 0, 0.04);
-  --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.10), 0 4px 8px rgba(0, 0, 0, 0.06);
+  /* —— Shadows (Multi-layered for realism) —— */
+  --shadow-sm: 0 2px 4px hsla(var(--pais-warm-900), 0.04), 0 1px 2px hsla(var(--pais-warm-900), 0.02);
+  --shadow-md: 0 10px 20px hsla(var(--pais-warm-900), 0.06), 0 4px 6px hsla(var(--pais-warm-900), 0.02);
+  --shadow-lg: 0 20px 40px hsla(var(--pais-warm-900), 0.08), 0 8px 12px hsla(var(--pais-warm-900), 0.04);
+
 
   /* —— Typography —— */
   --font-body: var(--font-inter), system-ui, sans-serif;
@@ -95,27 +63,25 @@
   --text-base: 18px;
   --text-lg: 20px;
   --text-xl: 24px;
-  --text-2xl: 30px;
-  --text-3xl: 36px;
-  --line-height: 1.6;
+  --line-height-body: 1.6;
+  --line-height-heading: 1.2;
 
-  /* —— Animation —— */
-  --duration-fast: 150ms;
-  --duration-normal: 300ms;
-  --duration-slow: 500ms;
-  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+  /* —— Animation (Fixed Speed) —— */
+  --duration-fast: 200ms;
+  --duration-normal: 350ms;
+  --duration-slow: 600ms;
   --ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
+
 
   /* —— Layout —— */
   --max-content: 960px;
   --nav-height: 72px;
-  --header-height: 64px;
 
-  /* —— Vibrant Glows —— */
-  --glow-green: rgba(0, 186, 97, 0.12);
-  --glow-blue: rgba(0, 132, 255, 0.12);
-  --glow-orange: rgba(255, 143, 0, 0.12);
+  /* —— Subtle Glows —— */
+  --glow-green: hsla(var(--pais-green-500), 0.08);
+  --glow-blue: hsla(var(--pais-blue-500), 0.08);
 }
+
 
 /* —— Tailwind v4 Theme Integration —— */
 @theme inline {
@@ -212,10 +178,21 @@ body {
   background-attachment: fixed;
   color: var(--foreground);
   font-family: var(--font-body);
-  line-height: var(--line-height);
+  line-height: var(--line-height-body);
   min-height: 100dvh;
   overflow-x: hidden;
 }
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  line-height: var(--line-height-heading);
+  font-family: var(--font-heading);
+}
+
 
 /* —— Senior-Optimized Focus Styles —— */
 :focus-visible {
@@ -259,23 +236,23 @@ textarea {
   padding-bottom: env(safe-area-inset-bottom, 0px);
 }
 
-/* —— Keyframes —— */
+/* —— Keyframes (Fixed Visual Delays) —— */
 @keyframes pulse-sos {
 
   0%,
   100% {
-    box-shadow: 0 0 0 0 rgba(211, 47, 47, 0.4);
+    box-shadow: 0 0 0 0 hsla(var(--pais-red-500), 0.4);
   }
 
   50% {
-    box-shadow: 0 0 0 12px rgba(211, 47, 47, 0);
+    box-shadow: 0 0 0 12px hsla(var(--pais-red-500), 0);
   }
 }
 
 @keyframes fade-in {
   from {
     opacity: 0;
-    transform: translateY(8px);
+    transform: translateY(6px);
   }
 
   to {
@@ -292,7 +269,7 @@ textarea {
   }
 
   50% {
-    opacity: 0.4;
+    opacity: 0.5;
   }
 }
 
@@ -304,64 +281,71 @@ textarea {
   }
 
   50% {
-    transform: scale(1.05) rotate(6deg);
+    transform: scale(1.02) rotate(6deg);
   }
 }
+
+
 
 .animate-fade-in {
   animation: fade-in var(--duration-normal) var(--ease-smooth) both;
 }
 
 .animate-sos-pulse {
-  animation: pulse-sos 2s infinite;
+  animation: pulse-sos 2.5s infinite;
 }
 
 .animate-skeleton {
-  animation: skeleton-pulse 2s var(--ease-smooth) infinite;
+  animation: skeleton-pulse 1.8s var(--ease-smooth) infinite;
 }
 
 .animate-pulse-slow {
-  animation: pulse-slow 4s ease-in-out infinite;
+  animation: pulse-slow 5s ease-in-out infinite;
 }
 
+/* —— Premium Components —— */
 .glass {
-  background: rgba(255, 255, 255, 0.7);
+  background: hsla(var(--pais-white), 0.75);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.3);
-}
-
-.glass-dark {
-  background: rgba(28, 28, 26, 0.7);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  border: 1px solid hsla(var(--pais-white), 0.4);
 }
 
 .text-gradient {
-  background: linear-gradient(to right, var(--pais-green-600), var(--pais-blue-600));
+  background: linear-gradient(135deg, hsl(var(--pais-green-600)), hsl(var(--pais-blue-600)));
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
-/* Specific Card Gradients — Energetic & Motivational */
+/* Unified Card Styles (Less Borders, More Depth) */
+.card-premium {
+  background: hsl(var(--pais-white));
+  border: 1px solid hsl(var(--pais-warm-200));
+  box-shadow: var(--shadow-sm);
+  border-radius: var(--radius-lg);
+  transition: all var(--duration-normal) var(--ease-smooth);
+}
+
+.card-premium:hover {
+  box-shadow: var(--shadow-lg);
+  transform: translateY(-2px);
+  border-color: transparent;
+}
+
+/* Specific Card Contexts (Subtle Gradients) */
 .grad-transport {
-  background: linear-gradient(135deg, #EEF8FF 0%, #FFFFFF 100%);
-  border: 1px solid #A3D5FF;
+  background: linear-gradient(135deg, hsla(var(--pais-blue-500), 0.05) 0%, hsl(var(--pais-white)) 100%);
 }
 
 .grad-community {
-  background: linear-gradient(135deg, var(--pais-orange-50) 0%, #FFFFFF 100%);
-  border: 1px solid var(--pais-orange-200);
+  background: linear-gradient(135deg, hsla(var(--pais-purple-500), 0.05) 0%, hsl(var(--pais-white)) 100%);
 }
 
 .grad-health {
-  background: linear-gradient(135deg, #FFF5F5 0%, #FFFFFF 100%);
-  border: 1px solid #FFCDD2;
+  background: linear-gradient(135deg, hsla(var(--pais-red-500), 0.05) 0%, hsl(var(--pais-white)) 100%);
 }
 
 .grad-energy {
-  background: linear-gradient(135deg, #FFF3E0 0%, #FFFFFF 100%);
-  border: 1px solid #FFE0B2;
+  background: linear-gradient(135deg, hsla(var(--pais-orange-500), 0.05) 0%, hsl(var(--pais-white)) 100%);
 }

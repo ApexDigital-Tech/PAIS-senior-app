@@ -35,7 +35,7 @@ export default function HomePage() {
                         title="Pedir Transporte"
                         description="Viajes seguros con conductores certificados"
                         onClick={() => router.push("/transport")}
-                        className="grad-transport shadow-lg hover:scale-[1.02] transition-transform"
+                        className="card-premium grad-transport"
                         badge="ACTIVO"
                     />
 
@@ -44,7 +44,7 @@ export default function HomePage() {
                         title="Compañía y Charla"
                         description="Conecta con voluntarios para pasear o conversar"
                         onClick={() => router.push("/community")}
-                        className="grad-community shadow-lg hover:scale-[1.02] transition-transform"
+                        className="card-premium grad-community"
                     />
 
                     <Card
@@ -52,9 +52,10 @@ export default function HomePage() {
                         title="Mi Salud y Bienestar"
                         description="Tus medicamentos y citas en un solo lugar"
                         onClick={() => router.push("/health")}
-                        className="grad-health shadow-lg hover:scale-[1.02] transition-transform"
+                        className="card-premium grad-health"
                     />
                 </div>
+
             </section>
 
             {/* Today's Schedule */}

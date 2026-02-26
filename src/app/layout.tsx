@@ -17,11 +17,19 @@ const outfit = Outfit({
 
 export const metadata: Metadata = {
   title: {
-    default: "PAIS — Atención Integral Senior",
-    template: "%s | PAIS",
+    default: "PAIS — Plataforma de Atención Integral Senior (Gerontología Digital 2026)",
+    template: "%s | PAIS - Atención Integral Senior",
   },
   description:
-    "Tu compañero de salud, movilidad y bienestar. Plataforma de Atención Integral Senior.",
+    "Únete a más de 10,000 seniors que ya disfrutan de mayor autonomía. La plataforma líder en salud, transporte seguro y compañía voluntaria.",
+  keywords: ["senior", "salud", "transporte seguro", "acompañamiento", "autonomía", "gerontología digital"],
+  openGraph: {
+    title: "PAIS — Atención Integral Senior",
+    description: "Tu compañero de vida para una autonomía prolongada y un bienestar integral. Certificado para tu seguridad.",
+    type: "website",
+    locale: "es_BO",
+    siteName: "PAIS",
+  },
   manifest: "/manifest.json",
   appleWebApp: {
     capable: true,
@@ -33,6 +41,7 @@ export const metadata: Metadata = {
     apple: "/icons/icon.svg",
   },
 };
+
 
 export const viewport: Viewport = {
   width: "device-width",
@@ -54,10 +63,15 @@ export default function RootLayout({
     <html lang="es" className={`${inter.variable} ${outfit.variable}`}>
       <body className="antialiased min-h-screen bg-[var(--pais-warm-50)] text-[var(--pais-text-primary)]">
         <UserProvider>
-          {children}
+          <div className="flex flex-col min-h-screen">
+            <main className="flex-1 max-w-[70ch] mx-auto w-full px-4 lg:px-0">
+              {children}
+            </main>
+          </div>
           <PwaUpdater />
         </UserProvider>
       </body>
+
     </html>
   );
 }
