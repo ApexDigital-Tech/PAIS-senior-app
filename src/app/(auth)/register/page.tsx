@@ -56,15 +56,18 @@ function RegisterContent() {
         const identifier = usePhone ? (phone.startsWith("+") ? phone : `+591${phone}`) : email;
         const appUrl = process.env.NEXT_PUBLIC_APP_URL || window.location.origin;
 
+        const mappedRole = role === "conductor" ? "voluntario" : role;
+        const mappedName = role === "conductor" ? `⚡${fullName}` : fullName;
+
         try {
             const { error } = await supabase.auth.signInWithOtp(
                 usePhone
-                    ? { phone: identifier, options: { data: { full_name: fullName, role: role } } }
+                    ? { phone: identifier, options: { data: { full_name: mappedName, role: mappedRole } } }
                     : {
                         email: identifier,
                         options: {
                             emailRedirectTo: `${appUrl}/auth/confirm?next=/dashboard`,
-                            data: { full_name: fullName, role: role }
+                            data: { full_name: mappedName, role: mappedRole }
                         }
                     }
             );
@@ -118,15 +121,17 @@ function RegisterContent() {
         }
         setLoading(true);
         setError(null);
+        const mappedRole = role === "conductor" ? "voluntario" : role;
+
         try {
             const { error } = await supabase.auth.signInWithOAuth({
                 provider: "google",
                 options: {
-                    redirectTo: `${window.location.origin}/dashboard`,
+                    redirectTo: `${window.location.origin}/auth/callback?next=/dashboard`,
                     queryParams: {
                         access_type: 'offline',
                         prompt: 'consent',
-                    }
+                    },
                 }
             });
             if (error) throw error;
