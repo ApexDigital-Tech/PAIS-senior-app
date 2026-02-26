@@ -29,10 +29,8 @@
   /* Energy & Warmth */
   --pais-orange-600: #E68100;
   --pais-orange-50: #FFF3E0;
-
-  --pais-purple-500: #8E24AA;
-  /* Spirituality & Community */
-  --pais-purple-50: #F3E5F5;
+  --pais-orange-100: #FFE0B2;
+  --pais-orange-200: #FFCC80;
 
   /* —— Semantic Colors —— */
   --pais-red-500: #FF3B30;
@@ -354,8 +352,8 @@ textarea {
 }
 
 .grad-community {
-  background: linear-gradient(135deg, #F3E5F5 0%, #FFFFFF 100%);
-  border: 1px solid #CE93D8;
+  background: linear-gradient(135deg, var(--pais-orange-50) 0%, #FFFFFF 100%);
+  border: 1px solid var(--pais-orange-200);
 }
 
 .grad-health {

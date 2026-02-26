@@ -88,12 +88,12 @@ export default function LandingPage() {
 
                     {/* Community */}
                     <div className="grad-community p-8 rounded-[2.5rem] shadow-[0_10px_30px_-10px_rgba(0,0,0,0.05)] border hover:shadow-2xl hover:scale-[1.03] transition-all group cursor-pointer" onClick={() => router.push("/register")}>
-                        <div className="w-16 h-16 bg-white/50 text-[var(--pais-purple-500)] rounded-2xl flex items-center justify-center mb-6 shadow-sm group-hover:bg-[var(--pais-purple-500)] group-hover:text-white transition-all">
+                        <div className="w-16 h-16 bg-white/50 text-[var(--pais-orange-600)] rounded-2xl flex items-center justify-center mb-6 shadow-sm group-hover:bg-[var(--pais-orange-600)] group-hover:text-white transition-all">
                             <Users size={32} />
                         </div>
-                        <h3 className="text-2xl font-bold mb-3 text-[var(--pais-purple-700)]">Comunidad</h3>
+                        <h3 className="text-2xl font-bold mb-3 text-[var(--pais-orange-700)]">Comunidad</h3>
                         <p className="text-lg text-[var(--pais-text-secondary)] font-medium leading-tight">
-                            Conecta con voluntarios para compañía y actividades.
+                            Conecta con voluntarios para compañía y actividades divertidas.
                         </p>
                     </div>
                 </div>
