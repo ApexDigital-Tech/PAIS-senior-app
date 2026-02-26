@@ -13,7 +13,8 @@ import {
     Star,
     CheckCircle2,
     Shield,
-    PhoneCall
+    PhoneCall,
+    Mail
 } from "lucide-react";
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
@@ -42,7 +43,7 @@ export default function LandingPage() {
 
     const itemVariants = {
         hidden: { opacity: 0, y: 20 },
-        visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] } }
+        visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] as any } }
     };
 
     return (
@@ -165,7 +166,7 @@ export default function LandingPage() {
                         <motion.div
                             initial={{ opacity: 0, scale: 0.9 }}
                             animate={{ opacity: 1, scale: 1 }}
-                            transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
+                            transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] as any }}
                             className="relative"
                         >
                             <div className="relative aspect-[4/5] md:aspect-square rounded-[3rem] overflow-hidden shadow-[0_50px_100px_-20px_rgba(0,0,0,0.2)] border-[12px] border-white ring-1 ring-black/5">
