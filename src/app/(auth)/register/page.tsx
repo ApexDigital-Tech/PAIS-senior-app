@@ -70,8 +70,8 @@ function RegisterContent() {
             );
 
             if (error) {
-                if (error.message.includes("9 seconds")) {
-                    throw new Error("Por seguridad, espera unos segundos antes de intentar de nuevo.");
+                if (error.message.includes("security purposes") || error.message.includes("seconds")) {
+                    throw new Error("Por seguridad, debes esperar un minuto antes de pedir otro código o enlace. Revisa tu correo o espera un momento.");
                 }
                 throw error;
             }

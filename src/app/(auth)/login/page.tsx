@@ -69,8 +69,8 @@ function LoginContent() {
                         }
                     });
                     if (error) {
-                        if (error.message.includes("9 seconds")) {
-                            throw new Error("Por seguridad, debes esperar unos segundos antes de pedir otro enlace.");
+                        if (error.message.includes("security purposes") || error.message.includes("seconds")) {
+                            throw new Error("Por seguridad, debes esperar un minuto antes de pedir otro enlace. Revisa tu correo o espera un momento.");
                         }
                         throw error;
                     }
