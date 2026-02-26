@@ -1,24 +1,39 @@
 "use client";
 
-import { useState } from "react";
-import { useRouter } from "next/navigation";
+import { useState, useEffect } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
-import { Button, Input, Card } from "@/components/ui";
-import { Phone, Mail, ChevronRight, AlertCircle, Loader2, Chrome } from "lucide-react";
+import { Button } from "@/components/ui/Button";
+import { Phone, Mail, ChevronLeft, AlertCircle, Loader2, Chrome, Heart, ArrowRight } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
 
 export default function LoginPage() {
     const router = useRouter();
+    const searchParams = useSearchParams();
     const supabase = createClient();
-    const [method, setMethod] = useState<"phone" | "email">("phone");
+
+    const [method, setMethod] = useState<"phone" | "email">("email");
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
     const [step, setStep] = useState<"identifier" | "otp">("identifier");
 
-    // State for inputs
+    // Form inputs
     const [phone, setPhone] = useState("");
     const [email, setEmail] = useState("");
     const [otp, setOtp] = useState("");
     const [otpSent, setOtpSent] = useState(false);
+
+    // Handle URL errors (like otp_expired)
+    useEffect(() => {
+        const errorDescription = searchParams.get("error_description");
+        if (errorDescription) {
+            if (errorDescription.includes("expired")) {
+                setError("El enlace de acceso ha caducado. Por favor, solicita uno nuevo.");
+            } else {
+                setError(errorDescription);
+            }
+        }
+    }, [searchParams]);
 
     const handleSignIn = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -29,15 +44,16 @@ export default function LoginPage() {
             const appUrl = process.env.NEXT_PUBLIC_APP_URL || window.location.origin;
 
             if (method === "phone") {
+                const formattedPhone = phone.startsWith("+") ? phone : `+591${phone}`;
                 if (step === "identifier") {
                     const { error } = await supabase.auth.signInWithOtp({
-                        phone: phone.startsWith("+") ? phone : `+591${phone}`,
+                        phone: formattedPhone,
                     });
                     if (error) throw error;
                     setStep("otp");
                 } else {
                     const { error } = await supabase.auth.verifyOtp({
-                        phone: phone.startsWith("+") ? phone : `+591${phone}`,
+                        phone: formattedPhone,
                         token: otp,
                         type: "sms",
                     });
@@ -52,7 +68,12 @@ export default function LoginPage() {
                             emailRedirectTo: `${appUrl}/dashboard`,
                         }
                     });
-                    if (error) throw error;
+                    if (error) {
+                        if (error.message.includes("9 seconds")) {
+                            throw new Error("Por seguridad, debes esperar unos segundos antes de pedir otro enlace.");
+                        }
+                        throw error;
+                    }
                     setOtpSent(true);
                 } else {
                     const { error } = await supabase.auth.verifyOtp({
@@ -65,7 +86,7 @@ export default function LoginPage() {
                 }
             }
         } catch (err: any) {
-            setError(err.message || "Ocurrió un error al intentar iniciar sesión");
+            setError(err.message || "Algo no salió bien. Intenta de nuevo.");
         } finally {
             setLoading(false);
         }
@@ -83,163 +104,162 @@ export default function LoginPage() {
             });
             if (error) throw error;
         } catch (err: any) {
-            setError(err.message || "Error al conectar con Google");
+            setError("No pudimos conectar con Google. Revisa tu conexión.");
             setLoading(false);
         }
     };
 
     if (otpSent && method === "email") {
         return (
-            <div className="min-h-screen flex flex-col px-6 py-12 bg-[var(--pais-warm-50)] animate-fade-in relative overflow-hidden">
-                <div className="absolute top-[-5%] left-[-5%] w-[40%] h-[40%] bg-[var(--pais-green-200)] blur-[100px] rounded-full opacity-20"></div>
-                <div className="absolute bottom-[-10%] right-[-10%] w-[50%] h-[50%] bg-[var(--pais-blue-100)] blur-[120px] rounded-full opacity-30"></div>
-
-                <div className="relative z-10 flex-1 max-w-sm mx-auto w-full flex flex-col justify-center text-center space-y-10">
-                    <div className="relative mx-auto w-40 h-40">
-                        <div className="absolute inset-0 bg-[var(--pais-green-500)] rounded-[3rem] opacity-10 animate-pulse"></div>
-                        <div className="absolute inset-2 bg-white rounded-[2.5rem] shadow-xl flex items-center justify-center border border-[var(--pais-green-100)]">
-                            <Mail className="text-[var(--pais-green-600)]" size={64} />
-                        </div>
+            <div className="min-h-screen flex flex-col bg-warm-50 font-sans p-6 items-center justify-center text-center animate-fade-in">
+                <div className="bg-white p-12 md:p-16 rounded-[4rem] shadow-2xl border-[12px] border-white ring-1 ring-black/5 max-w-xl w-full">
+                    <div className="bg-green-100 p-8 rounded-[2rem] text-green-600 mb-10 inline-block">
+                        <Mail size={80} strokeWidth={1.5} />
                     </div>
-
-                    <div className="space-y-6">
-                        <h1 className="text-4xl font-extrabold font-heading text-text-primary tracking-tight">¡Revisa tu buzón!</h1>
-                        <p className="text-xl text-text-secondary leading-relaxed font-medium">
-                            Hemos enviado un botón mágico de acceso a:<br />
-                            <span className="block mt-2 font-bold text-[var(--pais-green-700)] text-2xl truncate px-2">{email}</span>
-                        </p>
-                        <div className="bg-white/60 p-6 rounded-[2rem] border border-white mx-auto max-w-xs shadow-sm shadow-black/5">
-                            <p className="text-lg text-text-secondary font-medium italic">
-                                "Haz clic en el enlace del correo y estarás dentro. ¡Así de fácil!"
-                            </p>
-                        </div>
+                    <h1 className="text-5xl font-black text-warm-900 mb-6 font-heading tracking-tight">¡Revisa tu correo!</h1>
+                    <p className="text-2xl text-warm-600 font-medium leading-relaxed mb-10">
+                        Hemos enviado un botón mágico de acceso a:
+                        <span className="block mt-4 text-green-600 font-black text-3xl break-all px-4">{email}</span>
+                    </p>
+                    <div className="bg-warm-50/50 p-8 rounded-3xl border-2 border-dashed border-warm-200 mb-12 italic text-xl text-warm-500 font-medium">
+                        "Solo toca el botón en el correo y estarás dentro. ¡Así de fácil!"
                     </div>
-
-                    <div className="pt-8 space-y-6">
-                        <Button
-                            variant="secondary"
-                            fullWidth
-                            size="lg"
-                            className="text-xl py-10 rounded-[1.5rem] shadow-lg border-2"
-                            onClick={() => setOtpSent(false)}
-                        >
-                            Usar otro medio
-                        </Button>
-                        <p className="text-base text-text-secondary italic">
-                            ¿No ves el correo? Revisa en tu carpeta de Spam.
-                        </p>
-                    </div>
+                    <Button
+                        variant="outline"
+                        fullWidth
+                        size="lg"
+                        className="h-20 text-2xl font-black rounded-[1.5rem]"
+                        onClick={() => setOtpSent(false)}
+                    >
+                        Intentar otra forma
+                    </Button>
                 </div>
             </div>
         );
     }
 
     return (
-        <div className="relative min-h-screen flex flex-col px-6 py-12 overflow-hidden bg-[var(--pais-warm-50)]">
-            <div className="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] bg-[var(--pais-green-100)] blur-[120px] rounded-full opacity-30"></div>
-            <div className="absolute bottom-[-10%] right-[-10%] w-[50%] h-[50%] bg-[var(--pais-blue-100)] blur-[120px] rounded-full opacity-30"></div>
+        <div className="min-h-screen flex flex-col bg-warm-50 font-sans p-6 items-center justify-center relative overflow-hidden">
+            {/* Decorative Blobs (Stitch Aesthetic) */}
+            <div className="absolute top-0 left-0 w-full h-full -z-10 opacity-30 pointer-events-none">
+                <div className="absolute top-[10%] left-[10%] w-[40rem] h-[40rem] bg-green-200/50 rounded-full blur-[150px] animate-pulse-slow"></div>
+                <div className="absolute bottom-[10%] right-[10%] w-[40rem] h-[40rem] bg-blue-200/50 rounded-full blur-[150px] animate-pulse-slow"></div>
+            </div>
 
-            <div className="relative z-10 flex-1 max-w-sm mx-auto w-full flex flex-col justify-center">
-                <div className="text-center mb-10 animate-fade-in">
-                    <div className="w-24 h-24 bg-gradient-to-br from-[var(--pais-green-400)] via-[var(--pais-green-600)] to-[var(--pais-blue-600)] rounded-[2rem] flex items-center justify-center mx-auto mb-6 shadow-xl transform rotate-6">
-                        <span className="text-white font-heading text-5xl font-bold -rotate-6">P</span>
+            <div className="max-w-xl w-full space-y-12">
+                {/* Logo Section */}
+                <div className="text-center animate-fade-in">
+                    <div
+                        className="w-24 h-24 bg-green-500 p-2.5 rounded-[2rem] flex items-center justify-center text-white shadow-2xl shadow-green-500/30 mx-auto mb-8 cursor-pointer active:scale-90 transition-transform"
+                        onClick={() => router.push("/")}
+                    >
+                        <Heart size={44} fill="white" />
                     </div>
-                    <h1 className="font-heading text-4xl font-black tracking-tight text-[var(--pais-green-900)] mb-1">Entrar a PAIS</h1>
-                    <p className="text-lg text-text-secondary font-medium">Acceso rápido y seguro</p>
+                    <h1 className="text-5xl md:text-6xl font-black text-warm-900 font-heading tracking-tighter">Entrar a PAIS</h1>
+                    <p className="text-2xl text-warm-500 font-bold mt-2">Acceso rápido, humano y seguro</p>
                 </div>
 
-                <div className="bg-white p-8 rounded-[2.5rem] shadow-2xl border border-[var(--pais-warm-100)]">
-                    <div className="flex flex-col gap-6">
+                {/* Login Card */}
+                <div className="bg-white p-10 md:p-14 rounded-[4rem] shadow-[0_50px_100px_-20px_rgba(0,0,0,0.15)] border-[12px] border-white ring-1 ring-black/5 animate-fade-in" style={{ animationDelay: "0.1s" }}>
+                    <div className="space-y-10">
                         <Button
                             onClick={handleGoogleSignIn}
                             fullWidth
                             variant="secondary"
-                            className="h-20 rounded-[1.5rem] border-2 border-[var(--pais-warm-200)] hover:border-[var(--pais-green-300)] hover:bg-[var(--pais-green-50)] active:scale-95 transition-all text-xl font-bold"
+                            className="h-20 rounded-[1.75rem] border-4 border-warm-100 bg-white hover:border-green-500/30 hover:bg-green-50/50 active:scale-95 transition-all text-2xl font-black"
                             disabled={loading}
                         >
-                            <div className="flex items-center gap-4 text-[var(--pais-warm-900)]">
-                                <Chrome className="text-[var(--pais-green-600)]" size={32} />
-                                Entrar con Google
+                            <div className="flex items-center gap-5 text-warm-900">
+                                <Chrome className="text-green-500" size={36} />
+                                <span>Entrar con Google</span>
                             </div>
                         </Button>
 
-                        <div className="flex items-center gap-4 py-2">
-                            <div className="h-px bg-[var(--pais-warm-200)] flex-1"></div>
-                            <span className="text-sm font-bold text-text-secondary uppercase">o con tu celular/correo</span>
-                            <div className="h-px bg-[var(--pais-warm-200)] flex-1"></div>
+                        <div className="relative flex items-center py-2">
+                            <div className="flex-grow border-t-2 border-warm-100"></div>
+                            <span className="flex-shrink mx-6 text-sm font-black text-warm-400 uppercase tracking-[0.2em]">O CON TU CUENTA</span>
+                            <div className="flex-grow border-t-2 border-warm-100"></div>
                         </div>
 
-                        <form onSubmit={handleSignIn} className="space-y-6">
-                            {step === "identifier" ? (
-                                <>
-                                    {method === "phone" ? (
-                                        <div className="space-y-3">
-                                            <label htmlFor="phone" className="block text-xl font-bold text-[var(--pais-green-800)] ml-1">
-                                                Número de Celular
-                                            </label>
-                                            <div className="h-20 bg-[var(--pais-warm-50)] border-2 border-transparent focus-within:border-[var(--pais-green-500)] focus-within:bg-white rounded-[1.5rem] flex items-center px-6 transition-all ring-1 ring-black/5">
-                                                <Phone className="text-[var(--pais-green-600)]" size={24} />
-                                                <input
-                                                    id="phone"
-                                                    type="tel"
-                                                    value={phone}
-                                                    onChange={(e) => setPhone(e.target.value)}
-                                                    placeholder="70000000"
-                                                    className="w-full h-full ml-4 text-2xl bg-transparent border-none focus:outline-none placeholder:text-[var(--pais-warm-300)] font-bold text-[var(--pais-warm-900)]"
-                                                    required
-                                                    autoFocus
-                                                />
-                                            </div>
-                                        </div>
-                                    ) : (
-                                        <div className="space-y-3">
-                                            <label htmlFor="email" className="block text-xl font-bold text-[var(--pais-green-800)] ml-1">
-                                                Tu Correo
-                                            </label>
-                                            <div className="h-20 bg-[var(--pais-warm-50)] border-2 border-transparent focus-within:border-[var(--pais-green-500)] focus-within:bg-white rounded-[1.5rem] flex items-center px-6 transition-all ring-1 ring-black/5">
-                                                <Mail className="text-[var(--pais-green-600)]" size={24} />
-                                                <input
-                                                    id="email"
-                                                    type="email"
-                                                    value={email}
-                                                    onChange={(e) => setEmail(e.target.value)}
-                                                    placeholder="tu@correo.com"
-                                                    className="w-full h-full ml-4 text-xl bg-transparent border-none focus:outline-none placeholder:text-[var(--pais-warm-300)] font-bold text-[var(--pais-warm-900)]"
-                                                    required
-                                                    autoFocus
-                                                />
-                                            </div>
-                                        </div>
-                                    )}
-                                </>
-                            ) : (
-                                <div className="space-y-6 text-center">
-                                    <h2 className="text-2xl font-bold text-text-primary">Escribe el código</h2>
-                                    <input
-                                        type="text"
-                                        value={otp}
-                                        onChange={(e) => setOtp(e.target.value)}
-                                        placeholder="000000"
-                                        className="w-full h-24 text-center text-6xl tracking-[0.4em] font-black bg-[var(--pais-warm-50)] border-2 border-[var(--pais-green-500)] rounded-[1.5rem] focus:outline-none focus:ring-8 focus:ring-[var(--pais-green-100)] transition-all"
-                                        maxLength={6}
-                                        required
-                                        autoFocus
-                                    />
-                                    <button
-                                        type="button"
-                                        onClick={() => setStep("identifier")}
-                                        className="text-[var(--pais-green-700)] font-bold text-lg hover:underline"
+                        <form onSubmit={handleSignIn} className="space-y-8">
+                            <AnimatePresence mode="wait">
+                                {step === "identifier" ? (
+                                    <motion.div
+                                        key="identifier"
+                                        initial={{ opacity: 0, x: -20 }}
+                                        animate={{ opacity: 1, x: 0 }}
+                                        exit={{ opacity: 0, x: 20 }}
+                                        className="space-y-4"
                                     >
-                                        Reenviar código
-                                    </button>
-                                </div>
-                            )}
+                                        <div className="flex justify-between items-end mb-2 px-2">
+                                            <label className="text-2xl font-black text-warm-900 font-heading">
+                                                {method === "email" ? "Tu Correo" : "Número de Celular"}
+                                            </label>
+                                            <button
+                                                type="button"
+                                                onClick={() => setMethod(method === "email" ? "phone" : "email")}
+                                                className="text-lg font-bold text-green-600 hover:underline"
+                                            >
+                                                Usar {method === "email" ? "Celular" : "Correo"}
+                                            </button>
+                                        </div>
+                                        <div className="relative group">
+                                            <div className="absolute left-6 top-1/2 -translate-y-1/2 text-warm-300 group-focus-within:text-green-500 transition-colors">
+                                                {method === "email" ? <Mail size={32} /> : <Phone size={32} />}
+                                            </div>
+                                            <input
+                                                type={method === "email" ? "email" : "tel"}
+                                                value={method === "email" ? email : phone}
+                                                onChange={(e) => method === "email" ? setEmail(e.target.value) : setPhone(e.target.value)}
+                                                placeholder={method === "email" ? "tu@correo.com" : "70000000"}
+                                                className="w-full h-24 pl-16 pr-6 text-2xl md:text-3xl font-bold bg-warm-50 border-4 border-transparent focus:border-green-500 focus:bg-white rounded-[2rem] outline-none transition-all shadow-inner"
+                                                required
+                                            />
+                                        </div>
+                                    </motion.div>
+                                ) : (
+                                    <motion.div
+                                        key="otp"
+                                        initial={{ opacity: 0, x: 20 }}
+                                        animate={{ opacity: 1, x: 0 }}
+                                        exit={{ opacity: 0, x: -20 }}
+                                        className="space-y-8 text-center"
+                                    >
+                                        <div className="flex items-center gap-4 text-warm-500 mb-4">
+                                            <button onClick={() => setStep("identifier")} className="p-2 hover:bg-warm-100 rounded-full transition-colors">
+                                                <ChevronLeft size={32} />
+                                            </button>
+                                            <span className="text-xl font-bold">Verificar código</span>
+                                        </div>
+                                        <input
+                                            type="text"
+                                            value={otp}
+                                            onChange={(e) => setOtp(e.target.value)}
+                                            placeholder="000 000"
+                                            className="w-full h-32 text-center text-7xl tracking-[0.4em] font-black bg-warm-50 border-4 border-green-500 rounded-[2.5rem] focus:ring-[16px] focus:ring-green-50 outline-none transition-all"
+                                            maxLength={6}
+                                            required
+                                        />
+                                        <button
+                                            type="button"
+                                            onClick={() => setStep("identifier")}
+                                            className="text-green-600 font-black text-xl hover:underline"
+                                        >
+                                            Reenviar código
+                                        </button>
+                                    </motion.div>
+                                )}
+                            </AnimatePresence>
 
                             {error && (
-                                <div className="flex items-center gap-3 p-4 bg-red-50 text-red-700 rounded-2xl border border-red-100 animate-shake">
-                                    <AlertCircle size={24} className="shrink-0" />
-                                    <p className="text-sm font-bold">{error}</p>
-                                </div>
+                                <motion.div
+                                    initial={{ opacity: 0, scale: 0.95 }}
+                                    animate={{ opacity: 1, scale: 1 }}
+                                    className="p-8 bg-red-50 border-4 border-red-100 rounded-[2rem] flex items-start gap-5 text-red-900"
+                                >
+                                    <AlertCircle className="shrink-0 mt-1" size={32} />
+                                    <p className="text-xl font-black leading-tight">{error}</p>
+                                </motion.div>
                             )}
 
                             <Button
@@ -247,38 +267,22 @@ export default function LoginPage() {
                                 fullWidth
                                 size="lg"
                                 loading={loading}
-                                className="h-20 text-2xl font-black rounded-[1.5rem] bg-gradient-to-r from-[var(--pais-green-500)] to-[var(--pais-green-600)] shadow-lg shadow-green-200"
+                                className="h-24 text-3xl font-black rounded-[2rem] bg-green-500 shadow-2xl shadow-green-500/30 active:scale-95"
                             >
-                                {step === "identifier" ? "Continuar" : "Entrar"}
+                                {step === "identifier" ? "Continuar" : "Entrar a PAIS"}
                             </Button>
                         </form>
                     </div>
                 </div>
 
-                <div className="mt-8 flex flex-col gap-4 items-center">
+                <div className="text-center animate-fade-in" style={{ animationDelay: "0.2s" }}>
+                    <p className="text-xl font-bold text-warm-500 mb-6">¿Aún no tienes cuenta?</p>
                     <button
-                        onClick={() => {
-                            setMethod(method === "phone" ? "email" : "phone");
-                            setStep("identifier");
-                            setError(null);
-                        }}
-                        className="text-text-secondary font-bold hover:text-[var(--pais-green-700)] transition-colors flex items-center gap-2"
+                        onClick={() => router.push("/register")}
+                        className="inline-flex items-center gap-4 text-green-600 text-2xl font-black hover:gap-6 transition-all"
                     >
-                        {method === "phone" ? <Mail size={18} /> : <Phone size={18} />}
-                        Usar {method === "phone" ? "Correo" : "Celular"}
+                        Crear una ahora <ArrowRight size={32} />
                     </button>
-
-                    <div className="pt-6 border-t border-black/5 w-full text-center">
-                        <p className="text-[var(--pais-warm-500)] font-medium mb-4 italic">¿Eres nuevo?</p>
-                        <Button
-                            variant="ghost"
-                            fullWidth
-                            onClick={() => router.push("/register")}
-                            className="h-16 text-xl font-bold text-[var(--pais-green-700)]"
-                        >
-                            Crear una cuenta <ChevronRight size={20} className="ml-2" />
-                        </Button>
-                    </div>
                 </div>
             </div>
         </div>
