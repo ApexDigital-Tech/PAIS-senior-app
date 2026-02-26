@@ -1,11 +1,11 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
 import { motion } from "framer-motion";
 
-export default function ConfirmAccessPage() {
+function ConfirmAccess() {
     const router = useRouter();
     const searchParams = useSearchParams();
     const [message, setMessage] = useState("Validando tu acceso...");
@@ -64,5 +64,13 @@ export default function ConfirmAccessPage() {
                 <p className="text-warm-500 text-sm">{message}</p>
             </motion.div>
         </div>
+    );
+}
+
+export default function ConfirmAccessPage() {
+    return (
+        <Suspense fallback={<div className="min-h-screen bg-gray-50 flex items-center justify-center"><div className="w-12 h-12 border-4 border-green-500 border-t-transparent rounded-full animate-spin" /></div>}>
+            <ConfirmAccess />
+        </Suspense>
     );
 }
