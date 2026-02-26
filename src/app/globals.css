@@ -9,28 +9,30 @@
 :root {
   /* —— 60% Neutrals (Dominant) —— */
   --pais-white: 0 0% 100%;
-  --pais-warm-50: 60 20% 97%;
+  --pais-warm-50: 60 20% 98%;
+  /* #FAFAF8 - Fondo principal */
   --pais-warm-100: 60 20% 96%;
   /* #F5F5F0 */
-  --pais-warm-200: 60 15% 92%;
-  --pais-warm-300: 60 12% 86%;
-  --pais-warm-500: 60 8% 53%;
-  --pais-warm-700: 60 8% 33%;
-  --pais-warm-900: 210 100% 12%;
-  /* #001F3F Dark Blue for text */
+  --pais-warm-200: 60 12% 88%;
+  /* Bordes */
+  --pais-warm-500: 60 8% 35%;
+  /* Texto secundario */
+  --pais-warm-900: 0 0% 10%;
+  /* #1A1A1A - Texto principal */
 
   /* —— 30% Brand Colors (Secondary) —— */
-  --pais-green-500: 151 100% 36%;
-  /* #00BA61 */
-  --pais-green-600: 151 100% 32%;
-  --pais-blue-500: 210 100% 50%;
-  /* #007FFF */
-  --pais-blue-600: 210 100% 43%;
+  --pais-green-500: 151 51% 36%;
+  /* #2D8A56 - Verde Esperanza */
+  --pais-green-600: 151 51% 32%;
+  --pais-blue-500: 197 68% 32%;
+  /* #1A6B8A - Azul Salud */
+  --pais-blue-600: 197 68% 28%;
 
   /* —— 10% Accents (Strategic) —— */
-  --pais-orange-500: 34 100% 50%;
-  --pais-red-500: 0 90% 50%;
-  /* #F20D0D */
+  --pais-orange-500: 22 80% 58%;
+  /* #E87C3E - Naranja Cálido */
+  --pais-red-500: 0 63% 51%;
+  /* #D32F2F - Rojo Emergencia */
   --pais-amber-500: 48 100% 50%;
   --pais-purple-500: 271 81% 56%;
 
@@ -52,8 +54,12 @@
 
   /* —— Radius —— */
   --radius-sm: 8px;
-  --radius-md: 12px;
-  --radius-lg: 16px;
+  --radius-md: 16px;
+  /* Standardized for principal buttons */
+  --radius-lg: 20px;
+  /* Standardized for cards */
+  --radius-xl: 32px;
+  /* For larger containers */
   --radius-full: 9999px;
 
   /* —— Shadows (Multi-layered for realism) —— */
@@ -62,14 +68,19 @@
   --shadow-lg: 0 20px 40px hsla(var(--pais-warm-900), 0.08), 0 8px 12px hsla(var(--pais-warm-900), 0.04);
 
 
-  /* —— Typography —— */
+  /* —— Typography (Senior-Optimized) —— */
   --font-body: var(--font-lexend), var(--font-inter), system-ui, sans-serif;
-  --font-heading: var(--font-lexend), var(--font-outfit), system-ui, sans-serif;
-  --text-base: 16px;
-  --text-lg: 18px;
-  --text-xl: 20px;
-  --line-height-body: 1.5;
-  --line-height-heading: 1.2;
+  --font-heading: var(--font-outfit), var(--font-lexend), system-ui, sans-serif;
+  --text-base: 18px;
+  /* Minimum absolute per design system */
+  --text-lg: 20px;
+  /* Secondary text */
+  --text-xl: 22px;
+  /* Subheadings */
+  --text-hero: 36px;
+  /* Page titles */
+  --line-height-body: 1.6;
+  --line-height-heading: 1.3;
 
   /* —— Animation (Fixed Speed) —— */
   --duration-fast: 200ms;

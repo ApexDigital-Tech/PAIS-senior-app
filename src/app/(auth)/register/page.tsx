@@ -61,7 +61,7 @@ function RegisterContent() {
                     : {
                         email: identifier,
                         options: {
-                            emailRedirectTo: `${appUrl}/dashboard`,
+                            emailRedirectTo: `${appUrl}/auth/callback?next=/dashboard`,
                             data: { full_name: fullName, role: role }
                         }
                     }

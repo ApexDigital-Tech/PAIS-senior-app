@@ -65,7 +65,7 @@ function LoginContent() {
                     const { error } = await supabase.auth.signInWithOtp({
                         email,
                         options: {
-                            emailRedirectTo: `${appUrl}/dashboard`,
+                            emailRedirectTo: `${appUrl}/auth/callback?next=/dashboard`,
                         }
                     });
                     if (error) {
@@ -99,7 +99,7 @@ function LoginContent() {
             const { error } = await supabase.auth.signInWithOAuth({
                 provider: "google",
                 options: {
-                    redirectTo: `${window.location.origin}/dashboard`
+                    redirectTo: `${window.location.origin}/auth/callback?next=/dashboard`
                 }
             });
             if (error) throw error;
@@ -267,7 +267,7 @@ function LoginContent() {
                                 fullWidth
                                 size="lg"
                                 loading={loading}
-                                className="h-24 text-3xl font-black rounded-[2rem] bg-green-500 shadow-2xl shadow-green-500/30 active:scale-95"
+                                className="h-16 text-xl font-bold rounded-2xl bg-green-500 shadow-xl shadow-green-500/20 active:scale-95"
                             >
                                 {step === "identifier" ? "Continuar" : "Entrar a PAIS"}
                             </Button>

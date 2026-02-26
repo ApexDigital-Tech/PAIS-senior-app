@@ -2,7 +2,6 @@
 
 import { useRouter } from "next/navigation";
 import { useUser } from "@/hooks/useUser";
-import { Header } from "@/components/layout/Header";
 import { Button } from "@/components/ui/Button";
 import {
     Car,
@@ -11,222 +10,368 @@ import {
     ShieldCheck,
     ChevronRight,
     ArrowRight,
-    Star
+    Star,
+    CheckCircle2,
+    Shield,
+    PhoneCall
 } from "lucide-react";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import { motion } from "framer-motion";
 
 export default function LandingPage() {
     const router = useRouter();
     const { user, loading } = useUser();
+    const [mounted, setMounted] = useState(false);
 
-    // If logged in, go to dashboard
     useEffect(() => {
+        setMounted(true);
         if (!loading && user) {
             router.push("/dashboard");
         }
     }, [user, loading, router]);
 
+    if (!mounted) return null;
+
+    const containerVariants = {
+        hidden: { opacity: 0 },
+        visible: {
+            opacity: 1,
+            transition: { staggerChildren: 0.15 }
+        }
+    };
+
+    const itemVariants = {
+        hidden: { opacity: 0, y: 20 },
+        visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] } }
+    };
+
     return (
-        <div className="min-h-screen bg-warm-50 text-warm-900 font-sans selection:bg-green-100 selection:text-green-900">
-            {/* Header (Match Stitch exactly) */}
-            <header className="sticky top-0 z-50 w-full border-b border-green-500/10 bg-white/80 backdrop-blur-md px-6 md:px-10 py-4">
+        <div className="min-h-screen bg-[var(--background)] text-[var(--text-primary)] font-sans selection:bg-green-100 selection:text-green-900 overflow-x-hidden">
+            {/* 1. Navigation Header (Stitch-Style) */}
+            <header className="fixed top-0 z-50 w-full border-b border-warm-200/30 bg-white/70 backdrop-blur-xl px-6 md:px-10 py-4 transition-all duration-300">
                 <div className="max-w-7xl mx-auto flex items-center justify-between">
-                    <div className="flex items-center gap-3 group cursor-pointer" onClick={() => router.push("/")}>
-                        <div className="bg-green-500 p-2 rounded-xl flex items-center justify-center text-white shadow-lg shadow-green-500/20 group-hover:rotate-12 transition-transform duration-500">
+                    <motion.div
+                        initial={{ opacity: 0, x: -20 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        className="flex items-center gap-3 group cursor-pointer"
+                        onClick={() => router.push("/")}
+                    >
+                        <div className="bg-green-500 p-2.5 rounded-xl flex items-center justify-center text-white shadow-lg shadow-green-500/20 group-hover:rotate-12 transition-all duration-500">
                             <Heart size={20} fill="white" />
                         </div>
-                        <h2 className="text-warm-900 text-2xl font-black tracking-tight font-heading">PAIS</h2>
-                    </div>
+                        <h2 className="text-warm-900 text-2xl font-black tracking-tight font-heading uppercase">PAIS</h2>
+                    </motion.div>
+
                     <nav className="hidden md:flex items-center gap-10">
-                        <a className="text-warm-700 text-base font-bold hover:text-green-600 transition-colors" href="#servicios">Servicios</a>
-                        <a className="text-warm-700 text-base font-bold hover:text-green-600 transition-colors" href="#nosotros">Nosotros</a>
-                        <a className="text-warm-700 text-base font-bold hover:text-green-600 transition-colors" href="#contacto">Contacto</a>
+                        {["Servicios", "Nosotros", "Privacidad"].map((item) => (
+                            <a
+                                key={item}
+                                href={`#${item.toLowerCase()}`}
+                                className="text-warm-500 text-base font-bold hover:text-green-600 transition-colors"
+                            >
+                                {item}
+                            </a>
+                        ))}
                     </nav>
-                    <div className="flex items-center gap-4">
+
+                    <motion.div
+                        initial={{ opacity: 0, x: 20 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        className="flex items-center gap-4"
+                    >
+                        <Button
+                            variant="ghost"
+                            size="sm"
+                            onClick={() => router.push("/login")}
+                            className="hidden sm:flex text-green-600 font-bold"
+                        >
+                            Entrar
+                        </Button>
                         <Button
                             variant="primary"
-                            size="default"
-                            onClick={() => router.push("/login")}
-                            className="rounded-xl px-6 h-10 text-base font-bold"
+                            size="sm"
+                            onClick={() => router.push("/register")}
+                            className="rounded-xl px-6"
                         >
-                            Login
+                            Registro
                         </Button>
-                    </div>
+                    </motion.div>
                 </div>
             </header>
 
-            <main className="flex-1">
-                {/* Hero Section (Match code_dashboard_pais.html exactly) */}
-                <section className="relative px-6 py-16 md:py-24 bg-[#F5F5F0] overflow-hidden">
-                    <div className="max-w-7xl mx-auto grid lg:grid-cols-2 items-center gap-12">
-                        <div className="flex flex-col gap-8 animate-fade-in text-left">
-                            <div className="flex flex-col gap-4">
-                                <h1 className="text-warm-900 text-5xl md:text-7xl font-black leading-tight tracking-tight font-heading">
-                                    Bienvenido a <span className="text-green-500">PAIS</span>
-                                </h1>
-                                <p className="text-warm-700 text-lg md:text-xl font-medium leading-relaxed max-w-xl">
-                                    Tu compañero para una vida autónoma, segura y siempre conectada con los que amas.
-                                </p>
+            <main>
+                {/* 2. Hero Section: The "María" Test */}
+                <section className="relative pt-32 pb-20 md:pt-48 md:pb-32 px-6 overflow-hidden">
+                    {/* Dynamic Background Elements */}
+                    <div className="absolute top-0 left-0 w-full h-full -z-10">
+                        <div className="absolute top-[-10%] right-[-5%] w-[50rem] h-[50rem] bg-green-100/40 rounded-full blur-[120px] animate-pulse-slow"></div>
+                        <div className="absolute bottom-[-10%] left-[-5%] w-[40rem] h-[40rem] bg-blue-100/30 rounded-full blur-[120px] animate-pulse-slow" style={{ animationDelay: "2s" }}></div>
+                    </div>
+
+                    <div className="max-w-7xl mx-auto grid lg:grid-cols-2 items-center gap-20">
+                        <motion.div
+                            variants={containerVariants}
+                            initial="hidden"
+                            animate="visible"
+                            className="flex flex-col gap-10"
+                        >
+                            <div className="space-y-6">
+                                <motion.div variants={itemVariants} className="inline-flex items-center gap-2 px-4 py-2 bg-green-50 text-green-700 rounded-full text-sm font-black uppercase tracking-wider">
+                                    <ShieldCheck size={16} /> Certificado para Seniors 2026
+                                </motion.div>
+                                <motion.h1 variants={itemVariants} className="text-5xl md:text-7xl font-black leading-[1.05] tracking-tight font-heading text-warm-900">
+                                    Cuidamos lo que <br />
+                                    <span className="text-green-500">más importa.</span>
+                                </motion.h1>
+                                <motion.p variants={itemVariants} className="text-xl md:text-2xl text-warm-500 font-medium leading-relaxed max-w-xl">
+                                    La plataforma que conecta a los seniors con su familia y comunidad a través de salud, transporte y compañía.
+                                </motion.p>
                             </div>
-                            <div className="flex flex-col sm:flex-row gap-4">
+
+                            <motion.div variants={itemVariants} className="flex flex-col sm:flex-row gap-5">
                                 <Button
                                     variant="primary"
                                     size="lg"
                                     onClick={() => router.push("/register")}
-                                    className="min-w-[200px] h-14 text-lg rounded-xl shadow-xl shadow-green-500/20"
+                                    className="min-w-[220px] h-16 shadow-2xl shadow-green-500/20"
+                                    icon={<ArrowRight />}
                                 >
-                                    Comenzar ahora
+                                    Comenzar Gratis
                                 </Button>
                                 <Button
-                                    variant="outline"
+                                    variant="secondary"
                                     size="lg"
                                     onClick={() => router.push("/login")}
-                                    className="min-w-[200px] h-14 text-lg rounded-xl border-blue-500 text-blue-600 bg-white hover:bg-blue-50"
+                                    className="min-w-[220px] h-16"
                                 >
-                                    Ya tengo cuenta
+                                    Ver Demo
                                 </Button>
-                            </div>
-                        </div>
+                            </motion.div>
 
-                        {/* Hero Image with Floating Badge (Stitch Style) */}
-                        <div className="relative animate-fade-in" style={{ animationDelay: "0.2s" }}>
-                            <div className="aspect-square rounded-3xl overflow-hidden shadow-2xl bg-warm-200 border-8 border-white ring-1 ring-black/5">
+                            <motion.div variants={itemVariants} className="flex items-center gap-6 pt-4 border-t border-warm-200/50">
+                                <div className="flex -space-x-3">
+                                    {[1, 2, 3].map(i => (
+                                        <img key={i} src={`https://i.pravatar.cc/100?u=s${i}`} className="w-12 h-12 rounded-full border-4 border-white shadow-sm" alt="Senior user" />
+                                    ))}
+                                </div>
+                                <div className="text-sm font-bold text-warm-500">
+                                    <span className="text-warm-900 block font-black text-lg">+10,000 Seniors</span>
+                                    disfrutan de mayor autonomía
+                                </div>
+                            </motion.div>
+                        </motion.div>
+
+                        {/* Interactive Hero Image Component */}
+                        <motion.div
+                            initial={{ opacity: 0, scale: 0.9 }}
+                            animate={{ opacity: 1, scale: 1 }}
+                            transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
+                            className="relative"
+                        >
+                            <div className="relative aspect-[4/5] md:aspect-square rounded-[3rem] overflow-hidden shadow-[0_50px_100px_-20px_rgba(0,0,0,0.2)] border-[12px] border-white ring-1 ring-black/5">
                                 <img
-                                    src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?q=80&w=2070"
-                                    alt="Seniors felices usando tecnología"
+                                    src="https://images.unsplash.com/photo-1516307361474-3205029857a1?q=80&w=2070"
+                                    alt="Seniors felices usando PAIS"
                                     className="w-full h-full object-cover"
                                 />
+                                <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent"></div>
                             </div>
-                            {/* Floating Badge */}
-                            <div className="absolute -bottom-6 -right-2 md:-right-6 bg-white/95 backdrop-blur-md p-6 rounded-2xl shadow-xl flex items-center gap-4 max-w-xs border border-green-500/10 animate-float">
-                                <div className="bg-green-100 p-3 rounded-xl text-green-600">
-                                    <Users size={32} strokeWidth={2.5} />
+
+                            {/* Floating Feature Cards (Premium Touch) */}
+                            <motion.div
+                                animate={{ y: [0, -10, 0] }}
+                                transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+                                className="absolute -left-6 top-[20%] glass p-5 rounded-2xl shadow-xl flex items-center gap-4 border border-white/50"
+                            >
+                                <div className="bg-blue-500 p-3 rounded-xl text-white">
+                                    <Car size={24} />
                                 </div>
-                                <p className="text-warm-900 font-bold text-lg leading-tight font-heading">
-                                    Cerca de tu familia con un toque.
-                                </p>
-                            </div>
-                        </div>
+                                <div>
+                                    <p className="text-xs font-black text-warm-500 uppercase">Transporte</p>
+                                    <p className="text-sm font-bold text-warm-900">Chofer Certificado</p>
+                                </div>
+                            </motion.div>
+
+                            <motion.div
+                                animate={{ y: [0, 10, 0] }}
+                                transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
+                                className="absolute -right-6 bottom-[20%] glass p-5 rounded-2xl shadow-xl flex items-center gap-4 border border-white/50"
+                            >
+                                <div className="bg-red-500 p-3 rounded-xl text-white">
+                                    <Heart size={24} fill="white" />
+                                </div>
+                                <div>
+                                    <p className="text-xs font-black text-warm-500 uppercase">Salud</p>
+                                    <p className="text-sm font-bold text-warm-900">Botón SOS 24/7</p>
+                                </div>
+                            </motion.div>
+                        </motion.div>
                     </div>
                 </section>
 
-                {/* Services Section (Stitch Grid) */}
-                <section id="servicios" className="px-6 py-20 bg-white">
+                {/* 3. Services: The 3 Pillars (Premium Grid) */}
+                <section id="servicios" className="px-6 py-24 bg-white relative">
                     <div className="max-w-7xl mx-auto">
-                        <div className="flex flex-col gap-4 mb-16 text-center max-w-2xl mx-auto">
-                            <h2 className="text-warm-900 text-4xl font-black font-heading tracking-tight">Servicios</h2>
-                            <p className="text-warm-500 text-lg font-medium leading-relaxed">Diseñados para ser fáciles de usar por toda la familia.</p>
-                            <div className="h-1.5 w-20 bg-green-500 mx-auto rounded-full mt-1"></div>
+                        <div className="text-center max-w-3xl mx-auto mb-20 space-y-4">
+                            <h2 className="text-4xl md:text-5xl font-black text-warm-900 font-heading tracking-tight">
+                                Diseñado para ser <span className="text-green-500 underline decoration-4 underline-offset-8">simple.</span>
+                            </h2>
+                            <p className="text-xl text-warm-500 font-medium">
+                                Tres pilares fundamentales para una vida plena y conectada.
+                            </p>
                         </div>
 
                         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                            {/* Transport */}
-                            <div className="group flex flex-col gap-6 rounded-3xl border-2 border-slate-50 bg-white p-8 hover:border-green-500/40 transition-all duration-300">
-                                <div className="w-16 h-16 rounded-2xl bg-green-50 flex items-center justify-center text-green-500 transition-all group-hover:bg-green-500 group-hover:text-white group-hover:rotate-3 shadow-sm">
-                                    <Car size={32} strokeWidth={2.5} />
-                                </div>
-                                <div className="flex flex-col gap-3">
-                                    <h3 className="text-warm-900 text-xl font-black font-heading leading-tight">Transporte Seguro</h3>
-                                    <p className="text-warm-600 text-base leading-relaxed font-semibold opacity-80 group-hover:opacity-100 transition-opacity">
-                                        GPS integrado y conductores certificados para tus traslados diarios.
+                            {[
+                                {
+                                    title: "Transporte Seguro",
+                                    desc: "GPS integrado y conductores certificados para tus traslados diarios.",
+                                    icon: Car,
+                                    color: "bg-blue-500",
+                                    light: "bg-blue-50",
+                                    text: "text-blue-600"
+                                },
+                                {
+                                    title: "Compañía Solidaria",
+                                    desc: "Red de voluntarios e integración familiar para evitar la soledad.",
+                                    icon: Users,
+                                    color: "bg-orange-500",
+                                    light: "bg-orange-50",
+                                    text: "text-orange-600"
+                                },
+                                {
+                                    title: "Salud Digital",
+                                    desc: "Recordatorios de medicina y botón SOS inteligente en tu bolsillo.",
+                                    icon: Heart,
+                                    color: "bg-red-500",
+                                    light: "bg-red-50",
+                                    text: "text-red-600"
+                                }
+                            ].map((service, idx) => (
+                                <motion.div
+                                    key={idx}
+                                    whileHover={{ y: -10 }}
+                                    className="group p-10 rounded-[3rem] bg-warm-50/50 border-2 border-transparent hover:border-green-500/20 hover:bg-white hover:shadow-2xl transition-all duration-500 cursor-default"
+                                >
+                                    <div className={`${service.light} ${service.text} w-20 h-20 rounded-2xl flex items-center justify-center mb-8 group-hover:scale-110 transition-transform`}>
+                                        <service.icon size={40} strokeWidth={2.5} />
+                                    </div>
+                                    <h3 className="text-2xl font-black text-warm-900 mb-4 font-heading">{service.title}</h3>
+                                    <p className="text-lg text-warm-500 font-semibold leading-relaxed mb-6">
+                                        {service.desc}
                                     </p>
-                                </div>
-                            </div>
-
-                            {/* Health */}
-                            <div className="group flex flex-col gap-6 rounded-3xl border-2 border-slate-50 bg-white p-8 hover:border-red-500/40 transition-all duration-300">
-                                <div className="w-16 h-16 rounded-2xl bg-red-50 flex items-center justify-center text-red-500 transition-all group-hover:bg-red-500 group-hover:text-white group-hover:rotate-3 shadow-sm">
-                                    <ShieldCheck size={32} strokeWidth={2.5} />
-                                </div>
-                                <div className="flex flex-col gap-3">
-                                    <h3 className="text-warm-900 text-xl font-black font-heading leading-tight">Salud Digital</h3>
-                                    <p className="text-warm-600 text-base leading-relaxed font-semibold opacity-80 group-hover:opacity-100 transition-opacity">
-                                        Recordatorios de medicación y botón SOS inteligente conectado con emergencias.
-                                    </p>
-                                </div>
-                            </div>
-
-                            {/* Community */}
-                            <div className="group flex flex-col gap-6 rounded-3xl border-2 border-slate-50 bg-white p-8 hover:border-blue-500/40 transition-all duration-300">
-                                <div className="w-16 h-16 rounded-2xl bg-blue-50 flex items-center justify-center text-blue-500 transition-all group-hover:bg-blue-500 group-hover:text-white group-hover:rotate-3 shadow-sm">
-                                    <Users size={32} strokeWidth={2.5} />
-                                </div>
-                                <div className="flex flex-col gap-3">
-                                    <h3 className="text-warm-900 text-xl font-black font-heading leading-tight">Compañía Solidaria</h3>
-                                    <p className="text-warm-600 text-base leading-relaxed font-semibold opacity-80 group-hover:opacity-100 transition-opacity">
-                                        Red de voluntarios para mantenerte socialmente conectado y acompañado.
-                                    </p>
-                                </div>
-                            </div>
+                                    <div className="flex items-center gap-2 text-green-600 font-black text-sm uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-opacity">
+                                        Saber más <ChevronRight size={16} />
+                                    </div>
+                                </motion.div>
+                            ))}
                         </div>
                     </div>
                 </section>
 
-                {/* Social Proof (10k Seniors Trust Us) */}
-                <section className="px-6 py-20 bg-[#F5F5F0]">
-                    <div className="max-w-4xl mx-auto text-center">
-                        <h2 className="text-warm-900 text-3xl md:text-4xl font-black font-heading leading-tight mb-12 tracking-tight">
-                            Más de 10,000 seniors confían en nosotros
-                        </h2>
-                        <div className="flex justify-center mb-10">
-                            <div className="flex -space-x-4">
-                                {[1, 2, 3, 4].map(i => (
-                                    <div key={i} className="w-16 h-16 rounded-full border-4 border-white bg-warm-200 overflow-hidden shadow-lg transition-transform hover:translate-y-[-5px]">
-                                        <img src={`https://i.pravatar.cc/150?u=senior${i}`} alt="Senior" className="w-full h-full object-cover" />
+                {/* 4. Social Proof & Trust */}
+                <section className="px-6 py-24 bg-warm-900 text-white overflow-hidden relative">
+                    <div className="absolute top-0 right-0 w-[40rem] h-[40rem] bg-green-500/10 rounded-full blur-[100px]"></div>
+                    <div className="max-w-7xl mx-auto grid lg:grid-cols-2 gap-20 items-center">
+                        <div className="space-y-12">
+                            <h2 className="text-4xl md:text-6xl font-black font-heading leading-tight tracking-tight">
+                                Tu familia tranquila, <br />
+                                Tú siempre <span className="text-green-400">seguro.</span>
+                            </h2>
+                            <div className="space-y-6">
+                                {[
+                                    "Botón SOS integrado con línea de emergencia",
+                                    "Seguimiento en tiempo real para familiares",
+                                    "Privacidad y seguridad de datos garantizada"
+                                ].map((item, i) => (
+                                    <div key={i} className="flex items-center gap-4">
+                                        <div className="bg-green-500/20 p-1.5 rounded-full text-green-400">
+                                            <CheckCircle2 size={24} />
+                                        </div>
+                                        <span className="text-xl font-bold text-white/90">{item}</span>
                                     </div>
                                 ))}
-                                <div className="w-16 h-16 rounded-full border-4 border-white bg-green-500 flex items-center justify-center text-white text-lg font-black shadow-lg">
-                                    +10k
-                                </div>
                             </div>
+                            <Button variant="primary" size="lg" className="h-16 shadow-none" onClick={() => router.push("/register")}>
+                                Únete hoy mismo
+                            </Button>
                         </div>
-                        <div className="bg-white p-8 md:p-12 rounded-3xl shadow-xl border-4 border-white relative overflow-hidden">
-                            <p className="text-warm-800 text-xl md:text-2xl font-bold italic leading-tight font-heading">
-                                "PAIS me devolvió la libertad de salir a caminar tranquila. Es como tener a mi familia en el bolsillo."
+                        <div className="bg-white/5 backdrop-blur-sm p-10 rounded-[3rem] border border-white/10 space-y-8">
+                            <div className="flex items-center gap-5">
+                                <div className="flex text-orange-400">
+                                    {[1, 2, 3, 4, 5].map(i => <Star key={i} size={24} fill="currentColor" />)}
+                                </div>
+                                <span className="font-bold text-lg text-white/50">Más de 500 reseñas de 5 estrellas</span>
+                            </div>
+                            <p className="text-2xl md:text-3xl font-bold italic leading-tight text-white/90">
+                                "PAIS no es solo una aplicación, es la libertad de saber que si algo pasa, mi hijo está a un toque de distancia. Ahora salgo a caminar sin miedo."
                             </p>
-                            <div className="flex flex-col items-center mt-6 gap-1">
-                                <p className="text-green-600 font-black text-xl font-heading">— Elena, 72 años</p>
+                            <div className="flex items-center gap-4">
+                                <img src="https://i.pravatar.cc/100?u=senior1" className="w-16 h-16 rounded-full border-2 border-green-500" alt="Elena" />
+                                <div>
+                                    <p className="text-xl font-black">Elena Pérez</p>
+                                    <p className="text-white/50 font-bold uppercase tracking-widest text-sm">74 años · Usuaria de PAIS</p>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </section>
             </main>
 
-            {/* Custom Footer (Match Stitch) */}
-            <footer className="bg-green-500 px-6 py-24 text-white font-heading">
-                <div className="max-w-7xl mx-auto flex flex-col lg:flex-row items-center justify-between gap-20">
-                    <div className="flex items-center gap-16 md:gap-24">
-                        <div className="flex flex-col items-center gap-4 group">
-                            <div className="bg-white/10 p-5 rounded-[1.5rem] group-hover:bg-white/20 transition-colors">
-                                <ShieldCheck size={56} strokeWidth={2.5} />
-                            </div>
-                            <span className="font-black text-2xl tracking-tight">Seguro</span>
+            {/* 5. Footer (Stitch Minimalist) */}
+            <footer className="bg-white px-6 pt-24 pb-12 text-warm-900">
+                <div className="max-w-7xl mx-auto flex flex-col items-center text-center gap-16">
+                    <div className="flex flex-col items-center gap-6">
+                        <div className="bg-green-500 p-4 rounded-3xl text-white shadow-xl">
+                            <Heart size={40} fill="white" />
                         </div>
-                        <div className="flex flex-col items-center gap-4 group">
-                            <div className="bg-white/10 p-5 rounded-[1.5rem] group-hover:bg-white/20 transition-colors">
-                                <Users size={56} strokeWidth={2.5} />
-                            </div>
-                            <span className="font-black text-2xl tracking-tight">Familiar</span>
+                        <h3 className="text-5xl font-black font-heading tracking-tighter">PAIS</h3>
+                        <p className="text-xl text-warm-500 font-bold max-w-md">
+                            La plataforma lider en autonomía e inclusión para el adulto mayor en Bolivia y Latinoamérica.
+                        </p>
+                    </div>
+
+                    <div className="grid grid-cols-2 md:grid-cols-4 gap-12 text-left w-full border-y border-warm-100 py-12">
+                        <div className="space-y-4">
+                            <p className="font-black text-sm uppercase tracking-widest text-warm-900">Producto</p>
+                            <ul className="space-y-2 text-warm-500 font-bold">
+                                <li><a href="#" className="hover:text-green-600 transition-colors">Transporte</a></li>
+                                <li><a href="#" className="hover:text-green-600 transition-colors">Salud</a></li>
+                                <li><a href="#" className="hover:text-green-600 transition-colors">Comunidad</a></li>
+                            </ul>
                         </div>
-                        <div className="flex flex-col items-center gap-4 group">
-                            <div className="bg-white/10 p-5 rounded-[1.5rem] group-hover:bg-white/20 transition-colors">
-                                <Heart size={56} strokeWidth={2.5} />
+                        <div className="space-y-4">
+                            <p className="font-black text-sm uppercase tracking-widest text-warm-900">Nosotros</p>
+                            <ul className="space-y-2 text-warm-500 font-bold">
+                                <li><a href="#" className="hover:text-green-600 transition-colors">Misión</a></li>
+                                <li><a href="#" className="hover:text-green-600 transition-colors">Voluntariado</a></li>
+                                <li><a href="#" className="hover:text-green-600 transition-colors">Alianzas</a></li>
+                            </ul>
+                        </div>
+                        <div className="space-y-4">
+                            <p className="font-black text-sm uppercase tracking-widest text-warm-900">Legal</p>
+                            <ul className="space-y-2 text-warm-500 font-bold">
+                                <li><a href="#" className="hover:text-green-600 transition-colors">Privacidad</a></li>
+                                <li><a href="#" className="hover:text-green-600 transition-colors">Términos</a></li>
+                            </ul>
+                        </div>
+                        <div className="space-y-4">
+                            <p className="font-black text-sm uppercase tracking-widest text-warm-900">Contacto</p>
+                            <div className="flex gap-4">
+                                <Button variant="secondary" size="sm" className="h-10 w-10 p-0 rounded-full">
+                                    <PhoneCall size={18} />
+                                </Button>
+                                <Button variant="secondary" size="sm" className="h-10 w-10 p-0 rounded-full">
+                                    <Mail size={18} />
+                                </Button>
                             </div>
-                            <span className="font-black text-2xl tracking-tight">Privado</span>
                         </div>
                     </div>
-                    <div className="text-center lg:text-right">
-                        <h3 className="text-7xl font-black mb-6 tracking-tighter">PAIS</h3>
-                        <p className="text-white/80 text-2xl font-medium max-w-sm ml-auto">Cuidado humano que conecta generaciones.</p>
-                        <div className="mt-12 flex gap-10 justify-center lg:justify-end text-white/70 font-bold text-xl">
-                            <a href="#" className="hover:text-white hover:underline transition-all">Privacidad</a>
-                            <a href="#" className="hover:text-white hover:underline transition-all">Términos</a>
-                            <a href="#" className="hover:text-white hover:underline transition-all">Ayuda</a>
-                        </div>
+
+                    <div className="w-full flex flex-col md:flex-row justify-between items-center gap-6 text-warm-400 font-bold text-sm tracking-wide">
+                        <p>© 2026 PAIS Platform. Gerontología Digital Avanzada.</p>
+                        <p>Diseñado con ❤️ en Bolivia para el mundo.</p>
                     </div>
-                </div>
-                <div className="max-w-7xl mx-auto mt-20 pt-12 border-t border-white/20 text-center text-white/50 font-bold text-lg tracking-wide uppercase">
-                    © 2026 PAIS - Plataforma de Autonomía e Inclusión Senior.
                 </div>
             </footer>
         </div>

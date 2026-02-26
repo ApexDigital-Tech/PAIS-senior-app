@@ -30,8 +30,10 @@ const steps = [
 export function Onboarding() {
     const [currentStep, setCurrentStep] = useState(0);
     const [isVisible, setIsVisible] = useState(false);
+    const [mounted, setMounted] = useState(false);
 
     useEffect(() => {
+        setMounted(true);
         const hasSeenOnboarding = localStorage.getItem("pais-onboarding-seen");
         if (!hasSeenOnboarding) {
             setIsVisible(true);
@@ -47,7 +49,7 @@ export function Onboarding() {
         }
     };
 
-    if (!isVisible) return null;
+    if (!mounted || !isVisible) return null;
 
     return (
         <div className="fixed inset-0 z-[9999] bg-[#F5F5F0] overflow-y-auto flex items-center justify-center p-6">
@@ -58,7 +60,7 @@ export function Onboarding() {
                     animate={{ opacity: 1, scale: 1, y: 0 }}
                     exit={{ opacity: 0, scale: 1.1, y: -20 }}
                     transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-                    className="onboarding-card max-w-2xl mx-auto w-full bg-white p-10 md:p-16 rounded-[4rem] shadow-[0_50px_100px_-20px_rgba(0,0,0,0.2)] border-[12px] border-white ring-1 ring-black/5 flex flex-col items-center text-center"
+                    className="onboarding-card max-w-xl mx-auto w-full bg-white p-8 md:p-12 rounded-[3rem] shadow-[0_50px_100px_-20px_rgba(0,0,0,0.2)] border-8 border-white ring-1 ring-black/5 flex flex-col items-center text-center"
                 >
                     {/* Progress Indicator */}
                     <div className="flex justify-center gap-5 mb-12">
@@ -66,14 +68,14 @@ export function Onboarding() {
                             <div
                                 key={idx}
                                 className={`w-4 h-4 rounded-full transition-all duration-500 ${idx === currentStep
-                                        ? `scale-150 ${steps[currentStep].colorClass}`
-                                        : "bg-warm-200 opacity-50"
+                                    ? `scale-150 ${steps[currentStep].colorClass}`
+                                    : "bg-warm-200 opacity-50"
                                     }`}
                             />
                         ))}
                     </div>
 
-                    <h1 className="text-4xl md:text-6xl font-black mb-10 leading-[1.1] text-warm-900 font-heading tracking-tight">
+                    <h1 className="text-3xl md:text-5xl font-black mb-8 leading-[1.1] text-warm-900 font-heading tracking-tight">
                         {steps[currentStep].title}
                     </h1>
 
@@ -88,13 +90,13 @@ export function Onboarding() {
                         />
                     </div>
 
-                    <p className="text-warm-600 text-2xl md:text-3xl mb-14 max-w-lg mx-auto font-medium leading-relaxed">
+                    <p className="text-xl md:text-2xl mb-10 max-w-lg mx-auto font-medium leading-relaxed text-warm-500">
                         {steps[currentStep].description}
                     </p>
 
                     <button
                         onClick={handleNext}
-                        className={`onboarding-btn shadow-2xl hover:scale-105 active:scale-95 transition-all text-white w-full py-8 text-3xl font-black rounded-3xl ${steps[currentStep].colorClass}`}
+                        className={`onboarding-btn shadow-xl hover:scale-105 active:scale-95 transition-all text-white w-full py-6 text-2xl font-black rounded-2xl ${steps[currentStep].colorClass}`}
                     >
                         {steps[currentStep].btnText}
                     </button>
