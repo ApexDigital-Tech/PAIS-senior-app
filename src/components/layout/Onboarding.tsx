@@ -10,6 +10,7 @@ const steps = [
         image: "https://images.unsplash.com/photo-1516307361474-3205029857a1?q=80&w=2070&auto=format&fit=crop",
         btnText: "Siguiente",
         color: "var(--pais-green-500)",
+        colorRaw: "151 100% 36%",
     },
     {
         title: "Pide transporte con un solo toque.",
@@ -17,6 +18,7 @@ const steps = [
         image: "https://images.unsplash.com/photo-1449965408869-eaa3f722e40d?q=80&w=2070&auto=format&fit=crop",
         btnText: "Siguiente",
         color: "var(--pais-blue-500)",
+        colorRaw: "210 100% 50%",
     },
     {
         title: "Recuérdalo todo: medicina y salud.",
@@ -24,6 +26,7 @@ const steps = [
         image: "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?q=80&w=2030&auto=format&fit=crop",
         btnText: "¡Empezar ahora!",
         color: "var(--pais-green-500)",
+        colorRaw: "151 100% 36%",
     },
 ];
 
@@ -50,40 +53,52 @@ export function Onboarding() {
     if (!isVisible) return null;
 
     return (
-        <div className="fixed inset-0 z-[100] bg-[var(--pais-warm-100)] overflow-y-auto">
+        <div className="fixed inset-0 z-[9999] bg-[hsl(60_20%_96%)] overflow-y-auto flex items-center justify-center">
             <AnimatePresence mode="wait">
                 <motion.div
                     key={currentStep}
-                    initial={{ opacity: 0, x: 20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    exit={{ opacity: 0, x: -20 }}
-                    className="onboarding-container max-w-2xl mx-auto"
+                    initial={{ opacity: 0, scale: 0.9 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    exit={{ opacity: 0, scale: 1.1 }}
+                    transition={{ duration: 0.4, ease: "circOut" }}
+                    className="onboarding-card max-w-2xl mx-auto w-full bg-white p-12 rounded-[3.5rem] shadow-[0_40px_100px_-20px_rgba(0,0,0,0.15)] m-6 border-4 border-white isolate relative"
                 >
-                    <div className="flex gap-2 mb-8">
+                    {/* Progress Indicator */}
+                    <div className="flex justify-center gap-4 mb-10">
                         {steps.map((_, idx) => (
                             <div
                                 key={idx}
-                                className={`progress-dot ${idx === currentStep ? "active" : ""}`}
+                                className={`progress-dot ${idx === currentStep ? "active scale-110" : "opacity-30"}`}
+                                style={{
+                                    backgroundColor: idx === currentStep ? `hsl(${steps[idx].colorRaw})` : undefined
+                                }}
                             />
                         ))}
                     </div>
 
-                    <h1 className="onboarding-title">{steps[currentStep].title}</h1>
+                    <h1 className="text-4xl md:text-5xl font-black mb-8 leading-[1.1] text-[hsl(210_100%_12%)] font-heading">
+                        {steps[currentStep].title}
+                    </h1>
 
-                    <img
-                        src={steps[currentStep].image}
-                        alt="Onboarding"
-                        className="onboarding-image aspect-video object-cover"
-                    />
+                    <div className="relative w-full aspect-video rounded-[2.5rem] overflow-hidden mb-10 shadow-lg bg-gray-100">
+                        <img
+                            src={steps[currentStep].image}
+                            alt="Contexto PAIS"
+                            className="w-full h-full object-cover transform transition-transform duration-1000 hover:scale-105"
+                            onError={(e) => {
+                                e.currentTarget.src = "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?q=80&w=2070";
+                            }}
+                        />
+                    </div>
 
-                    <p className="text-[var(--text-secondary)] text-xl mb-12 max-w-md">
+                    <p className="text-[hsl(60_8%_33%)] text-2xl mb-12 max-w-lg mx-auto font-medium leading-[1.45] font-body">
                         {steps[currentStep].description}
                     </p>
 
                     <button
                         onClick={handleNext}
-                        className="onboarding-btn shadow-lg hover:shadow-xl active:scale-95 text-white"
-                        style={{ backgroundColor: steps[currentStep].color }}
+                        className="onboarding-btn shadow-2xl hover:scale-105 transition-all text-white w-full py-8 text-2xl font-black rounded-3xl"
+                        style={{ backgroundColor: `hsl(${steps[currentStep].colorRaw})` }}
                     >
                         {steps[currentStep].btnText}
                     </button>
