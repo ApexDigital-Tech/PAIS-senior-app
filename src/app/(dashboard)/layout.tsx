@@ -32,10 +32,10 @@ export default function DashboardLayout({
     if (!user) return null;
 
     return (
-        <div className="min-h-screen bg-background">
+        <div className="min-h-screen bg-background pb-16">
             <Header />
             {children}
-            <SOSHandler />
+            {user.role === 'senior' && <SOSHandler />}
             <BottomNav />
         </div>
     );

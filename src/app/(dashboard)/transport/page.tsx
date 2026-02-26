@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/Button";
 import { TripCard } from "@/components/transport/TripCard";
 import type { TransportRequest, FavoritePlace } from "@/types";
 import { Plus, MapPin, Hospital, Cross, Church, Home, TreePine, Building } from "lucide-react";
+import { useUser } from "@/hooks/useUser";
 
 const placeIcons: Record<string, typeof Hospital> = {
     hospital: Hospital,
@@ -63,6 +64,13 @@ const demoTrips: TransportRequest[] = [
 
 export default function TransportPage() {
     const router = useRouter();
+    const { user, loading } = useUser();
+
+    // Redirections for restricted roles
+    if (!loading && (user?.role === "conductor" || user?.role === "familiar")) {
+        router.push("/dashboard");
+        return null;
+    }
 
     return (
         <PageContainer>

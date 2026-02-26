@@ -17,7 +17,8 @@ import {
     Mail,
     Chrome,
     Heart,
-    ArrowRight
+    ArrowRight,
+    Car
 } from "lucide-react";
 import type { UserRole } from "@/types";
 import { motion, AnimatePresence } from "framer-motion";
@@ -29,6 +30,7 @@ const roles: { id: UserRole; title: string; desc: string; icon: any; color: stri
     { id: "familiar", title: "Familiar", desc: "Para hijos y nietos que quieren estar cerca.", icon: Heart, color: "text-blue-600", bg: "bg-blue-50", border: "group-hover:border-blue-500/30" },
     { id: "voluntario", title: "Voluntario", desc: "Para quienes desean brindar compañía.", icon: HeartHandshake, color: "text-orange-600", bg: "bg-orange-50", border: "group-hover:border-orange-500/30" },
     { id: "medico", title: "Médico", desc: "Profesionales gestionando pacientes.", icon: Stethoscope, color: "text-red-600", bg: "bg-red-50", border: "group-hover:border-red-500/30" },
+    { id: "conductor", title: "Conductor", desc: "Choferes verificados para traslados.", icon: Car, color: "text-purple-600", bg: "bg-purple-50", border: "group-hover:border-purple-500/30" },
 ];
 
 function RegisterContent() {

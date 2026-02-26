@@ -2,7 +2,8 @@
 
 import { usePathname } from "next/navigation";
 import Link from "next/link";
-import { Home, Car, Users, Heart, AlertCircle, LucideIcon } from "lucide-react";
+import { Home, Car, Users, Heart, AlertCircle, LucideIcon, Map, Settings, Calendar, Bell } from "lucide-react";
+import { useUser } from "@/hooks/useUser";
 
 interface NavItem {
     href: string;
@@ -11,7 +12,7 @@ interface NavItem {
     isEmergency?: boolean;
 }
 
-const navItems: NavItem[] = [
+const seniorNavItems: NavItem[] = [
     { href: "/dashboard", label: "Inicio", icon: Home },
     { href: "/transport", label: "Transporte", icon: Car },
     { href: "/sos", label: "SOS", icon: AlertCircle, isEmergency: true },
@@ -19,8 +20,25 @@ const navItems: NavItem[] = [
     { href: "/health", label: "Salud", icon: Heart },
 ];
 
+const conductorNavItems: NavItem[] = [
+    { href: "/dashboard", label: "Viajes", icon: Car },
+    { href: "/profile", label: "Mi Cuenta", icon: Settings },
+];
+
+const familiarNavItems: NavItem[] = [
+    { href: "/dashboard", label: "Actividad", icon: Bell },
+    { href: "/transport", label: "Viajes", icon: Car },
+    { href: "/health", label: "Salud", icon: Heart },
+    { href: "/profile", label: "Ajustes", icon: Settings },
+];
+
 export function BottomNav() {
     const pathname = usePathname();
+    const { user } = useUser();
+
+    let navItems = seniorNavItems;
+    if (user?.role === "conductor") navItems = conductorNavItems;
+    if (user?.role === "familiar") navItems = familiarNavItems;
 
     return (
         <nav

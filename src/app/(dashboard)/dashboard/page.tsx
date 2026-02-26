@@ -3,6 +3,8 @@
 import { useRouter } from "next/navigation";
 import { PageContainer } from "@/components/layout/PageContainer";
 import { Button } from "@/components/ui/Button";
+import { DriverPanel } from "@/components/transport/DriverPanel";
+import { FamilyPanel } from "@/components/transport/FamilyPanel";
 import {
     Car,
     Users,
@@ -56,6 +58,22 @@ export default function DashboardPage() {
         hidden: { opacity: 0, y: 30 },
         visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: [0.22, 1, 0.36, 1] as any } }
     };
+
+    if (user?.role === "conductor") {
+        return (
+            <PageContainer>
+                <DriverPanel />
+            </PageContainer>
+        );
+    }
+
+    if (user?.role === "familiar") {
+        return (
+            <PageContainer>
+                <FamilyPanel />
+            </PageContainer>
+        );
+    }
 
     return (
         <PageContainer className="bg-[var(--background)]">

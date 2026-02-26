@@ -3,7 +3,7 @@
 // ============================================
 
 // —— User & Roles ——
-export type UserRole = "senior" | "familiar" | "medico" | "voluntario" | "admin";
+export type UserRole = "senior" | "familiar" | "medico" | "voluntario" | "conductor" | "admin";
 
 export interface User {
     id: string;
