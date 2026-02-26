@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, Suspense } from "react";
 import { useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
 import { Button } from "@/components/ui/Button";
@@ -31,7 +31,7 @@ const roles: { id: UserRole; title: string; desc: string; icon: any; color: stri
     { id: "medico", title: "Médico", desc: "Profesionales gestionando pacientes.", icon: Stethoscope, color: "text-red-600", bg: "bg-red-50", border: "group-hover:border-red-500/30" },
 ];
 
-export default function RegisterPage() {
+function RegisterContent() {
     const router = useRouter();
     const supabase = createClient();
     const [step, setStep] = useState<Step>("role");
@@ -376,5 +376,13 @@ export default function RegisterPage() {
                 </AnimatePresence>
             </div>
         </div>
+    );
+}
+
+export default function RegisterPage() {
+    return (
+        <Suspense fallback={<div className="min-h-screen bg-warm-50 flex items-center justify-center text-2xl font-black text-green-600">Cargando...</div>}>
+            <RegisterContent />
+        </Suspense>
     );
 }

@@ -4,117 +4,166 @@ import { useRouter } from "next/navigation";
 import { PageContainer } from "@/components/layout/PageContainer";
 import { Card } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
-import { Car, Users, Heart, Calendar, Pill, MapPin } from "lucide-react";
+import {
+    Car,
+    Users,
+    Heart,
+    Calendar,
+    Pill,
+    MapPin,
+    ChevronRight,
+    Phone,
+    Bell,
+    Clock
+} from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
+import { useUser } from "@/hooks/useUser";
 
-export default function HomePage() {
+export default function DashboardPage() {
     const router = useRouter();
+    const { user } = useUser();
+    const firstName = user?.full_name?.split(" ")[0] || "María";
+
+    const containerVariants = {
+        hidden: { opacity: 0 },
+        visible: {
+            opacity: 1,
+            transition: {
+                staggerChildren: 0.1,
+                delayChildren: 0.2
+            }
+        }
+    };
+
+    const itemVariants = {
+        hidden: { opacity: 0, y: 20 },
+        visible: { opacity: 1, y: 0 }
+    };
 
     return (
-        <PageContainer>
-            {/* Welcome Section */}
-            <section className="mb-8 animate-fade-in">
-                <h1 className="font-heading text-3xl font-bold text-text-primary mb-2">
-                    ¡Bienvenida!
-                </h1>
-                <p className="text-lg text-text-secondary">
-                    ¿Qué necesitas hoy? Elige una opción.
-                </p>
-            </section>
-
-            {/* Quick Actions */}
-            <section className="space-y-4 mb-10">
-                <div className="flex items-center justify-between">
-                    <h2 className="font-heading text-2xl font-bold text-text-primary">
-                        ¿Cómo te ayudamos hoy?
-                    </h2>
-                </div>
-
-                <div className="grid grid-cols-1 gap-6">
-                    <Card
-                        icon={<Car size={32} className="text-[var(--pais-blue-600)]" />}
-                        title="Pedir Transporte"
-                        description="Viajes seguros con conductores certificados"
-                        onClick={() => router.push("/transport")}
-                        className="card-premium grad-transport"
-                        badge="ACTIVO"
-                    />
-
-                    <Card
-                        icon={<Users size={32} className="text-[var(--pais-purple-500)]" />}
-                        title="Compañía y Charla"
-                        description="Conecta con voluntarios para pasear o conversar"
-                        onClick={() => router.push("/community")}
-                        className="card-premium grad-community"
-                    />
-
-                    <Card
-                        icon={<Heart size={32} className="text-[var(--pais-red-500)]" />}
-                        title="Mi Salud y Bienestar"
-                        description="Tus medicamentos y citas en un solo lugar"
-                        onClick={() => router.push("/health")}
-                        className="card-premium grad-health"
-                    />
-                </div>
-
-            </section>
-
-            {/* Today's Schedule */}
-            <section className="space-y-4 mb-10">
-                <h2 className="font-heading text-xl font-bold text-text-primary flex items-center gap-2">
-                    <span className="w-2 h-6 bg-[var(--pais-orange-500)] rounded-full"></span>
-                    Tu Agenda de Hoy
-                </h2>
-
-                <div className="space-y-3">
-                    <div className="flex items-center gap-4 p-5 bg-white rounded-3xl border border-[var(--pais-warm-200)] shadow-sm">
-                        <div className="w-12 h-12 rounded-2xl bg-[var(--pais-blue-50)] text-[var(--pais-blue-600)] flex items-center justify-center shrink-0">
-                            <Pill size={24} />
-                        </div>
-                        <div className="flex-1">
-                            <p className="text-lg font-bold text-text-primary leading-tight">
-                                Medicamento: Losartán
-                            </p>
-                            <p className="text-base text-text-secondary">A las 10:00 — 1 pastilla</p>
-                        </div>
-                        <div className="text-xs font-bold text-[var(--pais-blue-600)] bg-[var(--pais-blue-50)] px-3 py-1 rounded-full">
-                            PENDIENTE
-                        </div>
-                    </div>
-
-                    <div className="flex items-center gap-4 p-5 bg-white rounded-3xl border border-[var(--pais-warm-200)] shadow-sm">
-                        <div className="w-12 h-12 rounded-2xl bg-[var(--pais-orange-50)] text-[var(--pais-orange-500)] flex items-center justify-center shrink-0">
-                            <Calendar size={24} />
-                        </div>
-                        <div className="flex-1">
-                            <p className="text-lg font-bold text-text-primary leading-tight">
-                                Visita de Voluntario: Ana
-                            </p>
-                            <p className="text-base text-text-secondary">A las 15:00 — Paseo por el parque</p>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            {/* Emergency Info */}
-            <section className="mt-8 relative overflow-hidden group">
-                <div className="p-8 bg-gradient-to-br from-[var(--pais-green-500)] to-[var(--pais-green-700)] rounded-[3rem] text-white shadow-xl transform transition-transform group-hover:scale-[1.01]">
-                    <div className="relative z-10 flex items-center gap-5">
-                        <div className="w-20 h-20 bg-white/20 rounded-3xl flex items-center justify-center backdrop-blur-xl shadow-inner group-hover:bg-white/30 transition-colors">
-                            <Heart size={40} className="animate-pulse" />
-                        </div>
+        <PageContainer className="bg-warm-50/30">
+            <motion.div
+                variants={containerVariants}
+                initial="hidden"
+                animate="visible"
+                className="space-y-10"
+            >
+                {/* 1. Greeting & Status Hero */}
+                <motion.section variants={itemVariants} className="pt-4">
+                    <div className="flex justify-between items-start">
                         <div>
-                            <p className="text-white/80 text-base font-bold uppercase tracking-wider">Contacto de confianza</p>
-                            <p className="text-3xl font-black font-heading">Carlos García (Hijo)</p>
+                            <h1 className="text-5xl font-black text-warm-900 font-heading tracking-tight mb-2">
+                                ¡Hola, {firstName}!
+                            </h1>
+                            <p className="text-2xl text-warm-500 font-bold">
+                                Todo está en orden por aquí hoy.
+                            </p>
+                        </div>
+                        <button className="w-16 h-16 bg-white rounded-2xl shadow-sm border border-warm-200 flex items-center justify-center text-warm-400 relative active:scale-90 transition-transform">
+                            <Bell size={32} />
+                            <span className="absolute top-4 right-4 w-3 h-3 bg-red-500 rounded-full border-2 border-white"></span>
+                        </button>
+                    </div>
+
+                    {/* Today's Highlight Bar */}
+                    <div className="mt-10 p-8 bg-white rounded-[3rem] border-4 border-white shadow-xl flex items-center gap-6">
+                        <div className="w-20 h-20 bg-blue-50 text-blue-600 rounded-[1.5rem] flex items-center justify-center shrink-0">
+                            <Car size={44} strokeWidth={2.5} />
+                        </div>
+                        <div className="flex-1">
+                            <p className="text-warm-500 font-black text-base uppercase tracking-widest mb-1">Próximo viaje</p>
+                            <p className="text-3xl font-black text-warm-900 leading-tight">Cita Médica</p>
+                            <div className="flex items-center gap-2 text-xl font-bold text-warm-500 mt-1">
+                                <Clock size={20} /> 11:30 AM · Hospital Central
+                            </div>
+                        </div>
+                        <ChevronRight className="text-warm-300" size={32} />
+                    </div>
+                </motion.section>
+
+                {/* 2. Primary Pillars Grid */}
+                <motion.section variants={itemVariants} className="space-y-6">
+                    <h2 className="text-3xl font-black text-warm-900 font-heading">¿Qué necesitas hacer?</h2>
+
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                        {/* Pilar: Transporte */}
+                        <div
+                            onClick={() => router.push("/transport")}
+                            className="group relative h-96 bg-white rounded-[3.5rem] p-10 shadow-lg hover:shadow-2xl transition-all cursor-pointer overflow-hidden border-4 border-white active:scale-95"
+                        >
+                            <div className="absolute top-0 right-0 w-48 h-48 bg-blue-50/50 rounded-full blur-3xl -mr-20 -mt-20 group-hover:bg-blue-100/50 transition-colors"></div>
+                            <div className="relative z-10 h-full flex flex-col justify-between">
+                                <div className="w-24 h-24 bg-blue-500 rounded-[2rem] flex items-center justify-center text-white shadow-xl shadow-blue-500/20">
+                                    <Car size={48} strokeWidth={2.5} />
+                                </div>
+                                <div>
+                                    <h3 className="text-4xl font-black text-warm-900 mb-3">Pedir Viaje</h3>
+                                    <p className="text-xl text-warm-500 font-bold leading-relaxed">Traslados seguros con conductores de confianza.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* Pilar: Comunidad */}
+                        <div
+                            onClick={() => router.push("/community")}
+                            className="group relative h-96 bg-white rounded-[3.5rem] p-10 shadow-lg hover:shadow-2xl transition-all cursor-pointer overflow-hidden border-4 border-white active:scale-95"
+                        >
+                            <div className="absolute top-0 right-0 w-48 h-48 bg-purple-50/50 rounded-full blur-3xl -mr-20 -mt-20 group-hover:bg-purple-100/50 transition-colors"></div>
+                            <div className="relative z-10 h-full flex flex-col justify-between">
+                                <div className="w-24 h-24 bg-purple-500 rounded-[2rem] flex items-center justify-center text-white shadow-xl shadow-purple-500/20">
+                                    <Users size={48} strokeWidth={2.5} />
+                                </div>
+                                <div>
+                                    <h3 className="text-4xl font-black text-warm-900 mb-3">Compañía</h3>
+                                    <p className="text-xl text-warm-500 font-bold leading-relaxed">Conversa o pasea con nuestros voluntarios.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* Pilar: Salud */}
+                        <div
+                            onClick={() => router.push("/health")}
+                            className="group relative h-96 bg-white rounded-[3.5rem] p-10 shadow-lg hover:shadow-2xl transition-all cursor-pointer overflow-hidden border-4 border-white active:scale-95"
+                        >
+                            <div className="absolute top-0 right-0 w-48 h-48 bg-red-50/50 rounded-full blur-3xl -mr-20 -mt-20 group-hover:bg-red-100/50 transition-colors"></div>
+                            <div className="relative z-10 h-full flex flex-col justify-between">
+                                <div className="w-24 h-24 bg-red-500 rounded-[2rem] flex items-center justify-center text-white shadow-xl shadow-red-500/20">
+                                    <Heart size={48} strokeWidth={2.5} />
+                                </div>
+                                <div>
+                                    <h3 className="text-4xl font-black text-warm-900 mb-3">Mi Salud</h3>
+                                    <p className="text-xl text-warm-500 font-bold leading-relaxed">Tus citas médicas y medicamentos al día.</p>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    <Button variant="secondary" fullWidth className="mt-8 bg-white text-[var(--pais-green-700)] hover:bg-[var(--pais-warm-50)] font-black text-2xl py-8 rounded-2xl border-none shadow-2xl">
-                        Llamar a Carlos
-                    </Button>
-                </div>
-                {/* Decorative glows */}
-                <div className="absolute -bottom-10 -right-10 w-48 h-48 bg-white/20 rounded-full blur-3xl"></div>
-                <div className="absolute -top-10 -left-10 w-32 h-32 bg-[var(--pais-green-400)] rounded-full blur-3xl opacity-50"></div>
-            </section>
+                </motion.section>
+
+                {/* 3. Emergency SOS Shortcut */}
+                <motion.section variants={itemVariants} className="relative">
+                    <div className="p-10 bg-gradient-to-br from-warm-900 to-warm-800 rounded-[3.5rem] text-white flex flex-col md:flex-row items-center gap-10 shadow-2xl relative overflow-hidden ring-4 ring-white/10 group">
+                        <div className="absolute inset-0 bg-red-500/5 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                        <div className="w-32 h-32 bg-white/10 rounded-[2.5rem] flex items-center justify-center shrink-0 border border-white/20 backdrop-blur-xl">
+                            <Heart size={64} className="text-red-500 animate-pulse" />
+                        </div>
+                        <div className="flex-1 text-center md:text-left">
+                            <h3 className="text-4xl font-black mb-3">Centro de Asistencia</h3>
+                            <p className="text-xl text-warm-300 font-bold leading-relaxed">Si te sientes mal o necesitas ayuda urgente, comunícate con Carlos o pide un SOS.</p>
+                        </div>
+                        <div className="flex flex-col gap-4 w-full md:w-auto">
+                            <Button
+                                onClick={() => window.location.href = "tel:70000000"}
+                                className="h-20 px-8 text-2xl font-black bg-white text-warm-900 rounded-[1.5rem] border-none flex items-center gap-4 hover:bg-warm-50 shadow-xl"
+                            >
+                                <Phone size={28} /> Llamar a Carlos
+                            </Button>
+                        </div>
+                    </div>
+                </motion.section>
+
+                {/* Add standard nav spacing */}
+                <div className="h-8"></div>
+            </motion.div>
         </PageContainer>
     );
 }
