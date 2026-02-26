@@ -2,6 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import { useUser } from "@/hooks/useUser";
+import Link from "next/link";
 import { Button } from "@/components/ui/Button";
 import {
     Car,
@@ -80,22 +81,24 @@ export default function LandingPage() {
                         animate={{ opacity: 1, x: 0 }}
                         className="flex items-center gap-4"
                     >
-                        <Button
-                            variant="ghost"
-                            size="sm"
-                            onClick={() => router.push("/login")}
-                            className="hidden sm:flex text-green-600 font-bold"
-                        >
-                            Entrar
-                        </Button>
-                        <Button
-                            variant="primary"
-                            size="sm"
-                            onClick={() => router.push("/register")}
-                            className="rounded-xl px-6"
-                        >
-                            Registro
-                        </Button>
+                        <Link href="/login" className="hidden sm:block">
+                            <Button
+                                variant="ghost"
+                                size="sm"
+                                className="text-green-600 font-bold w-full"
+                            >
+                                Iniciar Sesión
+                            </Button>
+                        </Link>
+                        <Link href="/register" className="block">
+                            <Button
+                                variant="primary"
+                                size="sm"
+                                className="rounded-xl px-6 w-full"
+                            >
+                                Crear Cuenta
+                            </Button>
+                        </Link>
                     </motion.div>
                 </div>
             </header>
@@ -130,23 +133,25 @@ export default function LandingPage() {
                             </div>
 
                             <motion.div variants={itemVariants} className="flex flex-col sm:flex-row gap-5">
-                                <Button
-                                    variant="primary"
-                                    size="lg"
-                                    onClick={() => router.push("/register")}
-                                    className="min-w-[220px] h-16 shadow-2xl shadow-green-500/20"
-                                    icon={<ArrowRight />}
-                                >
-                                    Comenzar Gratis
-                                </Button>
-                                <Button
-                                    variant="secondary"
-                                    size="lg"
-                                    onClick={() => router.push("/login")}
-                                    className="min-w-[220px] h-16"
-                                >
-                                    Ver Demo
-                                </Button>
+                                <Link href="/register" className="block w-full sm:w-auto">
+                                    <Button
+                                        variant="primary"
+                                        size="lg"
+                                        className="w-full sm:min-w-[220px] h-16 shadow-2xl shadow-green-500/20"
+                                        icon={<ArrowRight />}
+                                    >
+                                        Crear Cuenta Gratuita
+                                    </Button>
+                                </Link>
+                                <Link href="/login" className="block w-full sm:w-auto">
+                                    <Button
+                                        variant="secondary"
+                                        size="lg"
+                                        className="w-full sm:min-w-[220px] h-16"
+                                    >
+                                        Ingresar a mi Cuenta
+                                    </Button>
+                                </Link>
                             </motion.div>
 
                             <motion.div variants={itemVariants} className="flex items-center gap-6 pt-4 border-t border-warm-200/50">
