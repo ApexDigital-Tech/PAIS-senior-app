@@ -127,7 +127,7 @@ function LoginContent() {
                     <Button
                         variant="outline"
                         fullWidth
-                        size="base"
+                        size="default"
                         className="h-14 text-lg font-bold rounded-xl"
                         onClick={() => setOtpSent(false)}
                     >

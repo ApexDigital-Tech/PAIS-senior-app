@@ -218,58 +218,58 @@ function RegisterContent() {
                         >
                             <button
                                 onClick={() => setStep("role")}
-                                className="flex items-center gap-3 text-warm-400 hover:text-green-600 transition-colors font-black text-2xl"
+                                className="flex items-center gap-2 text-warm-400 hover:text-green-600 transition-colors font-bold text-xl"
                             >
-                                <ChevronLeft size={32} />
+                                <ChevronLeft size={24} />
                                 <span>Volver</span>
                             </button>
 
-                            <div className="bg-white p-10 md:p-14 rounded-[4rem] shadow-2xl border-[12px] border-white ring-1 ring-black/5">
-                                <form onSubmit={handleStartRegistration} className="space-y-10">
-                                    <div className="flex items-center gap-5 p-6 bg-warm-50 rounded-[2rem] border-2 border-warm-100">
-                                        <div className={`w-14 h-14 rounded-2xl flex items-center justify-center shrink-0 bg-white shadow-sm ${roles.find(r => r.id === role)?.color}`}>
+                            <div className="bg-white p-8 md:p-10 rounded-3xl shadow-xl border-8 border-white ring-1 ring-black/5">
+                                <form onSubmit={handleStartRegistration} className="space-y-8">
+                                    <div className="flex items-center gap-4 p-4 bg-warm-50 rounded-2xl border-2 border-warm-100">
+                                        <div className={`w-10 h-10 rounded-xl flex items-center justify-center shrink-0 bg-white shadow-sm ${roles.find(r => r.id === role)?.color}`}>
                                             {(() => {
                                                 const Icon = roles.find(r => r.id === role)?.icon || User;
-                                                return <Icon size={28} strokeWidth={2.5} />;
+                                                return <Icon size={20} strokeWidth={2.5} />;
                                             })()}
                                         </div>
-                                        <p className="text-xl font-black text-warm-900">Soy: <span className="capitalize text-green-600 font-black">{role}</span></p>
+                                        <p className="text-lg font-bold text-warm-900">Soy: <span className="capitalize text-green-600 font-black">{role}</span></p>
                                     </div>
 
-                                    <div className="space-y-6">
+                                    <div className="space-y-5">
                                         {/* Name field */}
-                                        <div className="space-y-3">
-                                            <label className="text-2xl font-black text-warm-900 font-heading ml-2">Nombre completo</label>
+                                        <div className="space-y-2">
+                                            <label className="text-lg font-bold text-warm-900 ml-1">Nombre completo</label>
                                             <div className="relative group">
-                                                <div className="absolute left-6 top-1/2 -translate-y-1/2 text-warm-300 group-focus-within:text-green-500 transition-colors">
-                                                    <User size={32} />
+                                                <div className="absolute left-5 top-1/2 -translate-y-1/2 text-warm-300 group-focus-within:text-green-500 transition-colors">
+                                                    <User size={24} />
                                                 </div>
                                                 <input
                                                     type="text"
                                                     value={fullName}
                                                     onChange={(e) => setFullName(e.target.value)}
                                                     placeholder="Escribe tu nombre"
-                                                    className="w-full h-24 pl-16 pr-6 text-2xl md:text-3xl font-bold bg-warm-50 border-4 border-transparent focus:border-green-500 focus:bg-white rounded-[2rem] outline-none transition-all shadow-inner"
+                                                    className="w-full h-14 pl-14 pr-6 text-lg font-bold bg-warm-50 border-2 border-transparent focus:border-green-500 focus:bg-white rounded-xl outline-none transition-all shadow-inner"
                                                     required
                                                 />
                                             </div>
                                         </div>
 
                                         {/* Identifier field */}
-                                        <div className="space-y-3">
-                                            <label className="text-2xl font-black text-warm-900 font-heading ml-2">
+                                        <div className="space-y-2">
+                                            <label className="text-lg font-bold text-warm-900 ml-1">
                                                 {usePhone ? "Tu celular" : "Tu correo"}
                                             </label>
                                             <div className="relative group">
-                                                <div className="absolute left-6 top-1/2 -translate-y-1/2 text-warm-300 group-focus-within:text-green-500 transition-colors">
-                                                    {usePhone ? <Phone size={32} /> : <Mail size={32} />}
+                                                <div className="absolute left-5 top-1/2 -translate-y-1/2 text-warm-300 group-focus-within:text-green-500 transition-colors">
+                                                    {usePhone ? <Phone size={24} /> : <Mail size={24} />}
                                                 </div>
                                                 <input
                                                     type={usePhone ? "tel" : "email"}
                                                     value={usePhone ? phone : email}
                                                     onChange={(e) => usePhone ? setPhone(e.target.value) : setEmail(e.target.value)}
                                                     placeholder={usePhone ? "70000000" : "hola@pais.com"}
-                                                    className="w-full h-24 pl-16 pr-6 text-2xl md:text-3xl font-bold bg-warm-50 border-4 border-transparent focus:border-green-500 focus:bg-white rounded-[2rem] outline-none transition-all shadow-inner"
+                                                    className="w-full h-14 pl-14 pr-6 text-lg font-bold bg-warm-50 border-2 border-transparent focus:border-green-500 focus:bg-white rounded-xl outline-none transition-all shadow-inner"
                                                     required
                                                 />
                                             </div>
@@ -296,7 +296,7 @@ function RegisterContent() {
                                         fullWidth
                                         size="lg"
                                         loading={loading}
-                                        className="h-24 text-3xl font-black rounded-[2rem] bg-green-500 shadow-2xl shadow-green-500/30 active:scale-95"
+                                        className="h-16 text-xl font-bold rounded-2xl bg-green-500 shadow-xl shadow-green-500/20 active:scale-95"
                                     >
                                         ¡Registrarme ya!
                                     </Button>
@@ -309,26 +309,26 @@ function RegisterContent() {
                     {step === "otp" && (
                         <motion.div
                             key="otp-step"
-                            initial={{ opacity: 0, scale: 0.9 }}
+                            initial={{ opacity: 0, scale: 0.95 }}
                             animate={{ opacity: 1, scale: 1 }}
-                            className="bg-white p-14 rounded-[4rem] shadow-2xl border-[12px] border-white ring-1 ring-black/5 text-center space-y-10"
+                            className="bg-white p-10 rounded-3xl shadow-xl border-8 border-white ring-1 ring-black/5 text-center space-y-8"
                         >
-                            <h2 className="text-5xl font-black text-warm-900 font-heading tracking-tight">Escribe el código</h2>
-                            <p className="text-2xl text-warm-500 font-bold">Hemos enviado un mensaje a tu celular.</p>
-                            <form onSubmit={handleVerifyOtp} className="space-y-12">
+                            <h2 className="text-3xl font-black text-warm-900 font-heading tracking-tight">Escribe el código</h2>
+                            <p className="text-xl text-warm-500 font-bold">Enviamos un código a tu celular.</p>
+                            <form onSubmit={handleVerifyOtp} className="space-y-10">
                                 <input
                                     type="text"
                                     value={otp}
                                     onChange={(e) => setOtp(e.target.value)}
-                                    placeholder="000 000"
-                                    className="w-full h-32 text-center text-7xl tracking-[0.4em] font-black bg-warm-50 border-4 border-green-500 rounded-[2.5rem] focus:ring-[16px] focus:ring-green-50 outline-none transition-all"
+                                    placeholder="000000"
+                                    className="w-full h-20 text-center text-4xl tracking-[0.2em] font-black bg-warm-50 border-2 border-green-500 rounded-2xl focus:ring-8 focus:ring-green-50 outline-none transition-all"
                                     maxLength={6}
                                     required
                                 />
                                 {error && (
-                                    <div className="p-8 bg-red-50 border-4 border-red-100 rounded-[2rem] flex items-start gap-5 text-red-900">
-                                        <AlertCircle className="shrink-0 mt-1" size={32} />
-                                        <p className="text-xl font-black leading-tight">{error}</p>
+                                    <div className="p-6 bg-red-50 border-2 border-red-100 rounded-xl flex items-start gap-4 text-red-900">
+                                        <AlertCircle className="shrink-0 mt-1" size={24} />
+                                        <p className="text-lg font-bold leading-tight text-left">{error}</p>
                                     </div>
                                 )}
                                 <Button
@@ -336,11 +336,11 @@ function RegisterContent() {
                                     fullWidth
                                     size="lg"
                                     loading={loading}
-                                    className="h-24 text-3xl font-black rounded-[2.5rem]"
+                                    className="h-16 text-xl font-bold rounded-xl"
                                 >
                                     ¡Entrar a PAIS!
                                 </Button>
-                                <button onClick={() => setStep("details")} className="text-warm-400 font-bold text-xl hover:underline">
+                                <button onClick={() => setStep("details")} className="text-warm-400 font-bold text-lg hover:underline">
                                     Corregir mis datos
                                 </button>
                             </form>
@@ -351,22 +351,21 @@ function RegisterContent() {
                     {step === "success" && (
                         <motion.div
                             key="success-step"
-                            initial={{ opacity: 0, scale: 0.9 }}
+                            initial={{ opacity: 0, scale: 0.95 }}
                             animate={{ opacity: 1, scale: 1 }}
-                            className="bg-white p-14 rounded-[4rem] shadow-2xl border-[12px] border-white ring-1 ring-black/5 text-center space-y-10"
+                            className="bg-white p-10 rounded-3xl shadow-xl border-8 border-white ring-1 ring-black/5 text-center space-y-8"
                         >
-                            <div className="bg-green-100 p-10 rounded-[2.5rem] text-green-600 inline-block">
-                                <ShieldCheck size={100} strokeWidth={1.5} />
+                            <div className="bg-green-100 p-8 rounded-2xl text-green-600 inline-block">
+                                <ShieldCheck size={64} strokeWidth={1.5} />
                             </div>
-                            <h2 className="text-5xl font-black text-warm-900 font-heading tracking-tight">¡Casi listo!</h2>
-                            <p className="text-2xl text-warm-600 font-medium leading-relaxed">
-                                Revisa tu correo <span className="text-green-600 font-black">{email}</span> y toca el botón para activar tu cuenta.
+                            <h2 className="text-3xl font-black text-warm-900 font-heading tracking-tight">¡Casi listo!</h2>
+                            <p className="text-xl text-warm-600 font-medium leading-relaxed">
+                                Revisa tu correo <span className="text-green-600 font-black">{email}</span> para activar tu cuenta.
                             </p>
                             <Button
                                 variant="outline"
                                 fullWidth
-                                size="lg"
-                                className="h-20 text-2xl font-black rounded-[1.5rem]"
+                                className="h-14 text-lg font-bold rounded-xl"
                                 onClick={() => router.push("/login")}
                             >
                                 Volver al inicio
