@@ -69,10 +69,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="es" className={`${inter.variable} ${outfit.variable} ${lexend.variable}`}>
-      <body className="antialiased min-h-screen bg-[var(--pais-warm-50)] text-[var(--pais-text-primary)]">
+      <body className="antialiased min-h-screen bg-[var(--background)] text-[var(--text-primary)]">
         <UserProvider>
           <div className="flex flex-col min-h-screen">
-            <main className="flex-1 max-w-[70ch] mx-auto w-full px-4 lg:px-0">
+            <main className="flex-1 w-full mx-auto">
               {children}
             </main>
           </div>

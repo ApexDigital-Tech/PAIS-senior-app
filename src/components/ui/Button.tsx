@@ -1,6 +1,6 @@
 import { type ButtonHTMLAttributes, forwardRef } from "react";
 
-type ButtonVariant = "primary" | "secondary" | "danger" | "ghost";
+type ButtonVariant = "primary" | "secondary" | "danger" | "ghost" | "outline";
 type ButtonSize = "default" | "lg" | "sm";
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
@@ -13,19 +13,21 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 
 const variantStyles: Record<ButtonVariant, string> = {
     primary:
-        "bg-green-500 text-text-inverse hover:bg-green-600 active:bg-green-700 focus-visible:ring-green-200",
+        "bg-[var(--pais-green-500)] text-white hover:bg-[var(--pais-green-600)] active:scale-95 shadow-[0_12px_24px_-8px_rgba(0,186,97,0.4)]",
     secondary:
-        "bg-surface text-text-primary border-2 border-border hover:bg-surface-hover active:bg-warm-200",
+        "bg-[var(--pais-warm-100)] text-[var(--pais-warm-900)] border-2 border-[var(--pais-warm-200)] hover:bg-[var(--pais-warm-200)]",
+    outline:
+        "bg-white text-[var(--pais-blue-600)] border-[3px] border-[var(--pais-blue-500)] hover:bg-[var(--pais-blue-50)] shadow-sm",
     danger:
-        "bg-red-500 text-text-inverse hover:bg-red-600 active:bg-[var(--pais-red-600)]",
+        "bg-[var(--pais-red-500)] text-white hover:bg-[var(--pais-red-600)]",
     ghost:
-        "bg-transparent text-text-primary hover:bg-surface-hover active:bg-warm-200",
+        "bg-transparent text-[var(--pais-warm-700)] hover:bg-[var(--pais-warm-100)]",
 };
 
 const sizeStyles: Record<ButtonSize, string> = {
-    sm: "h-12 px-4 text-base",
-    default: "h-14 px-6 text-lg",
-    lg: "h-16 px-8 text-xl",
+    sm: "h-12 px-6 text-lg",
+    default: "h-16 px-10 text-xl",
+    lg: "h-20 px-14 text-2xl font-black",
 };
 
 const Button = forwardRef<HTMLButtonElement, ButtonProps>(
