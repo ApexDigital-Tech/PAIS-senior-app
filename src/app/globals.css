@@ -100,42 +100,20 @@
   --color-text-secondary: var(--text-secondary);
   --color-text-inverse: var(--text-inverse);
 
-  --color-green-50: var(--pais-green-50);
-  --color-green-100: var(--pais-green-100);
-  --color-green-200: var(--pais-green-200);
-  --color-green-500: var(--pais-green-500);
-  --color-green-600: var(--pais-green-600);
-  --color-green-700: var(--pais-green-700);
-
-  --color-blue-50: var(--pais-blue-50);
-  --color-blue-100: var(--pais-blue-100);
-  --color-blue-200: var(--pais-blue-200);
-  --color-blue-500: var(--pais-blue-500);
-  --color-blue-600: var(--pais-blue-600);
-  --color-blue-700: var(--pais-blue-700);
-
-  --color-red-50: var(--pais-red-50);
-  --color-red-500: var(--pais-red-500);
-  --color-red-600: var(--pais-red-600);
-
-  --color-amber-50: var(--pais-amber-50);
-  --color-amber-500: var(--pais-amber-500);
-
-  --color-warm-50: var(--pais-warm-50);
-  --color-warm-100: var(--pais-warm-100);
-  --color-warm-200: var(--pais-warm-200);
-  --color-warm-300: var(--pais-warm-300);
-  --color-warm-500: var(--pais-warm-500);
-  --color-warm-700: var(--pais-warm-700);
-  --color-warm-900: var(--pais-warm-900);
+  --color-green-500: hsl(var(--pais-green-500));
+  --color-blue-500: hsl(var(--pais-blue-500));
+  --color-blue-600: hsl(var(--pais-blue-600));
+  --color-red-500: hsl(var(--pais-red-500));
+  --color-orange-500: hsl(var(--pais-orange-500));
+  --color-warm-50: hsl(var(--pais-warm-50));
+  --color-warm-100: hsl(var(--pais-warm-100));
+  --color-warm-200: hsl(var(--pais-warm-200));
+  --color-warm-500: hsl(var(--pais-warm-500));
+  --color-warm-700: hsl(var(--pais-warm-700));
+  --color-warm-900: hsl(var(--pais-warm-900));
 
   --font-sans: var(--font-body);
   --font-heading: var(--font-heading);
-
-  --radius-sm: 8px;
-  --radius-md: 16px;
-  --radius-lg: 24px;
-  --radius-full: 9999px;
 }
 
 /* —— High Contrast Mode —— */

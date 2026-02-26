@@ -9,24 +9,21 @@ const steps = [
         description: "Tu seguridad y bienestar son nuestra prioridad. Estamos aquí para acompañarte cada día.",
         image: "https://images.unsplash.com/photo-1516307361474-3205029857a1?q=80&w=2070&auto=format&fit=crop",
         btnText: "Siguiente",
-        color: "var(--pais-green-500)",
-        colorRaw: "151 100% 36%",
+        colorClass: "bg-green-500",
     },
     {
         title: "Pide transporte con un solo toque.",
         description: "Viaja tranquila con conductores de confianza. Tu familia sabrá que ya llegaste.",
         image: "https://images.unsplash.com/photo-1449965408869-eaa3f722e40d?q=80&w=2070&auto=format&fit=crop",
         btnText: "Siguiente",
-        color: "var(--pais-blue-500)",
-        colorRaw: "210 100% 50%",
+        colorClass: "bg-blue-500",
     },
     {
         title: "Recuérdalo todo: medicina y salud.",
         description: "Tus pastillas a tiempo y alertas de emergencia siempre a mano. Tu salud, bajo control.",
         image: "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?q=80&w=2030&auto=format&fit=crop",
         btnText: "¡Empezar ahora!",
-        color: "var(--pais-green-500)",
-        colorRaw: "151 100% 36%",
+        colorClass: "bg-green-500",
     },
 ];
 
@@ -53,52 +50,51 @@ export function Onboarding() {
     if (!isVisible) return null;
 
     return (
-        <div className="fixed inset-0 z-[9999] bg-[hsl(60_20%_96%)] overflow-y-auto flex items-center justify-center">
+        <div className="fixed inset-0 z-[9999] bg-[#F5F5F0] overflow-y-auto flex items-center justify-center p-6">
             <AnimatePresence mode="wait">
                 <motion.div
                     key={currentStep}
-                    initial={{ opacity: 0, scale: 0.9 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    exit={{ opacity: 0, scale: 1.1 }}
-                    transition={{ duration: 0.4, ease: "circOut" }}
-                    className="onboarding-card max-w-2xl mx-auto w-full bg-white p-12 rounded-[3.5rem] shadow-[0_40px_100px_-20px_rgba(0,0,0,0.15)] m-6 border-4 border-white isolate relative"
+                    initial={{ opacity: 0, scale: 0.9, y: 20 }}
+                    animate={{ opacity: 1, scale: 1, y: 0 }}
+                    exit={{ opacity: 0, scale: 1.1, y: -20 }}
+                    transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+                    className="onboarding-card max-w-2xl mx-auto w-full bg-white p-10 md:p-16 rounded-[4rem] shadow-[0_50px_100px_-20px_rgba(0,0,0,0.2)] border-[12px] border-white ring-1 ring-black/5 flex flex-col items-center text-center"
                 >
                     {/* Progress Indicator */}
-                    <div className="flex justify-center gap-4 mb-10">
+                    <div className="flex justify-center gap-5 mb-12">
                         {steps.map((_, idx) => (
                             <div
                                 key={idx}
-                                className={`progress-dot ${idx === currentStep ? "active scale-110" : "opacity-30"}`}
-                                style={{
-                                    backgroundColor: idx === currentStep ? `hsl(${steps[idx].colorRaw})` : undefined
-                                }}
+                                className={`w-4 h-4 rounded-full transition-all duration-500 ${idx === currentStep
+                                        ? `scale-150 ${steps[currentStep].colorClass}`
+                                        : "bg-warm-200 opacity-50"
+                                    }`}
                             />
                         ))}
                     </div>
 
-                    <h1 className="text-4xl md:text-5xl font-black mb-8 leading-[1.1] text-[hsl(210_100%_12%)] font-heading">
+                    <h1 className="text-4xl md:text-6xl font-black mb-10 leading-[1.1] text-warm-900 font-heading tracking-tight">
                         {steps[currentStep].title}
                     </h1>
 
-                    <div className="relative w-full aspect-video rounded-[2.5rem] overflow-hidden mb-10 shadow-lg bg-gray-100">
+                    <div className="relative w-full aspect-[4/3] rounded-[3rem] overflow-hidden mb-12 shadow-2xl border-4 border-white">
                         <img
                             src={steps[currentStep].image}
                             alt="Contexto PAIS"
-                            className="w-full h-full object-cover transform transition-transform duration-1000 hover:scale-105"
+                            className="w-full h-full object-cover"
                             onError={(e) => {
                                 e.currentTarget.src = "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?q=80&w=2070";
                             }}
                         />
                     </div>
 
-                    <p className="text-[hsl(60_8%_33%)] text-2xl mb-12 max-w-lg mx-auto font-medium leading-[1.45] font-body">
+                    <p className="text-warm-600 text-2xl md:text-3xl mb-14 max-w-lg mx-auto font-medium leading-relaxed">
                         {steps[currentStep].description}
                     </p>
 
                     <button
                         onClick={handleNext}
-                        className="onboarding-btn shadow-2xl hover:scale-105 transition-all text-white w-full py-8 text-2xl font-black rounded-3xl"
-                        style={{ backgroundColor: `hsl(${steps[currentStep].colorRaw})` }}
+                        className={`onboarding-btn shadow-2xl hover:scale-105 active:scale-95 transition-all text-white w-full py-8 text-3xl font-black rounded-3xl ${steps[currentStep].colorClass}`}
                     >
                         {steps[currentStep].btnText}
                     </button>
