@@ -9,23 +9,28 @@
 :root {
   /* —— 60% Neutrals (Dominant) —— */
   --pais-white: 0 0% 100%;
-  --pais-warm-50: 60 14% 98%;
-  --pais-warm-100: 60 14% 96%;
-  --pais-warm-200: 60 12% 92%;
-  --pais-warm-300: 60 10% 86%;
-  --pais-warm-500: 60 5% 53%;
-  --pais-warm-700: 60 5% 33%;
-  --pais-warm-900: 60 5% 11%;
+  --pais-warm-50: 60 20% 97%;
+  --pais-warm-100: 60 20% 96%;
+  /* #F5F5F0 */
+  --pais-warm-200: 60 15% 92%;
+  --pais-warm-300: 60 12% 86%;
+  --pais-warm-500: 60 8% 53%;
+  --pais-warm-700: 60 8% 33%;
+  --pais-warm-900: 210 100% 12%;
+  /* #001F3F Dark Blue for text */
 
   /* —— 30% Brand Colors (Secondary) —— */
-  --pais-green-500: 152 100% 43%;
-  --pais-green-600: 152 100% 39%;
-  --pais-blue-500: 209 100% 50%;
-  --pais-blue-600: 209 100% 43%;
+  --pais-green-500: 151 100% 36%;
+  /* #00BA61 */
+  --pais-green-600: 151 100% 32%;
+  --pais-blue-500: 210 100% 50%;
+  /* #007FFF */
+  --pais-blue-600: 210 100% 43%;
 
   /* —— 10% Accents (Strategic) —— */
   --pais-orange-500: 34 100% 50%;
-  --pais-red-500: 2 100% 60%;
+  --pais-red-500: 0 90% 50%;
+  /* #F20D0D */
   --pais-amber-500: 48 100% 50%;
   --pais-purple-500: 271 81% 56%;
 
@@ -58,8 +63,8 @@
 
 
   /* —— Typography —— */
-  --font-body: var(--font-inter), system-ui, sans-serif;
-  --font-heading: var(--font-outfit), system-ui, sans-serif;
+  --font-body: var(--font-lexend), var(--font-inter), system-ui, sans-serif;
+  --font-heading: var(--font-lexend), var(--font-outfit), system-ui, sans-serif;
   --text-base: 18px;
   --text-lg: 20px;
   --text-xl: 24px;
@@ -348,4 +353,55 @@ textarea {
 
 .grad-energy {
   background: linear-gradient(135deg, hsla(var(--pais-orange-500), 0.05) 0%, hsl(var(--pais-white)) 100%);
+}
+
+/* —— Onboarding & Tutorial —— */
+.onboarding-container {
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
+  text-align: center;
+}
+
+.onboarding-title {
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+  color: var(--text-primary);
+}
+
+.onboarding-btn {
+  font-size: 1.5rem;
+  padding: 1rem 3rem;
+  border-radius: var(--radius-full);
+  font-weight: 600;
+  transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.onboarding-btn:active {
+  transform: scale(0.95);
+}
+
+.onboarding-image {
+  max-width: 100%;
+  height: auto;
+  border-radius: var(--radius-lg);
+  margin-bottom: 2rem;
+  box-shadow: var(--shadow-lg);
+}
+
+.progress-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--pais-warm-300);
+  transition: all 0.3s ease;
+}
+
+.progress-dot.active {
+  background: var(--pais-green-500);
+  width: 24px;
 }

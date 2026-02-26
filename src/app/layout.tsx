@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Inter, Outfit } from "next/font/google";
+import { Inter, Outfit, Lexend } from "next/font/google";
 import "./globals.css";
 
 const inter = Inter({
@@ -13,6 +13,13 @@ const outfit = Outfit({
   subsets: ["latin"],
   display: "swap",
   weight: ["500", "600", "700"],
+});
+
+const lexend = Lexend({
+  variable: "--font-lexend",
+  subsets: ["latin"],
+  display: "swap",
+  weight: ["400", "500", "600", "700"],
 });
 
 export const metadata: Metadata = {
@@ -53,6 +60,7 @@ export const viewport: Viewport = {
 
 import { UserProvider } from "@/hooks/useUser";
 import { PwaUpdater } from "@/components/layout/PwaUpdater";
+import { Onboarding } from "@/components/layout/Onboarding";
 
 export default function RootLayout({
   children,
@@ -60,7 +68,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="es" className={`${inter.variable} ${outfit.variable}`}>
+    <html lang="es" className={`${inter.variable} ${outfit.variable} ${lexend.variable}`}>
       <body className="antialiased min-h-screen bg-[var(--pais-warm-50)] text-[var(--pais-text-primary)]">
         <UserProvider>
           <div className="flex flex-col min-h-screen">
@@ -68,6 +76,7 @@ export default function RootLayout({
               {children}
             </main>
           </div>
+          <Onboarding />
           <PwaUpdater />
         </UserProvider>
       </body>
