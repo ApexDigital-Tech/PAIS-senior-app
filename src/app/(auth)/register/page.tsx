@@ -146,13 +146,13 @@ function RegisterContent() {
                 {/* Header Section */}
                 <div className="text-center animate-fade-in">
                     <div
-                        className="w-20 h-20 bg-green-500 p-2 rounded-[1.5rem] flex items-center justify-center text-white shadow-2xl shadow-green-500/20 mx-auto mb-6 cursor-pointer transform rotate-6 active:scale-90 transition-transform"
+                        className="w-16 h-16 bg-green-500 p-2 rounded-2xl flex items-center justify-center text-white shadow-xl shadow-green-500/20 mx-auto mb-6 cursor-pointer rotate-3 active:scale-90 transition-transform"
                         onClick={() => router.push("/")}
                     >
-                        <Heart size={40} fill="white" />
+                        <Heart size={32} fill="white" />
                     </div>
-                    <h1 className="text-5xl font-black text-warm-900 font-heading tracking-tighter">Crea tu cuenta</h1>
-                    <p className="text-2xl text-warm-500 font-bold mt-2">Únete a la red que cuida a los seniors</p>
+                    <h1 className="text-4xl font-black text-warm-900 font-heading tracking-tight">Crea tu cuenta</h1>
+                    <p className="text-xl text-warm-500 font-bold mt-1">Únete a la red PAIS</p>
                 </div>
 
                 <AnimatePresence mode="wait">
@@ -179,16 +179,16 @@ function RegisterContent() {
                                                 setUsePhone(r.id === "senior" || r.id === "familiar");
                                                 setStep("details");
                                             }}
-                                            className={`group flex items-center gap-8 p-8 bg-white rounded-[3rem] border-4 border-white shadow-xl hover:shadow-2xl transition-all active:scale-95 text-left ring-1 ring-black/5 ${r.border}`}
+                                            className={`group flex items-center gap-6 p-6 bg-white rounded-3xl border-2 border-white shadow-lg hover:shadow-xl transition-all active:scale-95 text-left ring-1 ring-black/5 ${r.border}`}
                                         >
-                                            <div className={`w-16 h-16 rounded-[1.25rem] flex items-center justify-center shrink-0 ${r.bg} ${r.color} group-hover:scale-110 transition-transform duration-500`}>
-                                                <Icon size={36} strokeWidth={2.5} />
+                                            <div className={`w-12 h-12 rounded-xl flex items-center justify-center shrink-0 ${r.bg} ${r.color} group-hover:scale-110 transition-transform duration-500`}>
+                                                <Icon size={24} strokeWidth={2.5} />
                                             </div>
                                             <div className="flex-1">
-                                                <h3 className="text-2xl font-black text-warm-900 font-heading leading-tight mb-1">{r.title}</h3>
-                                                <p className="text-lg text-warm-500 font-semibold leading-snug">{r.desc}</p>
+                                                <h3 className="text-xl font-black text-warm-900 font-heading leading-tight mb-0.5">{r.title}</h3>
+                                                <p className="text-base text-warm-500 font-semibold leading-tight">{r.desc}</p>
                                             </div>
-                                            <ChevronRight size={28} className="text-warm-200 group-hover:text-green-500 group-hover:translate-x-2 transition-all" />
+                                            <ChevronRight size={24} className="text-warm-200 group-hover:text-green-500 group-hover:translate-x-1 transition-all" />
                                         </button>
                                     );
                                 })}
@@ -199,7 +199,7 @@ function RegisterContent() {
                                     variant="outline"
                                     fullWidth
                                     onClick={() => router.push("/login")}
-                                    className="h-20 text-2xl font-black rounded-[1.5rem] bg-white border-green-500 text-green-600"
+                                    className="h-14 text-xl font-black rounded-xl bg-white border-green-500 text-green-600"
                                 >
                                     Inicia sesión aquí
                                 </Button>

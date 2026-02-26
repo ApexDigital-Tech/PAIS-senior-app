@@ -52,8 +52,8 @@
 
   /* —— Radius —— */
   --radius-sm: 8px;
-  --radius-md: 16px;
-  --radius-lg: 24px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
   --radius-full: 9999px;
 
   /* —— Shadows (Multi-layered for realism) —— */
@@ -65,10 +65,10 @@
   /* —— Typography —— */
   --font-body: var(--font-lexend), var(--font-inter), system-ui, sans-serif;
   --font-heading: var(--font-lexend), var(--font-outfit), system-ui, sans-serif;
-  --text-base: 18px;
-  --text-lg: 20px;
-  --text-xl: 24px;
-  --line-height-body: 1.6;
+  --text-base: 16px;
+  --text-lg: 18px;
+  --text-xl: 20px;
+  --line-height-body: 1.5;
   --line-height-heading: 1.2;
 
   /* —— Animation (Fixed Speed) —— */

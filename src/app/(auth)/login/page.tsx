@@ -127,8 +127,8 @@ function LoginContent() {
                     <Button
                         variant="outline"
                         fullWidth
-                        size="lg"
-                        className="h-20 text-2xl font-black rounded-[1.5rem]"
+                        size="base"
+                        className="h-14 text-lg font-bold rounded-xl"
                         onClick={() => setOtpSent(false)}
                     >
                         Intentar otra forma
@@ -150,13 +150,13 @@ function LoginContent() {
                 {/* Logo Section */}
                 <div className="text-center animate-fade-in">
                     <div
-                        className="w-24 h-24 bg-green-500 p-2.5 rounded-[2rem] flex items-center justify-center text-white shadow-2xl shadow-green-500/30 mx-auto mb-8 cursor-pointer active:scale-90 transition-transform"
+                        className="w-16 h-16 bg-green-500 p-2 rounded-2xl flex items-center justify-center text-white shadow-xl shadow-green-500/20 mx-auto mb-6 cursor-pointer active:scale-90 transition-transform"
                         onClick={() => router.push("/")}
                     >
-                        <Heart size={44} fill="white" />
+                        <Heart size={32} fill="white" />
                     </div>
-                    <h1 className="text-5xl md:text-6xl font-black text-warm-900 font-heading tracking-tighter">Entrar a PAIS</h1>
-                    <p className="text-2xl text-warm-500 font-bold mt-2">Acceso rápido, humano y seguro</p>
+                    <h1 className="text-4xl font-black text-warm-900 font-heading tracking-tight">Entrar a PAIS</h1>
+                    <p className="text-xl text-warm-500 font-bold mt-1">Acceso rápido y seguro</p>
                 </div>
 
                 {/* Login Card */}
@@ -166,11 +166,11 @@ function LoginContent() {
                             onClick={handleGoogleSignIn}
                             fullWidth
                             variant="secondary"
-                            className="h-20 rounded-[1.75rem] border-4 border-warm-100 bg-white hover:border-green-500/30 hover:bg-green-50/50 active:scale-95 transition-all text-2xl font-black"
+                            className="h-14 rounded-xl border-2 border-warm-100 bg-white hover:border-green-500/30 hover:bg-green-50/50 active:scale-95 transition-all text-xl font-bold"
                             disabled={loading}
                         >
-                            <div className="flex items-center gap-5 text-warm-900">
-                                <Chrome className="text-green-500" size={36} />
+                            <div className="flex items-center gap-4 text-warm-900">
+                                <Chrome className="text-green-500" size={24} />
                                 <span>Entrar con Google</span>
                             </div>
                         </Button>
@@ -191,28 +191,28 @@ function LoginContent() {
                                         exit={{ opacity: 0, x: 20 }}
                                         className="space-y-4"
                                     >
-                                        <div className="flex justify-between items-end mb-2 px-2">
-                                            <label className="text-2xl font-black text-warm-900 font-heading">
+                                        <div className="flex justify-between items-end mb-2 px-1">
+                                            <label className="text-xl font-black text-warm-900 font-heading">
                                                 {method === "email" ? "Tu Correo" : "Número de Celular"}
                                             </label>
                                             <button
                                                 type="button"
                                                 onClick={() => setMethod(method === "email" ? "phone" : "email")}
-                                                className="text-lg font-bold text-green-600 hover:underline"
+                                                className="text-base font-bold text-green-600 hover:underline"
                                             >
                                                 Usar {method === "email" ? "Celular" : "Correo"}
                                             </button>
                                         </div>
                                         <div className="relative group">
-                                            <div className="absolute left-6 top-1/2 -translate-y-1/2 text-warm-300 group-focus-within:text-green-500 transition-colors">
-                                                {method === "email" ? <Mail size={32} /> : <Phone size={32} />}
+                                            <div className="absolute left-5 top-1/2 -translate-y-1/2 text-warm-300 group-focus-within:text-green-500 transition-colors">
+                                                {method === "email" ? <Mail size={24} /> : <Phone size={24} />}
                                             </div>
                                             <input
                                                 type={method === "email" ? "email" : "tel"}
                                                 value={method === "email" ? email : phone}
                                                 onChange={(e) => method === "email" ? setEmail(e.target.value) : setPhone(e.target.value)}
                                                 placeholder={method === "email" ? "tu@correo.com" : "70000000"}
-                                                className="w-full h-24 pl-16 pr-6 text-2xl md:text-3xl font-bold bg-warm-50 border-4 border-transparent focus:border-green-500 focus:bg-white rounded-[2rem] outline-none transition-all shadow-inner"
+                                                className="w-full h-16 pl-14 pr-6 text-xl font-bold bg-warm-50 border-2 border-transparent focus:border-green-500 focus:bg-white rounded-xl outline-none transition-all shadow-inner"
                                                 required
                                             />
                                         </div>
@@ -235,8 +235,8 @@ function LoginContent() {
                                             type="text"
                                             value={otp}
                                             onChange={(e) => setOtp(e.target.value)}
-                                            placeholder="000 000"
-                                            className="w-full h-32 text-center text-7xl tracking-[0.4em] font-black bg-warm-50 border-4 border-green-500 rounded-[2.5rem] focus:ring-[16px] focus:ring-green-50 outline-none transition-all"
+                                            placeholder="000000"
+                                            className="w-full h-20 text-center text-4xl tracking-[0.2em] font-black bg-warm-50 border-2 border-green-500 rounded-2xl focus:ring-8 focus:ring-green-50 outline-none transition-all"
                                             maxLength={6}
                                             required
                                         />
